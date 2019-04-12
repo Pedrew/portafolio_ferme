@@ -1,0 +1,26 @@
+{% load static %}
+<nav id="toolbar" class="bg-white">
+    <div class="row no-gutters align-items-center flex-nowrap">
+        <div class="col">
+            <div class="row no-gutters align-items-center flex-nowrap">
+                <button type="button" class="toggle-aside-button btn btn-icon d-block d-lg-none" data-fuse-bar-toggle="aside">
+                    <i class="icon icon-menu"></i>
+                </button>
+                <div class="toolbar-separator d-block d-lg-none"></div>
+            </div>
+        </div>
+
+        <div class="col-auto">
+            <div class="row no-gutters align-items-center justify-content-end">
+                <div class="user-menu-button pt-3">
+                    <div class="ripple row align-items-center no-gutters px-2 px-sm-4">
+                        <div class="avatar-wrapper">
+                            <img class="avatar" src="{% static 'images/avatars/profile.jpg' %}">
+                        </div>
+                        <span class="username mx-3 d-none d-md-block">Iniciar sesión</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
