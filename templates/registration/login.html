@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+	<title>Inicio de Sesión | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+	<div id="login" class="p-8">
+        <div class="form-wrapper md-elevation-8 p-8">
+            <div class="logo bg-secondary">
+                <span>F</span>
+            </div>
+            <form name="loginForm" id="formlogin" novalidate method="post" action="{% url 'login' %}">
+            	{% csrf_token %}
+            	<div id="form-login-respuesta" class="d-none alert alert-danger" role="alert"></div>
+  				{{ form.as_p }}
+                <button type="button" class="submit-button btn btn-block btn-secondary my-4 mx-auto">
+                    Iniciar sesión
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock contenido %}
+{% block js %}
+	<script>
+		$('#formlogin p').addClass('form-group').addClass('mb-4');
+		$('#formlogin p input').addClass('form-control');
+		$('#formlogin p label').addClass('mb-0');
+
+		$('#formlogin .errorlist').css({
+			'list-style' : 'none',
+			'padding' : '0',
+		});
+		$('#formlogin .errorlist li').addClass('alert').addClass('alert-danger');
+
+		$('#formlogin .submit-button').click(function(){
+			$('#formlogin .errorlist').remove();
+			var flag = false;
+			$('#formlogin .form-control').each(function(){
+				if($.trim($(this).val()) == ''){
+                    $(this).parent('.input-group').addClass('is-invalid');
+                    $(this).focus();
+                    $('#form-login-respuesta').html('Indicar '+$(this).prev().text()).removeClass('d-none');
+                    flag = true;
+                    return false;
+                }else{
+                    $(this).parent('.input-group').removeClass('is-invalid').addClass('is-valid');
+                }
+			});
+			if(flag == false){
+				$('#formlogin').submit();
+                $('#form-login-respuesta').addClass('d-none');
+            }
+		});
+	</script>
+{% endblock js %}
