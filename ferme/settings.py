@@ -76,9 +76,13 @@ WSGI_APPLICATION = 'ferme.wsgi.application'
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
-      	'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+    'default': {
+        'ENGINE': 'django.db.backends.oracle',
+        'NAME': 'DBDREW',
+        'USER': 'admin',
+        'PASSWORD': 'admin123',
+        'HOST': 'dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com',
+        'PORT': '1521',
     }
 }
 
