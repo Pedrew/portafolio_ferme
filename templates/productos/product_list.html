@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+	<title>Inicio | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+    <div class="page-content-card">
+        <table id="e-commerce-products-table" class="table dataTable">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="table-header">
+                            <span class="column-title">ID</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <span class="column-title">Nombre</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <span class="column-title">Precio</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <span class="column-title">Acciones</span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in productos %}
+                <tr>
+                {% for i in item%}
+                
+                    <td>{{ i }}</td>
+                
+                {% endfor %}
+                <td>
+                        <button type="button" class="btn btn-icon" aria-label="Product details">
+                            <i class="icon icon-pencil s-4"></i>
+                        </button>
+                    </td>
+            </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock contenido %}
+{% block js %}
+	<script>
+		$(document).ready(function(){
+			
+		});
+	</script>
+{% endblock js %}
