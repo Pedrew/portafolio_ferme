@@ -25,3 +25,19 @@ def productos_delete(request):
 	Product.deleteProduct(product_id)
 	response = redirect('productos_list')
 	return response
+
+def productos_get(request):
+	get = request.GET
+	product_id = get['id']
+	response = Product.getProduct(product_id)
+	return render(request, 'productos/product_update.html',{'product':response})
+
+def productos_update(request):
+	post = request.POST
+	id = post['producto_id']
+	nombre = post['nombre']
+	valor = post['valor']
+	Product.updateProduct(id, nombre, valor)
+	response = redirect('productos_list')
+	return response
+	

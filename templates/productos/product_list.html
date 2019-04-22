@@ -63,9 +63,9 @@
                         <td>{{ item.NOMBRE }}</td>
                         <td>{{ item.VALOR }}</td>
                     <td>
-                        <button type="button" class="btn btn-icon" aria-label="Product details">
+                        <a class="btn btn-icon" href="productos_get?id={{item.PRODUCTO_ID}}" aria-label="Modificar Producto">
                             <i class="icon icon-pencil s-4"></i>
-                        </button>
+                        </a>
                         <a class="btn btn-icon" href="productos_delete?id={{item.PRODUCTO_ID}}">
                             <i class="icon icon-trash s-4"></i>
                         </a>

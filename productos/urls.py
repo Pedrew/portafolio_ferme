@@ -6,4 +6,6 @@ urlpatterns = [
     url(r'^productos_create', productos_create, name='productos_create'),
     url(r'^productos_insert', productos_insert, name='productos_insert'),
     url(r'^productos_delete', productos_delete, name='productos_delete'),
+    url(r'^productos_get', productos_get, name='productos_get'),
+    url(r'^productos_update', productos_update, name='productos_update'),
 ]
