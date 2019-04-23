@@ -6,3 +6,6 @@ def home(request):
 
 def productos(request):
 	return render(request, 'productos/product_list.html')
+
+def proveedores(request):
+	return render(request, 'proveedores/proveedores_list.html')	
