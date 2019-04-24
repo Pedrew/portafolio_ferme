@@ -1,0 +1,111 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+	<title>Usuarios | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div id="e-commerce-products" class="page-layout carded full-width">
+    <div class="top-bg bg-primary"></div>
+    <div class="page-content-wrapper">
+        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+            <div class="col-12 col-sm">
+                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                    <div class="logo-icon mr-3 mt-1">
+                        <i class="icon-cube-outline s-6"></i>
+                    </div>
+                    <div class="logo-text">
+                        <div class="h4">Usuarios</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col search-wrapper px-20">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-icon">
+                            <i class="icon icon-magnify"></i>
+                        </button>
+                    </span>
+                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
+                </div>
+            </div>
+            <a class="btn btn-primary" href="{% url 'users_create' %}" style="float: right;">Crear Usuario</a>     
+        </div>
+        <div class="page-content-card">
+            <table id="e-commerce-products-table" class="table dataTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">ID</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Usuario</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Contraseña</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Tipo</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Nombre</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Apellido</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Estado</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Acciones</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in user %}
+                    <tr>
+                        <td>{{ item.USER_ID }}</td>
+                        <td>{{ item.USUARIO }}</td>
+                        <td>{{ item.PASS }}</td>
+                        <td>{{ item.TYPE_NAME }}</td>
+                        <td>{{ item.NOMBRE }}</td>
+                        <td>{{ item.APELLIDO }}</td>
+                        <td>{{ item.ESTADO }}</td>
+                    <td>
+                        <a class="btn btn-icon" href="users_get?id={{item.USER_ID}}" aria-label="Modificar Usuario">
+                            <i class="icon icon-pencil s-4"></i>
+                        </a>
+                        <a class="btn btn-icon" href="users_delete?id={{item.USER_ID}}">
+                            <i class="icon icon-trash s-4"></i>
+                        </a>
+                    </td>
+                </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
+{% block js %}
+	<script>
+		$(document).ready(function(){
+			
+		});
+	</script>
+{% endblock js %}

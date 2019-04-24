@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+	<title>Usuarios | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div id="e-commerce-products" class="page-layout carded full-width">
+    <div class="top-bg bg-primary"></div>
+    <div class="page-content-wrapper">
+
+        <div class="row">
+            <div class="col-sm-10" style="margin: 25px 25px 25px 25px">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>
+                            Crear Usuario
+                        </h3>
+                        <form method="POST" class="post-form" action ="users_update">{% csrf_token %}
+                            <input type="hidden" name="id" class="form-control" value="{{user.USER_ID}}">
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Usuario</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="usuario"  class="form-control" value="{{user.USUARIO}}">
+                                </div>
+                                <label class="col-sm-2 col-form-label">Contraseña</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="password" class="form-control" value="{{user.PASS}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Tipo</label>
+                                <div class="col-sm-4">
+                                    <select name="user_type" class="form-control" value="{{user.TIPO}}">
+                                        <option value="2">Vendedor</option>
+                                        <option value="1">Administrador</option>
+                                        <option value="3">Cliente</option>
+                                        <option value="4">Proveedor</option>
+                                    </select>
+                                </div>
+                                <label class="col-sm-2 col-form-label">Estado</label>
+                                <div class="col-sm-4">
+                                    <select name="status" class="form-control" value="{{user.ESTADO}}">
+                                        <option value="Activo">Activo</option>
+                                        <option value="Inactivo">Inactivo</option>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Nombre</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="name" class="form-control" value="{{user.NOMBRE}}">
+                                </div>
+                                <label class="col-md-2 col-form-label">Apellido</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="last_name"  class="form-control" value="{{user.APELLIDO}}">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="offset-sm-2 col-sm-10">
+                                <a class="btn btn-primary" href="{% url 'users_list' %}" style="float: right; margin: 0px 50px">Cancelar</a>                                
+                                <button type="submit" class="btn btn-primary" style="float: right">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+{% endblock contenido %}
+{% block js %}
+	<script>
+		$(document).ready(function(){
+			
+		});
+	</script>
+{% endblock js %}
