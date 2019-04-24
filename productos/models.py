@@ -40,10 +40,10 @@ class Product(models.Model):
         cur.callproc("create_product",[nombre,valor])
         cur.close()
         con.close()
-    def updateProduct(self, id, nombre, valor):
+    def updateProduct(id, nombre, valor):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute("update products set nombre = '" + nombre + "' , valor = "+ valor + " where producto_id = "+id)
+        cur.callproc("update_product",[id,nombre,valor])
         cur.close()
         con.close()
     @classmethod

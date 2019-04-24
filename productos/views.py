@@ -34,10 +34,10 @@ def productos_get(request):
 
 def productos_update(request):
 	post = request.POST
-	id = post['producto_id']
+	producto_id = post['producto_id']
 	nombre = post['nombre']
 	valor = post['valor']
-	Product.updateProduct(id, nombre, valor)
+	Product.updateProduct(producto_id, nombre, valor)
 	response = redirect('productos_list')
 	return response
 	
