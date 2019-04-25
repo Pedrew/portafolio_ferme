@@ -46,7 +46,7 @@ class Proveedor(models.Model):
         con.close()
 
     @classmethod 
-    def updateProveedor(id, nombre, rut, mail, telefono):
+    def updateProveedor(self,id, nombre, rut, mail, telefono):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
         cur.callproc("update_proveedor",[id,nombre,rut,mail,telefono])
