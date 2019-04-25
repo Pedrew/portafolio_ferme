@@ -26,9 +26,29 @@ class Proveedor(models.Model):
         return array
 
     @classmethod
+    def getProveedor(self, id):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select * from proveedor where proveedor_id ='+id)
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2],column[3]:res[3],column[4]:res[4]}
+        cur.close()
+        con.close()
+        return obj
+
+    @classmethod
     def createProveedor(self, nombre, rut, mail, telefono):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
         cur.callproc("create_proveedor",[nombre,rut,mail,telefono])
+        cur.close()
+        con.close()
+
+    @classmethod 
+    def updateProveedor(self,id, nombre, rut, mail, telefono):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.callproc("update_proveedor",[id,nombre,rut,mail,telefono])
         cur.close()
         con.close()

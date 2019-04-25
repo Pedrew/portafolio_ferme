@@ -31,6 +31,7 @@ def productos_get(request):
 	product_id = get['id']
 	response = Product.getProduct(product_id)
 	return render(request, 'productos/product_update.html',{'product':response})
+#retorna 2 argumentos en vez de 1	
 
 def productos_update(request):
 	post = request.POST
