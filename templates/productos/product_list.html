@@ -51,6 +51,16 @@
                         </th>
                         <th>
                             <div class="table-header">
+                                <span class="column-title">Stock</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Stock Crítico</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
                                 <span class="column-title">Acciones</span>
                             </div>
                         </th>
@@ -61,7 +71,9 @@
                     <tr>
                         <td>{{ item.PRODUCTO_ID }}</td>
                         <td>{{ item.NOMBRE }}</td>
-                        <td>{{ item.VALOR }}</td>
+                        <td>if {{ item.VALOR }}</td>
+                        <td>{{ item.STOCK }}</td>
+                        <td>if {{ item.STOCK_CRITICO }}</td>
                     <td>
                         <a class="btn btn-icon" href="productos_get?id={{item.PRODUCTO_ID}}" aria-label="Modificar Producto">
                             <i class="icon icon-pencil s-4"></i>
