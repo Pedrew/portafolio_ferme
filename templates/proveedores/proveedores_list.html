@@ -28,7 +28,6 @@
                     <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
                 </div>
             </div>
-            <a class="btn btn-primary" href="{% url 'proveedores_create' %}" style="float: right;">Crear Proveedor</a>     
         </div>
         <div class="page-content-card">
             <table id="e-commerce-products-table" class="table dataTable">
@@ -36,12 +35,17 @@
                     <tr>
                         <th>
                             <div class="table-header">
-                                <span class="column-title">ID</span>
+                                <span class="column-title">Identificador</span>
                             </div>
                         </th>
                         <th>
                             <div class="table-header">
-                                <span class="column-title">Nombre</span>
+                                <span class="column-title">Razón Social</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Rubro</span>
                             </div>
                         </th>
                         <th>
@@ -56,7 +60,7 @@
                         </th>
                         <th>
                             <div class="table-header">
-                                <span class="column-title">Telefono</span>
+                                <span class="column-title">Teléfono</span>
                             </div>
                         </th>
                     </tr>
@@ -64,20 +68,13 @@
                 <tbody>
                     {% for item in proveedores %}
                     <tr>
-                        <td>{{ item.PROVEEDOR_ID }}</td>
-                        <td>{{ item.NOMBRE }}</td>
+                        <td>{{ item.IDENTIFICADOR }}</td>
+                        <td>{{ item.RAZON_SOCIAL }}
+                        <td>{{ item.RUBRO }}</td></td>
                         <td>{{ item.RUT }}</td>
-                        <td>{{ item.MAIL }}</td>
+                        <td>{{ item.USUARIO }}</td>
                         <td>{{ item.TELEFONO }}</td>
-                    <td>
-                        <a class="btn btn-icon" href="proveedores_get?id={{item.PROVEEDOR_ID}}" aria-label="Modificar Proveedor">
-                            <i class="icon icon-pencil s-4"></i>
-                        </a>
-                        <a class="btn btn-icon" href="proveedor_delete?id={{item.PROVEEDOR_ID}}">
-                            <i class="icon icon-trash s-4"></i>
-                        </a>
-                    </td>
-                </tr>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>

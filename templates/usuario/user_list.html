@@ -66,6 +66,11 @@
                         </th>
                         <th>
                             <div class="table-header">
+                                <span class="column-title">Rut</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
                                 <span class="column-title">Estado</span>
                             </div>
                         </th>
@@ -73,7 +78,7 @@
                             <div class="table-header">
                                 <span class="column-title">Acciones</span>
                             </div>
-                        </th>
+                        </th>                        
                     </tr>
                 </thead>
                 <tbody>
@@ -85,9 +90,10 @@
                         <td>{{ item.TYPE_NAME }}</td>
                         <td>{{ item.NOMBRE }}</td>
                         <td>{{ item.APELLIDO }}</td>
+                        <td>{{ item.RUT }}</td>
                         <td>{{ item.ESTADO }}</td>
                     <td>
-                        <a class="btn btn-icon" href="users_get?id={{item.USER_ID}}" aria-label="Modificar Usuario">
+                        <a class="btn btn-icon" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}" aria-label="Modificar Usuario">
                             <i class="icon icon-pencil s-4"></i>
                         </a>
                         <a class="btn btn-icon" href="users_delete?id={{item.USER_ID}}">
