@@ -60,9 +60,7 @@ def productos_update(request):
 	producto_id = post['producto_id']
 	nombre = post['nombre']
 	valor = post['valor']
-	stock = post['stock']
-	stock_critico = post['stock_critico']
-	Product.updateProduct(producto_id, nombre, valor, stock, stock_critico)
+	Product.updateProduct(producto_id, nombre, valor)
 	response = redirect('productos_list')
 	return response
 

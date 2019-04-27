@@ -26,10 +26,10 @@ class Product(models.Model):
     def getProduct(self, id):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select * from products where producto_id ='+id)
+        cur.execute('select * from products where id_prod ='+id)
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
-        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3],column[4]:res[4],column[5]:res[5]}
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3],column[4]:res[4],column[5]:res[5],column[6]:res[6],column[7]:res[7]}
         cur.close()
         con.close()
         return obj
@@ -41,10 +41,10 @@ class Product(models.Model):
         cur.close()
         con.close()
     @classmethod
-    def updateProduct(self, id, nombre, valor, stock, stock_critico):
+    def updateProduct(self, id, nombre, valor):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.callproc("update_product",[id,nombre,valor, stock, stock_critico])
+        cur.callproc("update_product",[id,nombre,valor])
         cur.close()
         con.close()
     @classmethod
