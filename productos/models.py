@@ -13,12 +13,12 @@ class Product(models.Model):
     def getProductos(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select * from products')
+        cur.execute('select producto_id, nombre, valor, stock, stock_critico, id_prod, codigo_tipo, identificador from products join proveedor on products.id_prov = proveedor.proveedor_id')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
         for r in res:
-            array.append({column[0] :r[0], column[1]:r[1],column[2]:r[2], column[3]:r[3],column[4]:r[4]})
+            array.append({column[0] :r[0], column[1]:r[1],column[2]:r[2], column[3]:r[3],column[4]:r[4],column[5]:r[5], column[6]:r[6],column[7]:r[7]})
         cur.close()
         con.close()
         return array
@@ -34,10 +34,10 @@ class Product(models.Model):
         con.close()
         return obj
     @classmethod
-    def createProduct(self, id, nombre, valor, stock, stock_critico, codigo_tipo):
+    def createProduct(self, id, nombre, valor, stock, stock_critico, codigo_tipo, id_proveedor):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.callproc("create_product",[id, nombre,valor, stock, stock_critico, codigo_tipo])
+        cur.callproc("create_product",[id, nombre,valor, stock, stock_critico, codigo_tipo, id_proveedor])
         cur.close()
         con.close()
     @classmethod
@@ -92,12 +92,12 @@ class Product(models.Model):
     def getTipos(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select * from familia_tipo')
+        cur.execute('select id_tipo, codigo_tipo, descripcion, identificador, id_prov from familia_tipo join familia_producto on familia_tipo.id_familia = familia_producto.id_familia')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
         for r in res:
-            array.append({column[0] :r[0], column[1]:r[1],column[2]:r[2],column[3]:r[3]})
+            array.append({column[0] :r[0], column[1]:r[1],column[2]:r[2],column[3]:r[3],column[4]:r[4]})
         cur.close()
         con.close()
         return array
@@ -108,3 +108,17 @@ class Product(models.Model):
         cur.callproc("create_tipo_familia",[identificador, nombre, id_familia])
         cur.close()
         con.close()
+    @classmethod
+    def getProveedorId(self, id):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select proveedor_id, identificador from proveedor where proveedor_id ='+id)
+        res = cur.fetchall()
+        column = [row[0] for row in cur.description]
+        array = []
+        for r in res:
+            array.append({column[0] :r[0], column[1]:r[1]})
+        cur.close()
+        con.close()
+        return array
+    

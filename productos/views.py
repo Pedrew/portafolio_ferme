@@ -10,8 +10,13 @@ def productos_list(request):
 	return render(request, 'productos/product_list.html',{ 'productos' : product_list})
 
 def productos_create(request):
-	proveedor_list = Product.getProveedores()
-	return render(request, 'productos/product_create.html', { 'proveedores' : proveedor_list})
+	get = request.GET
+	proveedor_id = get['id_prov']
+	tipo = get['tipo']
+	familia = get['familia']
+	tipo_id = get['id_tipo']
+	proveedor_id = Product.getProveedorId(proveedor_id)
+	return render(request, 'productos/product_create.html', { 'prov_id' : proveedor_id, 'tipo': tipo, 'familia': familia, 'tipo_id': tipo_id })
 
 def productos_insert(request):
 	post = request.POST
@@ -19,17 +24,21 @@ def productos_insert(request):
 	valor = post['valor']
 	stock = post['stock']
 	stock_critico = post['stock_critico']
-	codigo_tipo = post['codigo_tipo']
+
+	codigo_tipo = post['tipo']
 	proveedor_id = post['proveedor_id']
+	
+	prov_id = post['prov_id']
 	familia = post['familia']
+	
 	fecha_vencimiento = post['fecha_de_vencimiento']
 	if fecha_vencimiento == "":
 		fecha_vencimiento = "00000000"
-	tipo = post['tipo']
+	tipo = post['tipo_id']
 	
-	producto_id = proveedor_id + familia + fecha_vencimiento.replace("-", "") + tipo
+	producto_id = proveedor_id + familia + fecha_vencimiento.replace("-", "") + codigo_tipo
 
-	Product.createProduct(producto_id, nombre, valor, stock, stock_critico, codigo_tipo)
+	Product.createProduct(producto_id, nombre, valor, stock, stock_critico, tipo, prov_id)
 	response = redirect('productos_list')
 	return response
 

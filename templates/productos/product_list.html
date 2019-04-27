@@ -28,8 +28,7 @@
                     <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
                 </div>
             </div>
-            <a class="btn btn-primary" href="{% url 'productos_create' %}" style="float: right;">Crear Producto</a>     
-        </div>
+       </div>
         <div class="page-content-card">
             <table id="e-commerce-products-table" class="table dataTable">
                 <thead>
@@ -41,7 +40,17 @@
                         </th>
                         <th>
                             <div class="table-header">
+                                <span class="column-title">Código</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
                                 <span class="column-title">Nombre</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Proveedor</span>
                             </div>
                         </th>
                         <th>
@@ -69,8 +78,10 @@
                 <tbody>
                     {% for item in productos %}
                     <tr>
+                        <td>{{ item.ID_PROD }}</td>
                         <td>{{ item.PRODUCTO_ID }}</td>
                         <td>{{ item.NOMBRE }}</td>
+                        <td>{{ item.IDENTIFICADOR }}</td>
                         <td>{{ item.VALOR }}</td>
                         <td>{{ item.STOCK }}</td>
                         <td>{{ item.STOCK_CRITICO }}</td>
