@@ -20,10 +20,10 @@
                                 <div class="col-sm-6"></div>
                                 <label class="col-md-4 col-form-label">Seleccione un proveedor</label>
                                 <div class="col-sm-2">
-                                        <select name="proveedor_id" class="form-control">
-                                            {% for item in proveedores %}
-                                                <option value="{{ item.IDENTIFICADOR }}">{{ item.IDENTIFICADOR }}</option>
-                                            {% endfor %}
+                                    <select name="proveedor_id" class="form-control">
+                                        {% for item in proveedores %}
+                                            <option value="{{ item.IDENTIFICADOR }}">{{ item.IDENTIFICADOR }}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>

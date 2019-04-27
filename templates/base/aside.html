@@ -27,16 +27,22 @@
                 </a>
             </li>
             <li class="nav-item" role="tab" id="heading-dashboards">
+                <a class="nav-link ripple" href="{% url 'proveedores_list' %}" data-menu="proveedores_list">
+                    <i class="icon-cube-outline"></i>
+                    <span>Proveedores</span>
+                </a>
+            </li>
+            <li class="nav-item" role="tab" id="heading-dashboards">
+                <a class="nav-link ripple" href="{% url 'familia_list' %}" data-menu="proveedores_list">
+                    <i class="icon-cube-outline"></i>
+                    <span>Familias/Tipos</span>
+                </a>
+            </li>
+            <li class="nav-item" role="tab" id="heading-dashboards">
                 <a class="nav-link ripple" href="{% url 'productos_list' %}" data-menu="productos_list">
                     <i class="icon-cube-outline"></i>
                     <span>Productos</span>
                 </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                    <a class="nav-link ripple" href="{% url 'proveedores_list' %}" data-menu="proveedores_list">
-                        <i class="icon-cube-outline"></i>
-                        <span>Proveedores</span>
-                    </a>
             </li>
         </ul>
     </div>
