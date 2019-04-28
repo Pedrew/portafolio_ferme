@@ -130,8 +130,22 @@
                         <td>{{item.RAZON_SOCIAL}}</td>
                         <td>{{item.PRODUCTO}}</td>
                         <td class="text-center">{{item.VALOR}}</td>
+                        {% if item.ESTADO == 'Pendiente' %}
                         <td><span class="badge badge-pill badge-warning">{{item.ESTADO}}</span></td>                        
-                    <td>
+                        {% endif %}
+                        {% if item.ESTADO == 'Envío Local' %}
+                        <td><span class="badge badge-pill badge-info">{{item.ESTADO}}</span></td>                        
+                        {% endif %}
+                        {% if item.ESTADO == 'En Sucursal' %}
+                        <td><span class="badge badge-pill badge-primary">{{item.ESTADO}}</span></td>                        
+                        {% endif %}
+                        {% if item.ESTADO == 'Procesada' %}
+                        <td><span class="badge badge-pill badge-success">{{item.ESTADO}}</span></td>                        
+                        {% endif %}
+                        {% if item.ESTADO == 'Anulada' %}
+                        <td><span class="badge badge-pill badge-danger">{{item.ESTADO}}</span></td>                        
+                        {% endif %}
+                        <td>
                         <a class="btn btn-icon" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}" aria-label="Modificar Usuario">
                             <i class="icon icon-eye s-4"></i>
                         </a>
