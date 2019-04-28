@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^logout', logout, name="logout"),
     url(r'^productos/', include('productos.urls')),
     url(r'^proveedores/', include('proveedores.urls')),
+    url(r'^orden_de_compra/', include('orden_compra.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

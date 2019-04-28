@@ -1,0 +1,154 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+	<title>Órden de Compra | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div id="e-commerce-products" class="page-layout carded full-width">
+    <div class="top-bg bg-primary"></div>
+    <div class="page-content-wrapper">
+        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+            <div class="col-12 col-sm">
+                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                    <div class="logo-icon mr-3 mt-1">
+                        <i class="icon-book s-6"></i>
+                    </div>
+                    <div class="logo-text">
+                        <div class="h4">Órden de Compra</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col search-wrapper px-20">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-icon">
+                            <i class="icon icon-magnify"></i>
+                        </button>
+                    </span>
+                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
+                </div>
+            </div>
+            <div class="col-sm-2">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label>Seleccione Proveedor</label>
+                        </div>
+                    </div>
+                    <form method="POST" class="post-form" action="order_create.html">{% csrf_token %}
+                        <div class="col-sm-10">
+                            <select name="proveedor_id" class="form-control text-center">
+                                {% for item in proveedores_list %}
+                                <option value="{{ item.PROVEEDOR_ID }}">{{ item.IDENTIFICADOR }}</option>
+                                {% endfor %}
+                            </select>    
+                        </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Nueva Órden</button>
+                </form>
+            </div>
+<div class="row">
+            <div class="col-sm-5">
+                    <div class="page-content-card">
+                        <table id="e-commerce-products-table" class="table dataTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <div class="table-header">
+                                            <span class="column-title">Proveedor</span>
+                                        </div>
+                                    </th>
+                                    <th>
+                                        <div class="table-header">
+                                            <span class="column-title">Código</span>
+                                        </div>
+                                    </th>
+                                    <th class="text-center">
+                                        <div class="table-header">
+                                            <span class="column-title">Acción</span>
+                                        </div>
+                                    </th>                        
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    {% for item in proveedores_list %}
+                                <tr> 
+                                    <td>{{item.RAZON_SOCIAL}}</td>
+                                    <td>{{item.IDENTIFICADOR}}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary" href="orden_create?id={{item.PROVEEDOR_ID}}">
+                                        <small>Nueva Órden</small>
+                                    </a>
+                                </td>
+                                    {%endfor%}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+</div>
+<div class="col-sm-7">
+        <div class="page-content-card">
+            <table id="e-commerce-products-table" class="table dataTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">ID</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Proveedor</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Producto</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Valor Total</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Estado</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Detalle</span>
+                            </div>
+                        </th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                        {% for item in order_list %}
+                    <tr> 
+                        <td>{{item.ID_ORDEN}}</td>
+                        <td>{{item.RAZON_SOCIAL}}</td>
+                        <td>{{item.PRODUCTO}}</td>
+                        <td>{{item.VALOR}}</td>
+                        <td>{{item.ESTADO}}</td>
+                    <td>
+                        <a class="btn btn-icon" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}" aria-label="Modificar Usuario">
+                            <i class="icon icon-eye s-4"></i>
+                        </a>
+                    </td>
+                        {%endfor%}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock contenido %}
+{% block js %}
+	<script>
+		$(document).ready(function(){
+			
+		});
+	</script>
+{% endblock js %}
