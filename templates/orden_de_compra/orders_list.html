@@ -75,7 +75,7 @@
                                     <td>{{item.RAZON_SOCIAL}}</td>
                                     <td>{{item.IDENTIFICADOR}}</td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary" href="orden_create?id={{item.PROVEEDOR_ID}}">
+                                    <a class="badge badge-dark" href="orden_create?id={{item.PROVEEDOR_ID}}">
                                         <small>Nueva Órden</small>
                                     </a>
                                 </td>
@@ -111,7 +111,7 @@
                                 <span class="column-title">Valor Total</span>
                             </div>
                         </th>
-                        <th>
+                        <th class="text-center">
                             <div class="table-header">
                                 <span class="column-title">Estado</span>
                             </div>
@@ -129,8 +129,8 @@
                         <td>{{item.ID_ORDEN}}</td>
                         <td>{{item.RAZON_SOCIAL}}</td>
                         <td>{{item.PRODUCTO}}</td>
-                        <td>{{item.VALOR}}</td>
-                        <td>{{item.ESTADO}}</td>
+                        <td class="text-center">{{item.VALOR}}</td>
+                        <td><span class="badge badge-pill badge-warning">{{item.ESTADO}}</span></td>                        
                     <td>
                         <a class="btn btn-icon" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}" aria-label="Modificar Usuario">
                             <i class="icon icon-eye s-4"></i>
