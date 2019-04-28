@@ -34,10 +34,10 @@ class Product(models.Model):
         con.close()
         return obj
     @classmethod
-    def createProduct(self, id, nombre, valor, stock, stock_critico, codigo_tipo, id_proveedor):
+    def createProduct(self, id, nombre, valor, codigo_tipo, id_proveedor):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.callproc("create_product",[id, nombre,valor, stock, stock_critico, codigo_tipo, id_proveedor])
+        cur.callproc("create_product",[id, nombre,valor, codigo_tipo, id_proveedor])
         cur.close()
         con.close()
     @classmethod

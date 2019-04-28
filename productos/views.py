@@ -22,8 +22,6 @@ def productos_insert(request):
 	post = request.POST
 	nombre = post['nombre']
 	valor = post['valor']
-	stock = post['stock']
-	stock_critico = post['stock_critico']
 
 	codigo_tipo = post['tipo']
 	proveedor_id = post['proveedor_id']
@@ -38,7 +36,7 @@ def productos_insert(request):
 	
 	producto_id = proveedor_id + familia + fecha_vencimiento.replace("-", "") + codigo_tipo
 
-	Product.createProduct(producto_id, nombre, valor, stock, stock_critico, tipo, prov_id)
+	Product.createProduct(producto_id, nombre, valor, tipo, prov_id)
 	response = redirect('productos_list')
 	return response
 
