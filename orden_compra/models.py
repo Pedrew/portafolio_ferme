@@ -9,7 +9,7 @@ class Orders(models.Model):
     def getOrders(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select orden_de_compra.id_orden as id_orden, proveedor.razon_social as razon_social, products.nombre as producto, usuarios.nombre as solicitante, orden_de_compra.valor as valor, orden_estado.descripcion as estado from orden_de_compra join proveedor on orden_de_compra.id_proveedor = proveedor.proveedor_id join products on orden_de_compra.id_producto = products.id_prod join usuarios on orden_de_compra.id_usuario = usuarios.user_id join orden_estado on orden_de_compra.estado = orden_estado.id')
+        cur.execute('select orden_de_compra.id_orden as id_orden, proveedor.razon_social as razon_social, products_proveedor.nombre as producto, usuarios.nombre as solicitante, orden_de_compra.valor as valor, orden_estado.descripcion as estado from orden_de_compra join proveedor on orden_de_compra.id_proveedor = proveedor.proveedor_id join products_proveedor on orden_de_compra.id_producto = products_proveedor.id_prod join usuarios on orden_de_compra.id_usuario = usuarios.user_id join orden_estado on orden_de_compra.estado = orden_estado.id')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []

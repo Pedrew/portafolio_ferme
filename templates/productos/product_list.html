@@ -30,7 +30,7 @@
             </div>
        </div>
         <div class="page-content-card">
-            <table id="e-commerce-products-table" class="table dataTable">
+            <table class="table dataTable">
                 <thead>
                     <tr>
                         <th>
@@ -72,7 +72,7 @@
                         <td>{{ item.PRODUCTO_ID }}</td>
                         <td>{{ item.NOMBRE }}</td>
                         <td>{{ item.IDENTIFICADOR }}</td>
-                        <td>{{ item.VALOR }}</td>
+                        <td>$ {{ item.VALOR }}</td>
                     <td>
                         <a class="btn btn-icon" href="productos_get?id={{item.ID_PROD}}" aria-label="Modificar Producto">
                             <i class="icon icon-pencil s-4"></i>
@@ -90,6 +90,7 @@
 </div>
 {% endblock contenido %}
 {% block js %}
+    <script type="text/javascript" src="{% static 'js/apps/e-commerce/products/productos_lista.js' %}"></script>
 	<script>
 		$(document).ready(function(){
 			

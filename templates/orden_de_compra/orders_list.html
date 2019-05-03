@@ -34,7 +34,7 @@
                             <label>Seleccione Proveedor</label>
                         </div>
                     </div>
-                    <form method="POST" class="post-form" action="order_create.html">{% csrf_token %}
+                    <form method="POST" class="post-form" action="orders_create.html">{% csrf_token %}
                         <div class="col-sm-10">
                             <select name="proveedor_id" class="form-control text-center">
                                 {% for item in proveedores_list %}
@@ -75,7 +75,7 @@
                                     <td>{{item.RAZON_SOCIAL}}</td>
                                     <td>{{item.IDENTIFICADOR}}</td>
                                 <td class="text-center">
-                                    <a class="badge badge-dark" href="orden_create?id={{item.PROVEEDOR_ID}}">
+                                    <a class="badge badge-dark" href="orders_create?id={{item.PROVEEDOR_ID}}">
                                         <small>Nueva Órden</small>
                                     </a>
                                 </td>
@@ -146,7 +146,7 @@
                         <td><span class="badge badge-pill badge-danger">{{item.ESTADO}}</span></td>                        
                         {% endif %}
                         <td>
-                        <a class="btn btn-icon" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}" aria-label="Modificar Usuario">
+                        <a class="btn btn-icon" href="" aria-label="Detalle Orden">
                             <i class="icon icon-eye s-4"></i>
                         </a>
                     </td>

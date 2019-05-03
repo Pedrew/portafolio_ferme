@@ -28,132 +28,133 @@
                     <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
                 </div>
             </div>
-            <div class="col-sm-2">
+            <div class="col-md-2">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-12">
                         <label>Seleccione Proveedor</label>
                     </div>
                 </div>
                 <form method="POST" class="post-form" action="familia_create">{% csrf_token %}
-                    <div class="col-sm-10">
+                    <div class="col-10">
                         <select name="proveedor_id" class="form-control text-center">
                             {% for item in proveedores %}
                             <option value="{{ item.PROVEEDOR_ID }}">{{ item.IDENTIFICADOR }}</option>
                             {% endfor %}
                         </select>    
                     </div>
+                    <button type="submit" class="btn btn-primary">Crear Familia</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary">Crear Familia</button>
-            </form>
         </div>
         <div class="row">
-                <div class="col-sm-6">
-                    <div class="light-fg text-center">
-                        <div class=" col-sm-6 h4">Familias</div>
-                    </div>
-                        <div class="page-content-card">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <table id="e-commerce-products-table" class="table dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    <div class="table-header">
-                                                        <span class="column-title">Familia</span>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="table-header">
-                                                        <span class="column-title">Identificador</span>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <div class="table-header">
-                                                        <span class="column-title">Proveedor</span>
-                                                    </div>
-                                                </th>
-                                                <th class="text-center">
-                                                    <div class="table-header">
-                                                        <span class="column-title">Acciones</span>
-                                                    </div>
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for item in familia %}
-                                            <tr>
-                                                <td>{{ item.DETALLE }}</td>
-                                                <td>{{ item.IDEN_FAMILIA }}</td>
-                                                <td>{{ item.IDEN_PROV }}</td>
-                                                <td class="text-center">
-                                                    <a class="badge badge-dark" href="tipo_create?id={{item.ID_FAMILIA}}&family={{item.IDEN_FAMILIA}}">
-                                                        <small>Agregar Tipo</small>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+            <div class="col-sm-6">
+                <div class="light-fg text-center">
+                    <div class=" col-sm-6 h4">Familias</div>
+                </div>
+                <div class="page-content-card">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="table-header">
+                                                <span class="column-title">Familia</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="table-header">
+                                                <span class="column-title">Identificador</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="table-header">
+                                                <span class="column-title">Proveedor</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">
+                                            <div class="table-header">
+                                                <span class="column-title">Acciones</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in familia %}
+                                    <tr>
+                                        <td>{{ item.DETALLE }}</td>
+                                        <td>{{ item.IDEN_FAMILIA }}</td>
+                                        <td>{{ item.IDEN_PROV }}</td>
+                                        <td class="text-center">
+                                            <a class="badge badge-dark" href="tipo_create?id={{item.ID_FAMILIA}}&family={{item.IDEN_FAMILIA}}">
+                                                <small>Agregar Tipo</small>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="light-fg text-center">
-                            <div class="h4">Tipos</div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="light-fg text-center">
+                    <div class="h4">Tipos</div>
+                </div>
+                <div class="page-content-card">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table dataTable">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            <div class="table-header">
+                                                <span class="column-title">Código</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">
+                                            <div class="table-header">
+                                                <span class="column-title">Tipo</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">
+                                            <div class="table-header">
+                                                <span class="column-title">Familia</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-center">
+                                            <div class="table-header text-center">
+                                                <span class="column-title">Acciones</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in tipo %}
+                                    <tr>
+                                        <td class="text-center">{{ item.CODIGO_TIPO }}</td>
+                                        <td class="text-center">{{ item.DESCRIPCION }}</td>
+                                        <td class="text-center">{{ item.IDENTIFICADOR }}</td>
+                                        <td class="text-center">
+                                            <a class="badge badge-dark" href="productos_create?tipo={{item.CODIGO_TIPO}}&id_tipo={{item.ID_TIPO}}&familia={{item.IDENTIFICADOR}}&id_prov={{item.ID_PROV}}">
+                                                <small>Crear Producto</small>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
-                            <div class="page-content-card">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table id="e-commerce-products-table" class="table dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">
-                                                        <div class="table-header">
-                                                            <span class="column-title">Código</span>
-                                                        </div>
-                                                    </th>
-                                                    <th class="text-center">
-                                                        <div class="table-header">
-                                                            <span class="column-title">Tipo</span>
-                                                        </div>
-                                                    </th>
-                                                    <th class="text-center">
-                                                        <div class="table-header">
-                                                            <span class="column-title">Familia</span>
-                                                        </div>
-                                                    </th>
-                                                    <th class="text-center">
-                                                        <div class="table-header text-center">
-                                                            <span class="column-title">Acciones</span>
-                                                        </div>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for item in tipo %}
-                                                <tr>
-                                                    <td class="text-center">{{ item.CODIGO_TIPO }}</td>
-                                                    <td class="text-center">{{ item.DESCRIPCION }}</td>
-                                                    <td class="text-center">{{ item.IDENTIFICADOR }}</td>
-                                                    <td class="text-center">
-                                                        <a class="badge badge-dark" href="productos_create?tipo={{item.CODIGO_TIPO}}&id_tipo={{item.ID_TIPO}}&familia={{item.IDENTIFICADOR}}&id_prov={{item.ID_PROV}}">
-                                                           <small>Crear Producto</small>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 {% endblock contenido %}
 {% block js %}
+    <script type="text/javascript" src="{% static 'js/apps/e-commerce/products/productos_lista.js' %}"></script>
 	<script>
 		$(document).ready(function(){
 			
