@@ -28,26 +28,12 @@
                     <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
                 </div>
             </div>
-            <div class="col-sm-2">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <label>Seleccione Proveedor</label>
-                        </div>
-                    </div>
-                    <form method="POST" class="post-form" action="orders_create.html">{% csrf_token %}
-                        <div class="col-sm-10">
-                            <select name="proveedor_id" class="form-control text-center">
-                                {% for item in proveedores_list %}
-                                <option value="{{ item.PROVEEDOR_ID }}">{{ item.IDENTIFICADOR }}</option>
-                                {% endfor %}
-                            </select>    
-                        </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Nueva Órden</button>
-                </form>
-            </div>
+        </div>    
 <div class="row">
             <div class="col-sm-5">
+                <div class="light-fg text-center">
+                    <div class=" col-sm-12 h4">Proveedores</div>
+                </div>
                     <div class="page-content-card">
                         <table id="e-commerce-products-table" class="table dataTable">
                             <thead>
@@ -75,7 +61,7 @@
                                     <td>{{item.RAZON_SOCIAL}}</td>
                                     <td>{{item.IDENTIFICADOR}}</td>
                                 <td class="text-center">
-                                    <a class="badge badge-dark" href="orders_create?id={{item.PROVEEDOR_ID}}">
+                                    <a class="badge badge-dark" href="productos_get?id={{item.PROVEEDOR_ID}}&proveedor={{item.RAZON_SOCIAL}}">
                                         <small>Nueva Órden</small>
                                     </a>
                                 </td>
@@ -87,6 +73,9 @@
                     
 </div>
 <div class="col-sm-7">
+    <div class="light-fg text-center">
+        <div class=" col-sm-12 h4">Listado Órdenes de Compra</div>
+    </div>
         <div class="page-content-card">
             <table id="e-commerce-products-table" class="table dataTable">
                 <thead>
@@ -129,7 +118,7 @@
                         <td>{{item.ID_ORDEN}}</td>
                         <td>{{item.RAZON_SOCIAL}}</td>
                         <td>{{item.PRODUCTO}}</td>
-                        <td class="text-center">{{item.VALOR}}</td>
+                        <td class="text-center">$ {{item.VALOR}}</td>
                         {% if item.ESTADO == 'Pendiente' %}
                         <td><span class="badge badge-pill badge-warning">{{item.ESTADO}}</span></td>                        
                         {% endif %}
@@ -146,7 +135,7 @@
                         <td><span class="badge badge-pill badge-danger">{{item.ESTADO}}</span></td>                        
                         {% endif %}
                         <td>
-                        <a class="btn btn-icon" href="" aria-label="Detalle Orden">
+                        <a class="btn btn-icon" href="order_status?id={{item.ID_ORDEN}}" aria-label="Detalle Orden">
                             <i class="icon icon-eye s-4"></i>
                         </a>
                     </td>

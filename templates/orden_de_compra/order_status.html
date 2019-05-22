@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+	<title>Órden de Compra | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div id="e-commerce-products" class="page-layout carded full-width">
+    <div class="top-bg bg-primary"></div>
+    <div class="page-content-wrapper">
+            <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+                    <div class="col-12 col-sm">
+                        <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                            <div class="logo-icon mr-3 mt-1">
+                                <i class="icon-book s-6"></i>
+                            </div>
+                            <div class="logo-text">
+                                <div class="h4">Crear Órden de Compra</div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" class="post-form" action ="order_update">{% csrf_token %}
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Proveedor</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name = "proveedor" value="{{orden.RAZON_SOCIAL}}" readonly>
+                                </div>      
+                            </div>
+                            <input type="hidden" name="id_orden" value="{{orden.ID_ORDEN}}" readonly>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Producto</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name = "producto" value="{{orden.PRODUCTO}}" readonly>
+                                </div>      
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Cantidad</label>
+                                <div class="col-sm-2">
+                                    <input type="text" id="stock" name="stock" value="{{orden.STOCK}}" readonly>
+                                </div>                   
+                                <label class="col-sm-2 col-form-label">Stock Crítico</label>
+                                <div class="col-sm-2">
+                                    <input type="text" name="stock_crit" value="{{orden.STOCK_CRIT}}"maxlength="3" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Total</label>
+                                <div class="col-sm-2">
+                                    <input type="text" name="total" value="$ {{orden.VALOR}}" readonly>
+                                </div>
+                                <label class="col-md-2 col-form-label">Estado</label>
+                                <div class="col-sm-2">
+                                    <input type="text" name="total" value="{{orden.ESTADO}}" readonly>
+                                </div>     
+                            </div>
+                            <div class="form-group row">
+                                <div class="offset-sm-2 col-sm-10">
+                                    <a class="btn btn-primary" href="{% url 'orders_list' %}" style="float: right; margin: 0px 50px">Volver</a>                                
+                                    {% if orden.ESTADO == 'Pendiente' %}
+                                    <input type="hidden" name="estado" value="2" readonly>
+                                    <button type="submit" class="btn btn-primary" style="float: right">Iniciar Envío Local</button>
+                                    {% endif %}
+                                    {% if orden.ESTADO == 'Envío Local' %}
+                                    <input type="hidden" name="estado" value="3" readonly>
+                                    <button type="submit" class="btn btn-primary" style="float: right">Órden En Sucursal</button>                        
+                                    {% endif %}
+                                    {% if orden.ESTADO == 'En Sucursal' %}
+                                    <input type="hidden" name="estado" value="4" readonly>
+                                    <button type="submit" class="btn btn-primary" style="float: right">Procesar y Cerrar</button>                        
+                                    {% endif %}
+                                    {% if orden.ESTADO == 'Procesada' %}                 
+                                    {% endif %}
+                                    {% if orden.ESTADO == 'Anulada' %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+</div>
+{% endblock contenido %}
+{% block js %}
+	<script>
+		$(document).ready(function(){
+		});
+	</script>
+{% endblock js %}

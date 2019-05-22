@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+	<title>Productos Ferretería | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div id="e-commerce-products" class="page-layout carded full-width">
+    <div class="top-bg bg-primary"></div>
+    <div class="page-content-wrapper">
+        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+            <div class="col-12 col-sm">
+                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                    <div class="logo-icon mr-3 mt-1">
+                        <i class="icon-cart s-6"></i>
+                    </div>
+                    <div class="logo-text">
+                        <div class="h4">Productos Ferretería</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col search-wrapper px-20">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-icon">
+                            <i class="icon icon-magnify"></i>
+                        </button>
+                    </span>
+                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
+                </div>
+            </div>
+       </div>
+        <div class="page-content-card">
+            <table class="table dataTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Código</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Nombre</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Proveedor</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Stock</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Precio</span>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <span class="column-title">Acciones</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in productos %}
+                    <tr>
+                        <td>{{ item.PRODUCTO_ID }}</td>
+                        <td>{{ item.NOMBRE }}</td>
+                        <td>{{ item.RAZON_SOCIAL }}</td>
+                        <td>{{ item.STOCK }}</td>
+                        <td>$ {{ item.VALOR }}</td>
+                    <td>
+                        <a class="btn btn-icon" href="productos_ferreteria_get?id={{item.ID_PROD}}" aria-label="Modificar Producto">
+                            <i class="icon icon-pencil s-4"></i>
+                        </a>
+                        <a class="btn btn-icon" href="productos_ferreteria_delete?id={{item.ID_PROD}}">
+                            <i class="icon icon-trash s-4"></i>
+                        </a>
+                    </td>
+                </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
+{% block js %}
+    <script type="text/javascript" src="{% static 'js/apps/e-commerce/products/productos_lista.js' %}"></script>
+	<script>
+		$(document).ready(function(){
+			
+		});
+	</script>
+{% endblock js %}

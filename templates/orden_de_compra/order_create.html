@@ -5,57 +5,80 @@
 {% endblock tituloPagina %}
 {% block contenido %}
 <div id="e-commerce-products" class="page-layout carded full-width">
-        <div class="top-bg bg-primary"></div>
-        <div class="page-content-wrapper">
+    <div class="top-bg bg-primary"></div>
+    <div class="page-content-wrapper">
             <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
-                <div class="col-12 col-sm">
-                    <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
-                        <div class="logo-icon mr-3 mt-1">
-                            <i class="icon-book s-6"></i>
-                        </div>
-                        <div class="logo-text">
-                            <div class="h4">Órden de Compra</div>
-                        </div>
-                    </div>
-                </div>
-    <div class="row">
-    <div class="col-sm-7">
-
-            <div id="e-commerce-products" class="page-layout carded full-width">
-                    <div class="top-bg bg-primary"></div>
-                    <div class="page-content-wrapper">
-                        <div class="row">
-                            <div class="col-sm-10" style="margin: 25px 25px 25px 25px">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h3>
-                                            Nueva Órden de Compra
-                                        </h3>
-                                        <form method="POST" class="post-form" action ="users_insert">{% csrf_token %}
-                                            <div class="form-group row">
-                                                <label class="col-md-2 col-form-label">Usuario</label>
-                                                <div class="col-sm-4">
-                                                    <input type="text" maxlength="80" name="usuario"  class="form-control">
-                                                </div>
-                                                <label class="col-sm-2 col-form-label">Contraseña</label>
-                                                <div class="col-sm-4">
-                                                    <input type="text" name="password" class="form-control">
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>    
-                                </div>
+                    <div class="col-12 col-sm">
+                        <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                            <div class="logo-icon mr-3 mt-1">
+                                <i class="icon-book s-6"></i>
+                            </div>
+                            <div class="logo-text">
+                                <div class="h4">Crear Órden de Compra</div>
                             </div>
                         </div>
                     </div>
+            </div>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="card">
+                    <div class="card-body">
+                        <form method="POST" class="post-form" action ="orders_insert">{% csrf_token %}
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Proveedor</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name = "proveedor" value="{{prov}}" readonly>
+                                </div>      
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Producto</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name = "producto" value="{{nombre}}" readonly>
+                                </div>      
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-2 col-form-label">Cantidad</label>
+                                <div class="col-sm-2">
+                                    <input type="number" id="stock" name="stock" value="1" min="1" class="form-control text-center">
+                                </div>                   
+                                <label class="col-sm-2 col-form-label">Stock Crítico</label>
+                                <div class="col-sm-2">
+                                    <input type="number" name="stock_crit" value="1" min="1" class="form-control text-center" maxlength="3">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">Total</label>
+                                    <div class="col-sm-4">
+                                        $
+                                        <input type="text" id="total" name="total" value="{{valor}}" readonly>
+                                    </div>      
+                                </div>
+                                <input type="hidden" id="valor" name="valor" value="{{valor}}" readonly>
+                                <input type="hidden" id="id_prov" name="id_prov" value="{{prov_id}}" readonly>
+                                <input type="hidden" id="id_prod" name="id_prod" value="{{id_prod}}" readonly>
+                                <input type="hidden" id="id_user" name="id_user" value="1" readonly>
+                            <div class="form-group row">
+                                <div class="offset-sm-2 col-sm-10">
+                                    <a class="btn btn-primary" href="{% url 'familia_list' %}" style="float: right; margin: 0px 50px">Cancelar</a>                                
+                                    <button type="submit" class="btn btn-primary" style="float: right">Guardar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-    </div>
+            </div>
+        </div>
+    
+</div>
 {% endblock contenido %}
 {% block js %}
 	<script>
 		$(document).ready(function(){
-			
 		});
+        $("#stock").change(function(){
+            var total = $("#valor").val();
+            var cantidad = $("#stock").val();
+            $("#total").val(total*cantidad);
+        });
 	</script>
 {% endblock js %}
