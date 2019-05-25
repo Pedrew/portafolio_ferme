@@ -62,3 +62,6 @@ def productos_ferreteria_update(request):
 	response = redirect('productos_ferreteria_list')
 	return response
 
+def productos_sell_list(request):
+	product_list = Product.getProductos()
+	return render(request, 'productos_ferreteria/product_sell_list.html',{ 'productos' : product_list})

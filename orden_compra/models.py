@@ -22,10 +22,10 @@ class Orders(models.Model):
     def getOrder(self, id):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select orden_de_compra.id_orden as id_orden, orden_de_compra.stock as stock, orden_de_compra.stock_crit as stock_crit, proveedor.razon_social as razon_social, products_proveedor.nombre as producto, usuarios.nombre as solicitante, products_proveedor.valor as producto_valor, orden_de_compra.valor as valor, orden_estado.descripcion as estado from orden_de_compra join proveedor on orden_de_compra.id_proveedor = proveedor.proveedor_id join products_proveedor on orden_de_compra.id_producto = products_proveedor.id_prod join usuarios on orden_de_compra.id_usuario = usuarios.user_id join orden_estado on orden_de_compra.estado = orden_estado.id where orden_de_compra.id_orden ='+id)
+        cur.execute('select orden_de_compra.id_orden as id_orden, orden_de_compra.stock as stock, orden_de_compra.stock_crit as stock_crit, proveedor.razon_social as razon_social, products_proveedor.nombre as producto, usuarios.nombre as solicitante, products_proveedor.valor as producto_valor, orden_de_compra.valor as valor, orden_estado.descripcion as estado, orden_de_compra.id_producto as id_prod, orden_de_compra.id_proveedor as id_prov from orden_de_compra join proveedor on orden_de_compra.id_proveedor = proveedor.proveedor_id join products_proveedor on orden_de_compra.id_producto = products_proveedor.id_prod join usuarios on orden_de_compra.id_usuario = usuarios.user_id join orden_estado on orden_de_compra.estado = orden_estado.id where orden_de_compra.id_orden ='+id)
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
-        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3],column[4]:res[4],column[5]:res[5],column[6]:res[6],column[7]:res[7],column[8]:res[8]}
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3],column[4]:res[4],column[5]:res[5],column[6]:res[6],column[7]:res[7],column[8]:res[8],column[9]:res[9],column[10]:res[10]}
         cur.close()
         con.close()
         return obj
@@ -68,5 +68,12 @@ class Orders(models.Model):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
         cur.callproc("update_order_status",[id,estado])
+        cur.close()
+        con.close()
+    @classmethod
+    def createProduct(self, id_prov, id_prod, stock, stock_crit):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.callproc("insert_product",[stock,stock_crit,id_prod,id_prov])
         cur.close()
         con.close()

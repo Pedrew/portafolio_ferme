@@ -51,6 +51,15 @@ def order_update(request):
 	post = request.POST
 	estado = post['estado']
 	id_orden = post['id_orden']
-	Orders.updateOrder(id_orden, estado)
-	response = redirect('orders_list')
+	if estado == "4":
+		id_prov = post['id_prov']
+		id_prod = post['id_prod']
+		stock = post['stock']
+		stock_crit = post['stock_crit']
+		Orders.createProduct(id_prov, id_prod, stock, stock_crit)
+		Orders.updateOrder(id_orden, estado)
+		response = redirect('orders_list')
+	else:
+		Orders.updateOrder(id_orden, estado)
+		response = redirect('orders_list')
 	return response

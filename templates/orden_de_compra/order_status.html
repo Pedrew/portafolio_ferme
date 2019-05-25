@@ -30,6 +30,8 @@
                                     <input type="text" name = "proveedor" value="{{orden.RAZON_SOCIAL}}" readonly>
                                 </div>      
                             </div>
+                            <input type="hidden" name="id_prod" value="{{orden.ID_PROD}}" readonly>
+                            <input type="hidden" name="id_prov" value="{{orden.ID_PROV}}" readonly>
                             <input type="hidden" name="id_orden" value="{{orden.ID_ORDEN}}" readonly>
                             <div class="form-group row">
                                 <label class="col-md-2 col-form-label">Producto</label>
@@ -66,13 +68,11 @@
                                     {% endif %}
                                     {% if orden.ESTADO == 'Envío Local' %}
                                     <input type="hidden" name="estado" value="3" readonly>
-                                    <button type="submit" class="btn btn-primary" style="float: right">Órden En Sucursal</button>                        
+                                    <button type="submit" class="btn btn-info" style="float: right">Órden En Sucursal</button>                        
                                     {% endif %}
                                     {% if orden.ESTADO == 'En Sucursal' %}
                                     <input type="hidden" name="estado" value="4" readonly>
-                                    <button type="submit" class="btn btn-primary" style="float: right">Procesar y Cerrar</button>                        
-                                    {% endif %}
-                                    {% if orden.ESTADO == 'Procesada' %}                 
+                                    <button type="submit" class="btn btn-success" style="float: right">Procesar y Cerrar</button>                        
                                     {% endif %}
                                     {% if orden.ESTADO == 'Anulada' %}
                                     {% endif %}
