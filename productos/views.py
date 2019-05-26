@@ -3,6 +3,7 @@ from .models import Product
 from django.shortcuts import redirect
 import datetime
 
+
 # Create your views here.
 
 def productos_ferreteria_list(request):
@@ -72,4 +73,8 @@ def productos_detail(request):
 	tipo = get['tipo']
 	response = Product.getProduct(product_id)
 	familia_tipo = Product.getTipo(tipo)
+	print('HOLA')
 	return render(request, 'productos_ferreteria/product_detail.html',{'product':response, 'tipo':familia_tipo})
+
+def product_receipt(request):
+	return render(request, 'productos_ferreteria/product_receipt.html')

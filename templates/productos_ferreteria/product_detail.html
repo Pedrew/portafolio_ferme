@@ -191,11 +191,7 @@ img {
 						
 						<div class="preview-pic tab-content">
 						  <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
-						  <div class="tab-pane" id="pic-2"><img src="http://placekitten.com/400/252" /></div>
-						  <div class="tab-pane" id="pic-3"><img src="http://placekitten.com/400/252" /></div>
-						  <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-						  <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
-						</div>
+						</div>  
 						
 					</div>
 					<div class="details col-md-6">
@@ -203,8 +199,46 @@ img {
                         <h5>Categoria: <a>{{tipo.DETALLE}}</a> -> <a>{{tipo.DESCRIPCION}}</a></h5>
 						<h5 class="product-description">stock: {{product.STOCK}}</h5>
                         <h3 class="price"><span>$ {{product.VALOR}}</span></h3>
-						<div class="action">
-							<button class="add-to-cart btn btn-default" type="button">COMPRAR</button>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-7 text-right">
+                                    Cantidad:
+                                </div>
+                                <div class="col-md-5">
+                                    <input class="col-md-12" type="number" value="1" min="1" name="cantidad">
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-7 text-right">
+                                Medio de pago:
+                            </div>
+                            <div class="col-md-5">
+                                <select name="payment">
+                                    <option value="0">Seleccione</option>
+                                    <option value="1">Efectivo</option>
+                                    <option value="1">Pago en Línea</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-7 text-right">
+                                Entrega:
+                            </div>
+                            <div class="col-md-5">
+                                <select name="payment">
+                                    <option value="0">Seleccione</option>
+                                    <option value="1">Retiro en sucursal</option>
+                                    <option value="1">Entrega a domicilio</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="action">
+							<a href="product_receipt?id={{product.ID_PROD}}" class="add-to-cart btn btn-default" type="button">COMPRAR</a>
 						</div>
 					</div>
 				</div>
