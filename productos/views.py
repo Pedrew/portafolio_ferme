@@ -65,3 +65,11 @@ def productos_ferreteria_update(request):
 def productos_sell_list(request):
 	product_list = Product.getProductos()
 	return render(request, 'productos_ferreteria/product_sell_list.html',{ 'productos' : product_list})
+
+def productos_detail(request):
+	get = request.GET
+	product_id = get['id']
+	tipo = get['tipo']
+	response = Product.getProduct(product_id)
+	familia_tipo = Product.getTipo(tipo)
+	return render(request, 'productos_ferreteria/product_detail.html',{'product':response, 'tipo':familia_tipo})

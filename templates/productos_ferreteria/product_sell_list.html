@@ -54,20 +54,19 @@
 {% block contenido %}
 <a class="" href="{% url 'productos_ferreteria_list' %}">VOLVER AL ADMINISTRADOR</a>
 <div class="row">
-        {% for item in productos %}
-        <div class="col-sm-2 m-5">
-                <div class="card text-center" style="width: 24rem;">
-                        <img src="{% static '/media/herramientas.png' %}" class="card-img-top" alt="Image doesn't exists">
-                        <div class="card-body">
-                            <h5 class="card-title" style="font-size:20px;">{{item.NOMBRE}}</h5>
-                            <p class="card-text">$ {{item.VALOR}}</p>
-                            <p class="card-text">Stock: {{item.STOCK}}</p>
-                            <a href="#" class="btn btn-primary">Comprar</a>
-                        </div>
-                    </div>
+    {% for item in productos %}
+    <div class="col-sm-2 m-5">
+        <div class="card text-center" style="width: 24rem;">
+            <img src="{% static '/media/herramientas.png' %}" class="card-img-top" alt="Image doesn't exists">
+            <div class="card-body">
+                <h5 class="card-title" style="font-size:20px;">{{item.NOMBRE}}</h5>
+                <p class="card-text">$ {{item.VALOR}}</p>
+                <p class="card-text">Stock: {{item.STOCK}}</p>
+                <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-primary">Comprar</a>
+            </div>
         </div>
-        
-        {% endfor %}
+    </div>
+    {% endfor %}
 </div>
 
 {% endblock contenido %}

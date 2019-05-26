@@ -28,6 +28,17 @@ class Product(models.Model):
         cur.close()
         con.close()
         return obj
+    @classmethod    
+    def getTipo(self,id):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select descripcion, detalle from familia_tipo join familia_producto on familia_tipo.id_familia = familia_producto.id_familia where id_tipo ='+id)
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        obj = {column[0] :res[0], column[1]:res[1]}
+        cur.close()
+        con.close()
+        return obj
     @classmethod
     def createProduct(self, id, nombre, valor, codigo_tipo, id_proveedor):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')

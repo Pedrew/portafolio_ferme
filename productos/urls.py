@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^productos_ferreteria_get', productos_ferreteria_get, name='productos_ferreteria_get'),
     url(r'^productos_ferreteria_update', productos_ferreteria_update, name='productos_ferreteria_update'),
     url(r'^productos_sell_list', productos_sell_list, name='productos_sell_list'),
+    url(r'^productos_detail', productos_detail, name='productos_detail'),
 ]
