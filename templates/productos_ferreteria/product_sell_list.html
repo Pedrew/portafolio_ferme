@@ -1,72 +1,44 @@
-{% load staticfiles %}
+{% extends 'base/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic" rel="stylesheet">
-
-	<link type="text/css" rel="stylesheet" href="{% static 'icons/fuse-icon-font/style.css' %}">
-	<link type="text/css" rel="stylesheet" href="{% static 'node_modules/animate.css/animate.min.css' %}">
-    <!-- PNotify -->
-    <link type="text/css" rel="stylesheet" href="{% static 'node_modules/pnotify/dist/PNotifyBrightTheme.css' %}">
-    <!-- Nvd3 - D3 Charts -->
-    <link type="text/css" rel="stylesheet" href="{% static 'node_modules/nvd3/build/nv.d3.min.css' %}">
-    <!-- Perfect Scrollbar -->
-    <link type="text/css" rel="stylesheet" href="{% static 'node_modules/perfect-scrollbar/css/perfect-scrollbar.css' %}">
-    <!-- Fuse Html -->
-    <link type="text/css" rel="stylesheet" href="{% static 'fuse-html/fuse-html.min.css' %}">
-    <!-- Main CSS -->
-    <link type="text/css" rel="stylesheet" href="{% static 'css/main.css' %}">
-	
-	<!-- jQuery -->
-    <script type="text/javascript" src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
-    <!-- Mobile Detect -->
-    <script type="text/javascript" src="{% static 'node_modules/mobile-detect/mobile-detect.min.js' %}"></script>
-    <!-- Perfect Scrollbar -->
-    <script type="text/javascript" src="{% static 'node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js' %}"></script>
-    <!-- Popper.js -->
-    <script type="text/javascript" src="{% static 'node_modules/popper.js/dist/umd/popper.min.js' %}"></script>
-    <!-- Bootstrap -->
-    <script type="text/javascript" src="{% static 'node_modules/bootstrap/dist/js/bootstrap.min.js' %}"></script>
-    <!-- Nvd3 - D3 Charts -->
-    <script type="text/javascript" src="{% static 'node_modules/d3/d3.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/nvd3/build/nv.d3.min.js' %}"></script>
-    <!-- Data tables -->
-    <script type="text/javascript" src="{% static 'node_modules/datatables.net/js/jquery.dataTables.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/datatables-responsive/js/dataTables.responsive.js' %}"></script>
-    <!-- PNotify -->
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotify.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyStyleMaterial.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyButtons.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyCallbacks.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyMobile.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyHistory.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyDesktop.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyConfirm.js' %}"></script>
-    <script type="text/javascript" src="{% static 'node_modules/pnotify/dist/iife/PNotifyReference.js' %}"></script>
-    <!-- Fuse Html -->
-    <script type="text/javascript" src="{% static 'fuse-html/fuse-html.min.js' %}"></script>
-    <!-- Main JS -->
-    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
-
+{% block tituloPagina %}
+    <title>PRODUCTOS VENTA | FERME</title>
+{% endblock tituloPagina %}
 {% block contenido %}
-<a class="" href="{% url 'productos_ferreteria_list' %}">VOLVER AL ADMINISTRADOR</a>
-<div class="row">
-    {% for item in productos %}
-    <div class="col-sm-2 m-5">
-        <div class="card text-center" style="width: 24rem;">
-            <img src="{% static '/media/herramientas.png' %}" class="card-img-top" alt="Image doesn't exists">
-            <div class="card-body">
-                <h5 class="card-title" style="font-size:20px;">{{item.NOMBRE}}</h5>
-                <p class="card-text">$ {{item.VALOR}}</p>
-                <p class="card-text">Stock: {{item.STOCK}}</p>
-                <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-primary">Comprar</a>
+    <div class="container-fluid">
+        <div class="py-4">
+            <h1 class="titulo">Productos Venta</h1>
+            <div class="productos">
+                {% for item in productos %}
+                    <div class="producto">
+                        <div class="foto" data-bg="{% static 'media/producto.jpg' %}" data-url="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}"></div>
+                        <div class="texto">
+                            <h2>
+                                <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}">
+                                    {{item.NOMBRE}}
+                                </a>
+                            </h2>
+                            <p class="precio">$ {{item.VALOR}}</p>
+                            <p class="stock">Stock: {{item.STOCK}}</p>
+                            <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-block btn-detalle">Ver Detalle</a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
-    {% endfor %}
-</div>
-
 {% endblock contenido %}
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            $('[data-bg]').each(function(){
+                $(this).css({
+                    'background-image': 'url('+$(this).attr("data-bg")+')'
+                });
+            });
+            $('[data-url]').click(function(){
+                window.location = $(this).attr('data-url');
+            });
+            $('#aside [data-menu="productos_sell_list"]').addClass('active');
+        });
+    </script>
+{% endblock js %}

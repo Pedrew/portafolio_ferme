@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from productos.models import Product
 
 # Create your views here.
 def home(request):
-	return render(request, 'home/index.html')
+	product_list = Product.getProductos()
+	return render(request, 'home/index.html',{ 'productos' : product_list})
 
 def productos(request):
 	return render(request, 'productos/product_list.html')
