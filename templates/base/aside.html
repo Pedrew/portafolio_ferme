@@ -1,67 +1,42 @@
 {% load static %}
-<aside id="aside" class="aside aside-left" data-fuse-bar="aside" data-fuse-bar-media-step="md" data-fuse-bar-position="left">
-    <div class="aside-content bg-primary-700 text-auto">
-        <div class="aside-toolbar">
-            <div class="logo">
-                <span class="logo-icon">F</span>
-                <span class="logo-text">FERME</span>
-            </div>
-            <button id="toggle-fold-aside-button" type="button" class="btn btn-icon d-none d-lg-block" data-fuse-aside-toggle-fold>
-                <i class="icon icon-backburger"></i>
-            </button>
+<aside id="aside">
+    <div class="menu-lateral">
+        <div class="logo">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'media/logo.jpg'%}" alt="">
+            </a>
         </div>
-        <ul class="nav flex-column custom-scrollbar" id="sidenav" data-children=".nav-item">
-            <li class="subheader">
-                <span>Menú</span>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'home' %}" data-menu="home">
-                    <i class="icon icon-home"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'users_list' %}" data-menu="users_list">
-                    <i class="icon-account-outline"></i>
-                    <span>Usuarios</span>
-                </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'proveedores_list' %}" data-menu="proveedores_list">
-                    <i class="icon-truck-delivery"></i>
-                    <span>Proveedores</span>
-                </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'familia_list' %}" data-menu="proveedores_list">
-                    <i class="icon-tag-multiple"></i>
-                    <span>Familias / Tipos</span>
-                </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'productos_list' %}" data-menu="productos_list">
-                    <i class="icon-cart"></i>
-                    <span>Productos Proveedores</span>
-                </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'orders_list' %}" data-menu="productos_list">
-                    <i class="icon-book"></i>
-                    <span>Órden de Compra</span>
-                </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'productos_ferreteria_list' %}" data-menu="productos_ferreteria_list">
-                    <i class="icon-cart"></i>
-                    <span>Productos Ferreteria</span>
-                </a>
-            </li>
-            <li class="nav-item" role="tab" id="heading-dashboards">
-                <a class="nav-link ripple" href="{% url 'productos_sell_list' %}" data-menu="productos_sell_list">
-                    <i class="icon-cart"></i>
-                    <span>Productos Venta</span>
-                </a>
-            </li>
-        </ul>
+        <a class="btn btn-block btn-ferme" href="{% url 'home' %}" data-menu="home">
+            <i class="icon-office"></i>
+            <span>Home</span>
+        </a>
+        <a class="btn btn-block btn-ferme" href="{% url 'users_list' %}" data-menu="users_list">
+            <i class="icon-users"></i>
+            <span>Usuarios</span>
+        </a>
+        <a class="btn btn-block btn-ferme" href="{% url 'proveedores_list' %}" data-menu="proveedores_list">
+            <i class="icon-truck"></i>
+            <span>Proveedores</span>
+        </a>
+        <a class="btn btn-block btn-ferme" href="{% url 'familia_list' %}" data-menu="proveedores_list">
+            <i class="icon-tag"></i>
+            <span>Familias / Tipos</span>
+        </a>
+        <a class="btn btn-block btn-ferme" href="{% url 'productos_list' %}" data-menu="productos_list">
+            <i class="icon-"></i>
+            <span>Productos Proveedores</span>
+        </a>
+        <a class="btn btn-block btn-ferme" href="{% url 'orders_list' %}" data-menu="productos_list">
+            <i class="icon-clipboard"></i>
+            <span>Órden de Compra</span>
+        </a>
+        <a class="btn btn-block btn-ferme" href="{% url 'productos_ferreteria_list' %}" data-menu="productos_ferreteria_list">
+            <i class="icon-"></i>
+            <span>Productos Ferreteria</span>
+        </a>
+        <a class="btn btn-block btn-ferme" href="{% url 'productos_sell_list' %}" data-menu="productos_sell_list">
+            <i class="icon-hammer"></i>
+            <span>Productos Venta</span>
+        </a>
     </div>
 </aside>

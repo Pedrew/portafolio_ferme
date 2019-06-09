@@ -1,420 +1,73 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block tituloPagina %}
-	<title>Inicio | FERME</title>
+	<title>HOME | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-	<div id="e-commerce-products" class="page-layout carded full-width">
-	    <div class="top-bg bg-primary"></div>
-	    <!-- CONTENT -->
-	    <div class="page-content-wrapper">
-
-	        <!-- HEADER -->
-	        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
-
-	            <!-- APP TITLE -->
-	            <div class="col-12 col-sm">
-
-	                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
-	                    <div class="logo-icon mr-3 mt-1">
-	                        <i class="icon-cube-outline s-6"></i>
-	                    </div>
-	                    <div class="logo-text">
-	                        <div class="h4">Productos</div>
-	                    </div>
-	                </div>
-
-	            </div>
-	            <!-- / APP TITLE -->
-	            <!-- SEARCH -->
-	            <div class="col search-wrapper px-2">
-	                <div class="input-group">
-	                    <span class="input-group-btn">
-	                        <button type="button" class="btn btn-icon">
-	                            <i class="icon icon-magnify"></i>
-	                        </button>
-	                    </span>
-	                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
-	                </div>
-
-	            </div>
-	            <!-- / SEARCH -->
-	        </div>
-	        <!-- / HEADER -->
-	        <div class="page-content-card">
-	            <table id="e-commerce-products-table" class="table dataTable">
-	                <thead>
-	                    <tr>
-	                        <th>
-	                            <div class="table-header">
-	                                <span class="column-title">ID</span>
-	                            </div>
-	                        </th>
-	                        <th>
-	                            <div class="table-header">
-	                                <span class="column-title">Imagen</span>
-	                            </div>
-	                        </th>
-	                        <th>
-	                            <div class="table-header">
-	                                <span class="column-title">Producto</span>
-	                            </div>
-	                        </th>
-	                        <th>
-	                            <div class="table-header">
-	                                <span class="column-title">Descripción</span>
-	                            </div>
-	                        </th>
-	                        <th>
-	                            <div class="table-header">
-	                                <span class="column-title">Precio</span>
-	                            </div>
-	                        </th>
-	                        <th>
-	                            <div class="table-header">
-	                                <span class="column-title">Stock</span>
-	                            </div>
-	                        </th>
-	                        <th>
-	                            <div class="table-header">
-	                                <span class="column-title"></span>
-	                            </div>
-	                        </th>
-	                    </tr>
-	                </thead>
-	                <tbody>
-	                    <tr>
-	                        <td>1</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Printed Dress</td>
-	                        <td>Dresses</td>
-	                        <td>10.24</td>
-	                        <td>3</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>2</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Green Skirt</td>
-	                        <td>Skirts</td>
-	                        <td>24.62</td>
-	                        <td>92</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>3</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Printed Dress</td>
-	                        <td>Dresses</td>
-	                        <td>49.29</td>
-	                        <td>60</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>4</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>White T-Shirt</td>
-	                        <td>T-Shirts</td>
-	                        <td>69.11</td>
-	                        <td>101</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>5</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Red Hoodie</td>
-	                        <td>Hoodies</td>
-	                        <td>10.24</td>
-	                        <td>19</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>6</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Red Hoodie</td>
-	                        <td>Hoodies</td>
-	                        <td>59.36</td>
-	                        <td>101</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>7</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Summer Dress</td>
-	                        <td>Dresses</td>
-	                        <td>64.21</td>
-	                        <td>34</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>8</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Black Shoes</td>
-	                        <td>Shoes</td>
-	                        <td>69.73</td>
-	                        <td>4</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>9</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Yellow Bag</td>
-	                        <td>Bags</td>
-	                        <td>57.37</td>
-	                        <td>58</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>10</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Brown Shoes</td>
-	                        <td>Shoes</td>
-	                        <td>68.4</td>
-	                        <td>125</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>11</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Brown Shoes</td>
-	                        <td>Shoes</td>
-	                        <td>53.6</td>
-	                        <td>27</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>12</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Night Dress</td>
-	                        <td>Dresses</td>
-	                        <td>10.24</td>
-	                        <td>188</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>13</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Red Hoodie</td>
-	                        <td>Hoodies</td>
-	                        <td>24.62</td>
-	                        <td>147</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>14</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Red Hoodie</td>
-	                        <td>Hoodies</td>
-	                        <td>49.29</td>
-	                        <td>21</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>15</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Summer Dress</td>
-	                        <td>Dresses</td>
-	                        <td>69.11</td>
-	                        <td>10</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>16</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Red Hoodie</td>
-	                        <td>Hoodies</td>
-	                        <td>10.24</td>
-	                        <td>68</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>17</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Printed Dress</td>
-	                        <td>Dresses</td>
-	                        <td>59.36</td>
-	                        <td>66</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>18</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Blouse</td>
-	                        <td>Dresses</td>
-	                        <td>64.21</td>
-	                        <td>60</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>19</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Leather Belt</td>
-	                        <td>Belts</td>
-	                        <td>69.73</td>
-	                        <td>78</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                    <tr>
-	                        <td>20</td>
-	                        <td>
-	                            <img class="product-image" src="{% static 'images/ecommerce/product-image-placeholder.png' %}">
-	                        </td>
-	                        <td>Leather Belt</td>
-	                        <td>Belts</td>
-	                        <td>57.37</td>
-	                        <td>2</td>
-	                        <td>
-	                            <button type="button" class="btn btn-icon" aria-label="Product details">
-	                                <i class="icon icon-pencil s-4"></i>
-	                            </button>
-	                        </td>
-	                    </tr>
-
-	                </tbody>
-	            </table>
-	        </div>
-	    </div>
-	    <!-- / CONTENT -->
+	<div class="slider-caja">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide" data-bg="{% static 'media/slide-1.jpg' %}"></div>
+			<div class="swiper-slide" data-bg="{% static 'media/slide-2.jpg' %}"></div>
+			<div class="swiper-slide" data-bg="{% static 'media/slide-3.jpg' %}"></div>
+			<div class="swiper-slide" data-bg="{% static 'media/slide-4.jpg' %}"></div>
+		</div>
+    	<div class="swiper-pagination"></div>
+		<div class="swiper-button-next"></div>
+		<div class="swiper-button-prev"></div>
 	</div>
-	<script type="text/javascript" src="{% static 'js/apps/e-commerce/products/products.js' %}"></script>
+
+	<div class="container-fluid">
+		<div class="py-4">
+			<h1 class="titulo">Productos</h1>
+			<div class="productos">
+				{% for item in productos %}
+                    <div class="producto">
+                        <div class="foto" data-bg="{% static 'media/producto.jpg' %}" data-url="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}"></div>
+                        <div class="texto">
+                            <h2>
+                                <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}">
+                                    {{item.NOMBRE}}
+                                </a>
+                            </h2>
+                            <p class="precio">$ {{item.VALOR}}</p>
+                            <p class="stock">Stock: {{item.STOCK}}</p>
+                            <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-block btn-detalle">Ver Detalle</a>
+                        </div>
+                    </div>
+                {% endfor %}
+			</div>
+		</div>
+	</div>
 {% endblock contenido %}
 {% block js %}
+	<link type="text/css" rel="stylesheet" href="{% static 'css/swiper.css' %}">
+	<script type="text/javascript" src="{% static 'js/swiper.min.js' %}"></script>
 	<script>
 		$(document).ready(function(){
-			$('#aside .nav [data-menu="home"]').addClass('active');
+			$('[data-bg]').each(function(){
+				$(this).css({
+					'background-image': 'url('+$(this).attr("data-bg")+')'
+				});
+			});
+			$('#aside [data-menu="home"]').addClass('active');
+
+			var swiper = new Swiper('.slider-caja', {
+				loop: true,
+				spaceBetween: 0,
+				centeredSlides: true,
+				autoplay: {
+					delay: 2500,
+					disableOnInteraction: false,
+				},
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true,
+				},
+				navigation: {
+					nextEl: '.swiper-button-next',
+					prevEl: '.swiper-button-prev',
+				},
+		    });
 		});
 	</script>
 {% endblock js %}

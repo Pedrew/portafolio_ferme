@@ -25,9 +25,9 @@ class Usuario(models.Model):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
         if type == "proveedor":
-            cur.execute('select user_id, usuario, pass, type_name, nombre, apellido, estado, rut, identificador, razon_social, rubro, telefono from usuarios join user_type on usuarios.tipo = user_type.type_id join proveedor on usuarios.user_id = proveedor.proveedor_id where user_id ='+id)
+            cur.execute('select user_id, usuario, pass, tipo, nombre, apellido, estado, rut, identificador, razon_social, rubro, telefono from usuarios join user_type on usuarios.tipo = user_type.type_id join proveedor on usuarios.user_id = proveedor.proveedor_id where user_id ='+id)
         else:
-            cur.execute('select user_id, usuario, pass, type_name, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id where user_id ='+id)            
+            cur.execute('select user_id, usuario, pass, tipo, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id where user_id ='+id)            
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
         if type == "proveedor":
