@@ -12,7 +12,7 @@
             <form method="POST" id="form-familia" class="post-form" action="familia_create">
                 {% csrf_token %}
                 <div class="input-group mb-3">
-                    <select name="proveedor_id" class="form-control validarCampo">
+                    <select name="proveedor_id" class="form-control validarCampo" data-nom="Proveedor">
                         <option value="">Seleccione Proveedor</option>
                         {% for item in proveedores %}
                         <option value="{{ item.PROVEEDOR_ID }}">{{ item.IDENTIFICADOR }}</option>
@@ -22,8 +22,7 @@
                         <button type="button" class="input-group-text btn-ferme b2 btn-enviar">Crear Familia</button>
                     </div>
                 </div>
-                
-                
+                <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
             </form>
         </div>
 
@@ -48,9 +47,9 @@
                         <tbody>
                             {% for item in familia %}
                             <tr class="fila">
-                                <td>{{ item.DETALLE }}</td>
-                                <td>{{ item.IDEN_FAMILIA }}</td>
-                                <td>{{ item.IDEN_PROV }}</td>
+                                <td class="text-uppercase text-left">{{ item.DETALLE }}</td>
+                                <td class="text-uppercase">{{ item.IDEN_FAMILIA }}</td>
+                                <td class="text-uppercase">{{ item.IDEN_PROV }}</td>
                                 <td>
                                     <a class="btn btn-block btn-small btn-ferme b2" href="tipo_create?id={{item.ID_FAMILIA}}&family={{item.IDEN_FAMILIA}}">
                                         Agregar Tipo
@@ -82,9 +81,9 @@
                         <tbody>
                             {% for item in tipo %}
                             <tr class="fila">
-                                <td>{{ item.CODIGO_TIPO }}</td>
-                                <td>{{ item.DESCRIPCION }}</td>
-                                <td>{{ item.IDENTIFICADOR }}</td>
+                                <td class="text-uppercase">{{ item.CODIGO_TIPO }}</td>
+                                <td class="text-uppercase">{{ item.DESCRIPCION }}</td>
+                                <td class="text-uppercase">{{ item.IDENTIFICADOR }}</td>
                                 <td>
                                     <a class="btn btn-block btn-small btn-ferme b2" href="productos_create?tipo={{item.CODIGO_TIPO}}&id_tipo={{item.ID_TIPO}}&familia={{item.IDENTIFICADOR}}&id_prov={{item.ID_PROV}}">
                                         Crear Producto
@@ -99,13 +98,11 @@
         </div>
     </div>
 </div>
-    </div>
-</div>
 {% endblock contenido %}
 {% block js %}
 <script>
     $(document).ready(function(){
-        $('#aside [data-menu="proveedores_list"]').addClass('familia_list');
+        $('#aside [data-menu="familia_list"]').addClass('active');
         $('.btn-enviar').click(function(){
             var flag = false;
             $('#res').addClass('d-none');
@@ -113,7 +110,7 @@
             $('#form-familia .validarCampo').each(function(){
                 if($.trim($(this).val()) == ''){
                     $(this).addClass('is-invalid').focus();
-                    $('#res').html('Ingrese '+$(this).attr('data-nom'));
+                    $('#res').html('Seleccione '+$(this).attr('data-nom'));
                     $('#res').removeClass('d-none');
                     flag = true;
                     return false;
