@@ -1,163 +1,165 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block tituloPagina %}
-	<title>Familias / Tipos | FERME</title>
+    <title>FAMILIAS / TIPO | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-<div id="e-commerce-products" class="page-layout carded full-width">
-    <div class="top-bg bg-primary"></div>
-    <div class="page-content-wrapper">
-        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
-            <div class="col-12 col-sm">
-                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
-                    <div class="logo-icon mr-3 mt-1">
-                        <i class="icon-tag-multiple s-6"></i>
-                    </div>
-                    <div class="logo-text">
-                        <div class="h4">Familias / Tipos</div>
-                    </div>
-                </div>
-            </div>
-            <div class="col search-wrapper px-20">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-icon">
-                            <i class="icon icon-magnify"></i>
-                        </button>
-                    </span>
-                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="row">
-                    <div class="col-12">
-                        <label>Seleccione Proveedor</label>
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Familias / Tipos</h1>
+
+        <div class="col-4 ml-auto mb-3">
+            <form method="POST" id="form-familia" class="post-form" action="familia_create">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <select name="proveedor_id" class="form-control validarCampo">
+                        <option value="">Seleccione Proveedor</option>
+                        {% for item in proveedores %}
+                        <option value="{{ item.PROVEEDOR_ID }}">{{ item.IDENTIFICADOR }}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="input-group-append">
+                        <button type="button" class="input-group-text btn-ferme b2 btn-enviar">Crear Familia</button>
                     </div>
                 </div>
-                <form method="POST" class="post-form" action="familia_create">{% csrf_token %}
-                    <div class="col-10">
-                        <select name="proveedor_id" class="form-control text-center">
-                            {% for item in proveedores %}
-                            <option value="{{ item.PROVEEDOR_ID }}">{{ item.IDENTIFICADOR }}</option>
-                            {% endfor %}
-                        </select>    
-                    </div>
-                    <button type="submit" class="btn btn-primary">Crear Familia</button>
-                </form>
-            </div>
+                
+                
+            </form>
         </div>
+
         <div class="row">
-            <div class="col-sm-6">
-                <div class="light-fg text-center">
-                    <div class=" col-sm-6 h4">Familias</div>
-                </div>
-                <div class="page-content-card">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table dataTable">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="table-header">
-                                                <span class="column-title">Familia</span>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="table-header">
-                                                <span class="column-title">Identificador</span>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <div class="table-header">
-                                                <span class="column-title">Proveedor</span>
-                                            </div>
-                                        </th>
-                                        <th class="text-center">
-                                            <div class="table-header">
-                                                <span class="column-title">Acciones</span>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in familia %}
-                                    <tr>
-                                        <td>{{ item.DETALLE }}</td>
-                                        <td>{{ item.IDEN_FAMILIA }}</td>
-                                        <td>{{ item.IDEN_PROV }}</td>
-                                        <td class="text-center">
-                                            <a class="badge badge-dark" href="tipo_create?id={{item.ID_FAMILIA}}&family={{item.IDEN_FAMILIA}}">
-                                                <small>Agregar Tipo</small>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Familias</span>
                     </div>
+                    <input type="text" class="form-control btn-filtro" data-op="familia" placeholder="Filtrar por familia...">
+                </div>
+                <div class="tabla-general table-responsive">
+                    <table class="table table-hover table-bordered" id="tabla-familia">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Familia</th>
+                                <th scope="col">Identificador</th>
+                                <th scope="col">Proveedor</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in familia %}
+                            <tr class="fila">
+                                <td>{{ item.DETALLE }}</td>
+                                <td>{{ item.IDEN_FAMILIA }}</td>
+                                <td>{{ item.IDEN_PROV }}</td>
+                                <td>
+                                    <a class="btn btn-block btn-small btn-ferme b2" href="tipo_create?id={{item.ID_FAMILIA}}&family={{item.IDEN_FAMILIA}}">
+                                        Agregar Tipo
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="light-fg text-center">
-                    <div class="h4">Tipos</div>
-                </div>
-                <div class="page-content-card">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table class="table dataTable">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">
-                                            <div class="table-header">
-                                                <span class="column-title">Código</span>
-                                            </div>
-                                        </th>
-                                        <th class="text-center">
-                                            <div class="table-header">
-                                                <span class="column-title">Tipo</span>
-                                            </div>
-                                        </th>
-                                        <th class="text-center">
-                                            <div class="table-header">
-                                                <span class="column-title">Familia</span>
-                                            </div>
-                                        </th>
-                                        <th class="text-center">
-                                            <div class="table-header text-center">
-                                                <span class="column-title">Acciones</span>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for item in tipo %}
-                                    <tr>
-                                        <td class="text-center">{{ item.CODIGO_TIPO }}</td>
-                                        <td class="text-center">{{ item.DESCRIPCION }}</td>
-                                        <td class="text-center">{{ item.IDENTIFICADOR }}</td>
-                                        <td class="text-center">
-                                            <a class="badge badge-dark" href="productos_create?tipo={{item.CODIGO_TIPO}}&id_tipo={{item.ID_TIPO}}&familia={{item.IDENTIFICADOR}}&id_prov={{item.ID_PROV}}">
-                                                <small>Crear Producto</small>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Tipos</span>
                     </div>
+                    <input type="text" class="form-control btn-filtro" data-op="tipos" placeholder="Filtrar por tipo...">
+                </div>
+                <div class="tabla-general table-responsive">
+                    <table class="table table-hover table-bordered" id="tabla-tipo">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Familia</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in tipo %}
+                            <tr class="fila">
+                                <td>{{ item.CODIGO_TIPO }}</td>
+                                <td>{{ item.DESCRIPCION }}</td>
+                                <td>{{ item.IDENTIFICADOR }}</td>
+                                <td>
+                                    <a class="btn btn-block btn-small btn-ferme b2" href="productos_create?tipo={{item.CODIGO_TIPO}}&id_tipo={{item.ID_TIPO}}&familia={{item.IDENTIFICADOR}}&id_prov={{item.ID_PROV}}">
+                                        Crear Producto
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+    </div>
+</div>
 {% endblock contenido %}
 {% block js %}
-    <script type="text/javascript" src="{% static 'js/apps/e-commerce/products/productos_lista.js' %}"></script>
-	<script>
-		$(document).ready(function(){
-			
-		});
-	</script>
+<script>
+    $(document).ready(function(){
+        $('#aside [data-menu="proveedores_list"]').addClass('familia_list');
+        $('.btn-enviar').click(function(){
+            var flag = false;
+            $('#res').addClass('d-none');
+
+            $('#form-familia .validarCampo').each(function(){
+                if($.trim($(this).val()) == ''){
+                    $(this).addClass('is-invalid').focus();
+                    $('#res').html('Ingrese '+$(this).attr('data-nom'));
+                    $('#res').removeClass('d-none');
+                    flag = true;
+                    return false;
+                }else{
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+            if(flag == false){
+                $('#form-familia').submit();
+                $('#form-familia .btn-enviar').prop('disabled',true).html('Enviando...');
+            }
+        });
+    });
+
+    $('.btn-filtro').keyup(function(){
+        var palabra = $(this).val().toUpperCase();
+        var tipo = $(this).attr('data-op');
+
+        if($.trim(palabra) != ''){
+            if(tipo == "familia"){
+                $('#tabla-familia .fila').addClass('d-none');
+                $('#tabla-familia .fila td:first-child').each(function(){
+                    var texto = $(this).text().toUpperCase();
+
+                    if(texto.search(palabra) != -1){
+                        $(this).parent().removeClass('d-none');
+                    }
+                });
+            }else{
+                $('#tabla-tipo .fila').addClass('d-none');
+                $('#tabla-tipo .fila td:nth-child(2)').each(function(){
+                    var texto = $(this).text().toUpperCase();
+
+                    if(texto.search(palabra) != -1){
+                        $(this).parent().removeClass('d-none');
+                    }
+                });
+            }
+        }else{
+            if(tipo == "familia"){
+                $('#tabla-familia .fila').removeClass('d-none');
+            }else{
+                $('#tabla-tipo .fila').removeClass('d-none');
+            }
+        }
+    });
+</script>
 {% endblock js %}
+

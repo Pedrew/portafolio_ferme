@@ -125,6 +125,9 @@ nav{
 	border: 1px solid #027D46;
 	background-color: #027D46;
 }
+.btn-ferme.btn-small{
+	font-size: 12px;
+}
 .btn-ferme i{
 	font-size: 20px;
 	margin: 0 .4rem 0 0;

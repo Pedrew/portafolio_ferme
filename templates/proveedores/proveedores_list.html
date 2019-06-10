@@ -4,52 +4,44 @@
     <title>PROOVEDORES | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-    <div class="container-fluid">
-        <div class="py-4">
-            <h1 class="titulo">Proveedores</h1>
-            <div class="usuarios">
-                <div class="tabla-general table-responsive">
-                    <table class="table table-hover table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Identificador</th>
-                                <th scope="col">Razón Social</th>
-                                <th scope="col">Rubro</th>
-                                <th scope="col">Rut</th>
-                                <th scope="col">Mail</th>
-                                <th scope="col">Teléfono</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in proveedores %}
-                            <tr>
-                                <td>{{ item.IDENTIFICADOR }}</td>
-                                <td>{{ item.RAZON_SOCIAL }}
-                                <td>{{ item.RUBRO }}</td></td>
-                                <td>{{ item.RUT }}</td>
-                                <td>{{ item.USUARIO }}</td>
-                                <td>{{ item.TELEFONO }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Proveedores</h1>
+        <div class="usuarios">
+            <div class="tabla-general table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Identificador</th>
+                            <th scope="col">Razón Social</th>
+                            <th scope="col">Rubro</th>
+                            <th scope="col">Rut</th>
+                            <th scope="col">Mail</th>
+                            <th scope="col">Teléfono</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in proveedores %}
+                        <tr>
+                            <td>{{ item.IDENTIFICADOR }}</td>
+                            <td>{{ item.RAZON_SOCIAL }}
+                            <td>{{ item.RUBRO }}</td></td>
+                            <td>{{ item.RUT }}</td>
+                            <td>{{ item.USUARIO }}</td>
+                            <td>{{ item.TELEFONO }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+</div>
 {% endblock contenido %}
 {% block js %}
-    <script>
-        $(document).ready(function(){
-            $('[data-bg]').each(function(){
-                $(this).css({
-                    'background-image': 'url('+$(this).attr("data-bg")+')'
-                });
-            });
-            $('[data-url]').click(function(){
-                window.location = $(this).attr('data-url');
-            });
-            $('#aside [data-menu="proveedores_list"]').addClass('active');
-        });
-    </script>
+<script>
+    $(document).ready(function(){
+        $('#aside [data-menu="proveedores_list"]').addClass('active');
+    });
+</script>
 {% endblock js %}
