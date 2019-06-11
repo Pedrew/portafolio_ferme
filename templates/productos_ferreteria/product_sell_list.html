@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block tituloPagina %}
     <title>PRODUCTOS VENTA | FERME</title>
 {% endblock tituloPagina %}
@@ -17,7 +18,8 @@
                                     {{item.NOMBRE}}
                                 </a>
                             </h2>
-                            <p class="precio">$ {{item.VALOR}}</p>
+
+                            <p class="precio">$ {{ item.VALOR|intcomma }}</p>
                             <p class="stock">Stock: {{item.STOCK}}</p>
                             <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-block btn-detalle">Ver Detalle</a>
                         </div>

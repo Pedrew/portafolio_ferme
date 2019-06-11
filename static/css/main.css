@@ -70,9 +70,11 @@ aside{
 	background-color: #027D46;
 	width: 250px;
 	height: 100vh;
+	padding: 0 0 7rem 0;
 	position: fixed;
 	left: 0;
 	top: 0;
+	overflow-y: auto;
 }
 aside .logo{
 	padding: 2rem 0 0 0;
@@ -187,6 +189,42 @@ nav{
 .contenedor{
 	width: calc(100% - 250px);
 	margin: 0 0 0 auto;
+}
+.producto-detalle .foto{
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 17rem;
+	border: 1px solid #027D46;
+	border-radius: .5rem;
+}
+.producto-detalle .texto h1{
+	font-weight: bold;
+	font-size: 30px;
+	line-height: 1.1em;
+	margin: 0 0 .7rem 0;
+	color: #027D46;
+}
+.producto-detalle .texto .cantidad{
+	width: 130px;
+}
+.producto-detalle .texto .cantidad label{
+	font-size: 14px;
+	margin: 0;
+	line-height: 1em;
+}
+.producto-detalle .texto .cantidad .btn-control .input-group-text{
+	cursor: pointer;
+	background-color: #027D46;
+	color: #ffffff;
+}
+.producto-detalle .texto .precio{
+	font-size: 20px;
+}
+.producto-detalle .texto .stock{
+	font-weight: bold;
+	font-size: 14px;
+	color: #979797;
 }
 .productos{
 	display: flex;
