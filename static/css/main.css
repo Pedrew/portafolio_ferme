@@ -1,16 +1,14 @@
 @font-face {
   font-family: 'ferme';
-  src:  url('../fonts/ferme.eot?ncnyt9');
-  src:  url('../fonts/ferme.eot?ncnyt9#iefix') format('embedded-opentype'),
-    url('../fonts/ferme.ttf?ncnyt9') format('truetype'),
-    url('../fonts/ferme.woff?ncnyt9') format('woff'),
-    url('../fonts/ferme.svg?ncnyt9#ferme') format('svg');
+  src:  url('../fonts/ferme.eot?8ukjzb');
+  src:  url('../fonts/ferme.eot?8ukjzb#iefix') format('embedded-opentype'),
+		url('../fonts/ferme.ttf?8ukjzb') format('truetype'),
+		url('../fonts/ferme.woff?8ukjzb') format('woff'),
+		url('../fonts/ferme.svg?8ukjzb#ferme') format('svg');
   font-weight: normal;
   font-style: normal;
 }
-
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
+[class^="icon-"],[class*=" icon-"]{
   font-family: 'ferme' !important;
   speak: none;
   font-style: normal;
@@ -18,14 +16,8 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-
-  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-tag:before {
-  content: "\e902";
 }
 .icon-reply:before {
   content: "\e900";
@@ -33,11 +25,8 @@
 .icon-clipboard:before {
   content: "\e901";
 }
-.icon-pencil:before {
-  content: "\f040";
-}
-.icon-truck:before {
-  content: "\f0d1";
+.icon-tag:before {
+  content: "\e902";
 }
 .icon-office:before {
   content: "\e903";
@@ -60,8 +49,18 @@
 .icon-bin:before {
   content: "\e9ac";
 }
-
-
+.icon-pencil:before {
+  content: "\f040";
+}
+.icon-truck:before {
+  content: "\f0d1";
+}
+.icon-wrench:before {
+  content: "\e991";
+}
+.icon-list2:before {
+  content: "\e9bb";
+}
 body{
 	font-family: 'Montserrat', sans-serif;
 	color: #454545;
@@ -70,9 +69,11 @@ aside{
 	background-color: #027D46;
 	width: 250px;
 	height: 100vh;
+	padding: 0 0 7rem 0;
 	position: fixed;
 	left: 0;
 	top: 0;
+	overflow-y: auto;
 }
 aside .logo{
 	padding: 2rem 0 0 0;
@@ -90,6 +91,7 @@ aside .menu-lateral{
 aside .menu-lateral .btn-ferme{
 	text-align: left;
 	margin: 0 0 .3rem 0;
+	padding: .375rem .5rem;
 }
 nav{
 	border-bottom: 1px solid #c2c2c2;
@@ -124,6 +126,9 @@ nav{
 .btn-ferme.b2{
 	border: 1px solid #027D46;
 	background-color: #027D46;
+}
+.btn-ferme.btn-small{
+	font-size: 12px;
 }
 .btn-ferme i{
 	font-size: 20px;
@@ -184,6 +189,42 @@ nav{
 .contenedor{
 	width: calc(100% - 250px);
 	margin: 0 0 0 auto;
+}
+.producto-detalle .foto{
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 17rem;
+	border: 1px solid #027D46;
+	border-radius: .5rem;
+}
+.producto-detalle .texto h1{
+	font-weight: bold;
+	font-size: 30px;
+	line-height: 1.1em;
+	margin: 0 0 .7rem 0;
+	color: #027D46;
+}
+.producto-detalle .texto .cantidad{
+	width: 130px;
+}
+.producto-detalle .texto .cantidad label{
+	font-size: 14px;
+	margin: 0;
+	line-height: 1em;
+}
+.producto-detalle .texto .cantidad .btn-control .input-group-text{
+	cursor: pointer;
+	background-color: #027D46;
+	color: #ffffff;
+}
+.producto-detalle .texto .precio{
+	font-size: 20px;
+}
+.producto-detalle .texto .stock{
+	font-weight: bold;
+	font-size: 14px;
+	color: #979797;
 }
 .productos{
 	display: flex;

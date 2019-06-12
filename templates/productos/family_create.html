@@ -1,55 +1,91 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block tituloPagina %}
-	<title>Familias | FERME</title>
+	<title>CREAR FAMILIA | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-<div id="e-commerce-products" class="page-layout carded full-width">
-    <div class="top-bg bg-primary"></div>
-    <div class="page-content-wrapper">
 
-        <div class="row">
-            <div class="col-sm-10" style="margin: 25px 25px 25px 25px">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>
-                            Crear Familia
-                        </h3>
-                        <form method="POST" class="post-form" action ="familia_insert">{% csrf_token %}
-                            <div class="form-group row">
-                                <label class="col-md-2 col-form-label">ID Proveedor</label>
-                                <div class="col-sm-4">
-                                    <input type="text" name = "id_proveedor" value="{{proveedor}}" readonly>
-                                </div>      
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-md-2 col-form-label">Detalle</label>
-                                <div class="col-sm-4">
-                                    <input type="text" name="detalle"  class="form-control">
-                                </div>                   
-                                <label class="col-sm-2 col-form-label">Identificador</label>
-                                <div class="col-sm-2">
-                                    <input type="text" name="identificador" class="form-control" maxlength="3">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="offset-sm-2 col-sm-10">
-                                    <a class="btn btn-primary" href="{% url 'familia_list' %}" style="float: right; margin: 0px 50px">Cancelar</a>                                
-                                    <button type="submit" class="btn btn-primary" style="float: right">Guardar</button>
-                                </div>
-                            </div>
-                        </form>
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Crear Familia</h1>
+
+        <div class="col-6 mx-auto py-3">
+            <form method="POST" id="form-familia" action="familia_insert">
+                {% csrf_token %}
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">ID Proveedor</span>
                     </div>
+                    <input type="text" name="id_proveedor" class="form-control col-8" value="{{proveedor}}" readonly>
                 </div>
-            </div>
+
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Detalle</span>
+                    </div>
+                    <input type="text" name="detalle" class="form-control col-8 validarCampo text-uppercase" data-nom="Detalle">
+                </div>
+
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Identificador</span>
+                    </div>
+                    <input type="text" name="identificador" maxlength="3" class="form-control col-8 validarCampo text-uppercase solo-texto" data-nom="Identificador">
+                </div>
+                <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
+                <div class="text-center">
+                    <a class="btn btn-volver" href="{% url 'familia_list' %}"><i class="icon-reply"></i> Volver</a>
+                    <button type="button" class="btn btn-ferme b2 btn-enviar">Guardar</button>
+                </div>
+            </form>
         </div>
-    
+    </div>
 </div>
 {% endblock contenido %}
 {% block js %}
-	<script>
-		$(document).ready(function(){
-			
-		});
-	</script>
+<script>
+	$(document).ready(function(){
+		$('#aside [data-menu="familia_list"]').addClass('active');
+        $('.btn-enviar').click(function(){
+            var flag = false;
+            $('#res').addClass('d-none');
+
+            $('#form-familia .validarCampo').each(function(){
+                if($.trim($(this).val()) == ''){
+                    $(this).addClass('is-invalid').focus();
+                    $('#res').html('Seleccione '+$(this).attr('data-nom'));
+                    $('#res').removeClass('d-none');
+                    flag = true;
+                    return false;
+                }else{
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                }
+
+                if($(this).attr('name') == 'identificador'){
+                    var texto = $.trim($(this).val()).replace(' ','');
+                    if(texto.length != 3){
+                        $(this).addClass('is-invalid').focus();
+                        $('#res').html('El identificador debe ser de 3 letras');
+                        $('#res').removeClass('d-none');
+                        flag = true;
+                        return false;
+                    }else{
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    }
+                }
+            });
+            if(flag == false){
+                $('#form-familia').submit();
+                $('#form-familia .btn-enviar').prop('disabled',true).html('Enviando...');
+            }
+        });
+
+        $('.solo-texto').keypress(function(e){
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                e.preventDefault();
+            }
+        });
+	});
+</script>
 {% endblock js %}
