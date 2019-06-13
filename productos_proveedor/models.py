@@ -24,7 +24,8 @@ class Product_proveedor(models.Model):
         cur.execute('select * from products_proveedor where id_prod ='+id)
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
-        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3],column[4]:res[4],column[5]:res[5],column[6]:res[6],column[7]:res[7]}
+        # obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3],column[4]:res[4],column[5]:res[5],column[6]:res[6],column[7]:res[7]}
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3],column[4]:res[4],column[5]:res[5]}
         cur.close()
         con.close()
         return obj
