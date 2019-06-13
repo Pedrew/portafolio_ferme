@@ -31,49 +31,17 @@
     <div class="row">
         <div class="col-xs-12 mt-4">
     		<div class="invoice-title">
-    			<h2>Boleta</h2><h3 class="pull-right"># 12345</h3>
+    			<h2>Carro de compra</h2><button class="pull-right btn btn-ferme b2">Continuar comprando</button>
     		</div>
     		<hr>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-    				<strong>Emitida para:</strong><br>
-    					Iván Díaz<br>
-    					Springfield, ST 54321<br>
-    					usuario@gmail.com
-    				</address>
-    			</div>
-    			<div class="col-xs-6 text-right">
-    				<address>
-        			<strong>Tipo de pago:</strong><br>
-    					Pago contra entrega<br>
-                    <strong>Tipo de entrega:</strong><br>
-                        Retiro en sucursal<br>
-    				</address>
-    			</div>
-    		</div>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-    					<strong>Forma de pago:</strong><br>
-    					Efectivo
-    				</address>
-    			</div>
-    			<div class="col-xs-6 text-right">
-    				<address>
-    					<strong>Fecha:</strong><br>
-    					6/12/2019<br><br>
-    				</address>
-    			</div>
-    		</div>
-    	</div>
+    	</div>	
     </div>
     
     <div class="row">
     	<div class="col-md-12">
     		<div class="panel panel-default">
     			<div class="panel-heading">
-    				<h3 class="panel-title"><strong>Detalle Órden</strong></h3>
+    				<h3 class="panel-title"><strong>Detalle</strong></h3>
     			</div>
     			<div class="panel-body">
     				<div class="table-responsive">
@@ -122,10 +90,33 @@
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>Total</strong></td>
-    								<td class="no-line text-right">$670.99</td>
+    								<td class="no-line text-right">$685.99</td>
     							</tr>
     						</tbody>
-    					</table>
+                        </table>
+                        <hr>
+                        <div>
+                            <label>Tipo de entrega: </label>
+                            <select name="payment_method" class="ml-1" data-nom="Tipo Usuario">
+                                <option value="Retiro en sucursal">Retiro en sucursal</option>
+                                <option value="Entrega a domicilio">Entrega a domicilio</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Tipo de pago:</label>
+                            <select name="payment_method" class="ml-4" data-nom="Tipo Usuario">
+                                <option value="Pago contra entrega">Pago contra entrega</option>
+                                <option value="Pago online">Pago online</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Medio de pago:</label>
+                            <select name="payment_method" class="ml-2" data-nom="Tipo Usuario">
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Tarjeta">Tarjeta</option>
+                            </select>
+                        </div>
+                        <a class="pull-right btn btn-ferme b2" href="{% url 'product_receipt' %}">Procesar Compra</a>
     				</div>
     			</div>
     		</div>

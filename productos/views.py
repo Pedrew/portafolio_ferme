@@ -77,3 +77,6 @@ def productos_detail(request):
 
 def product_receipt(request):
 	return render(request, 'productos_ferreteria/product_receipt.html')
+
+def shopping_cart(request):
+	return render(request, 'productos_ferreteria/shopping_cart.html')

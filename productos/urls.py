@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^productos_sell_list', productos_sell_list, name='productos_sell_list'),
     url(r'^productos_detail', productos_detail, name='productos_detail'),
     url(r'^product_receipt', product_receipt, name='product_receipt'),
+    url(r'^shopping_cart', shopping_cart, name='shopping_cart'),
 ]
