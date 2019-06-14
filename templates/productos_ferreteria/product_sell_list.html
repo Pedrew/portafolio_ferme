@@ -20,7 +20,14 @@
                             </h2>
 
                             <p class="precio">$ {{ item.VALOR|intcomma }}</p>
-                            <p class="stock">Stock: {{item.STOCK}}</p>
+                            <p class="stock">
+                                Stock: 
+                                {% if item.STOCK > 0 %}
+                                    {{ item.STOCK }}
+                                {% else %}
+                                    <span class="text-danger">Sin stock</span>
+                                {% endif %}
+                            </p>
                             <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-block btn-detalle">Ver Detalle</a>
                         </div>
                     </div>
