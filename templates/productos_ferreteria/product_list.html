@@ -1,99 +1,112 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block tituloPagina %}
-	<title>Productos Ferretería | FERME</title>
+    <title>PRODUCTOS FERRETERÍA | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-<div id="e-commerce-products" class="page-layout carded full-width">
-    <div class="top-bg bg-primary"></div>
-    <div class="page-content-wrapper">
-        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
-            <div class="col-12 col-sm">
-                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
-                    <div class="logo-icon mr-3 mt-1">
-                        <i class="icon-cart s-6"></i>
-                    </div>
-                    <div class="logo-text">
-                        <div class="h4">Productos Ferretería</div>
-                    </div>
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Productos Ferretería</h1>
+
+
+        <div class="col-6 px-0">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Buscador</span>
                 </div>
+                <input type="text" class="form-control btn-filtro" placeholder="Buscador por nombre...">
             </div>
-            <div class="col search-wrapper px-20">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-icon">
-                            <i class="icon icon-magnify"></i>
-                        </button>
-                    </span>
-                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
-                </div>
-            </div>
-       </div>
-        <div class="page-content-card">
-            <table class="table dataTable">
-                <thead>
+        </div>
+        <div class="tabla-general table-responsive">
+            <table class="table table-hover table-bordered" id="tabla-productos">
+                <thead class="thead-dark">
                     <tr>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Código</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Nombre</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Proveedor</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Stock</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Precio</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Acciones</span>
-                            </div>
-                        </th>
+                        <th scope="col">Código</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Proveedor</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in productos %}
-                    <tr>
-                        <td>{{ item.PRODUCTO_ID }}</td>
+                    <tr class="fila">
+                        <td class="text-uppercase text-left">{{ item.PRODUCTO_ID }}</td>
                         <td>{{ item.NOMBRE }}</td>
                         <td>{{ item.RAZON_SOCIAL }}</td>
-                        <td>{{ item.STOCK }}</td>
-                        <td>$ {{ item.VALOR }}</td>
-                    <td>
-                        <a class="btn btn-icon" href="productos_ferreteria_get?id={{item.ID_PROD}}" aria-label="Modificar Producto">
-                            <i class="icon icon-pencil s-4"></i>
-                        </a>
-                        <a class="btn btn-icon" href="productos_ferreteria_delete?id={{item.ID_PROD}}">
-                            <i class="icon icon-trash s-4"></i>
-                        </a>
-                    </td>
-                </tr>
+                        <td class="text-center">{{ item.STOCK }}</td>
+                        <td class="text-right">$ {{ item.VALOR|intcomma }}</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning" href="productos_ferreteria_get?id={{item.ID_PROD}}">
+                                <i class="icon-pencil s-4"></i>
+                            </a>
+                            <button type="button" class="btn btn-danger btn-eliminar" data-nom="{{ item.NOMBRE }}" data-id="{{item.ID_PROD}}">
+                                <i class="icon-bin s-4"></i>
+                            </button>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+            ¿Está seguro que desea eliminar el producto <br>
+            "<strong></strong>"?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-volver" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger btn-confirmar">Si, Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock contenido %}
 {% block js %}
-    <script type="text/javascript" src="{% static 'js/apps/e-commerce/products/productos_lista.js' %}"></script>
-	<script>
-		$(document).ready(function(){
-			
-		});
-	</script>
+<script>
+    $(document).ready(function(){
+        $('#aside [data-menu="productos_ferreteria_list"]').addClass('active');
+    });
+
+    $('.btn-eliminar').click(function(){
+        $('#modalConfirmar').modal('show');
+        $('#modalConfirmar .modal-body strong').text($(this).attr('data-nom').toUpperCase());
+        $('#modalConfirmar .modal-footer .btn-confirmar').attr('data-id',$(this).attr('data-id'));
+    });
+
+    $('.btn-confirmar').click(function(){
+        window.location = 'productos_ferreteria_delete?id='+$(this).attr('data-id');
+    });
+
+    $('.btn-filtro').keyup(function(){
+        var palabra = $(this).val().toUpperCase();
+
+        if($.trim(palabra) != ''){
+            $('#tabla-productos .fila').addClass('d-none');
+            $('#tabla-productos .fila td:nth-child(2)').each(function(){
+                var texto = $(this).text().toUpperCase();
+
+                if(texto.search(palabra) != -1){
+                    $(this).parent().removeClass('d-none');
+                }
+            });
+        }else{    
+            $('#tabla-productos .fila').removeClass('d-none');
+        }
+    });
+</script>
 {% endblock js %}

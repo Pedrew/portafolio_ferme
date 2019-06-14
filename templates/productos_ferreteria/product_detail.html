@@ -17,31 +17,46 @@
             <div class="texto">
               <h1>{{product.NOMBRE}}</h1>
 
-              <p class="stock">Stock: {{product.STOCK}}</p>
+              <p class="stock">
+                Stock: 
+                {% if product.STOCK > 0 %}
+                    {{ product.STOCK }}
+                {% else %}
+                    <span class="text-danger">Sin stock</span>
+                {% endif %}
+              </p>
+
               <p class="precio">$ {{ product.VALOR|intcomma }}</p>
               
-              <form method="POST" class="post-form" action="shopping_cart">
-                {% csrf_token %}
-                <input type="hidden" name="precio" class="from-control" value="{{product.VALOR}}">
-                <input type="hidden" name="id" class="from-control" value="{{product.ID_PROD}}">
-                <div class="form-group cantidad">
-                  <label>Cantidad:</label>
-                  <div class="input-group mb-3 ">
-                    <div class="input-group-prepend btn-control" data-op="0">
-                      <span class="input-group-text">-</span>
-                    </div>
-                    <input type="text" name="cantidad" class="form-control text-center" readonly="readonly" value="1">
-                    <div class="input-group-append btn-control" data-op="1">
-                      <span class="input-group-text">+</span>
+              {% if product.STOCK > 0 %}
+                <form method="POST" id="form-sell" class="post-form" action="shopping_cart">
+                  {% csrf_token %}
+                  <input type="hidden" name="precio" class="from-control" value="{{product.VALOR}}">
+                  <input type="hidden" name="id" class="from-control" value="{{product.ID_PROD}}">
+                  <div class="form-group cantidad">
+                    <label>Cantidad:</label>
+                    <div class="input-group mb-3 ">
+                      <div class="input-group-prepend btn-control" data-op="0">
+                        <span class="input-group-text">-</span>
+                      </div>
+                      <input type="text" name="cantidad" class="form-control text-center" readonly="readonly" value="1">
+                      <div class="input-group-append btn-control" data-op="1">
+                        <span class="input-group-text">+</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
+                  <div class="py-4">
+                    <a class="btn btn-volver" href="{% url 'productos_sell_list' %}"><i class="icon-reply"></i> Volver a Productos</a>
+                    <button type="button" class="btn btn-ferme btn-agregar b2">Agregar al Carro</button>
+                  </div>
+                </form>
+              {% else %}
                 <div class="py-4">
                   <a class="btn btn-volver" href="{% url 'productos_sell_list' %}"><i class="icon-reply"></i> Volver a Productos</a>
-                  <button type="submit" class="btn btn-ferme b2">Agregar al Carro</button>
                 </div>
-              </form>
+              {% endif %}
+              
             </div>
           </div>
         </div>
@@ -59,6 +74,7 @@
       });
       $('#aside [data-menu="productos_sell_list"]').addClass('active');
     });
+
     var stock = parseInt('{{product.STOCK}}');
     $('.cantidad .btn-control').click(function(){
       var act = parseInt($('.cantidad [name="cantidad"]').attr('value'));
@@ -72,6 +88,11 @@
             $('.cantidad [name="cantidad"]').attr('value', act - 1); 
           }
       }
+    });
+
+    $('#form-sell .btn-agregar').click(function(){
+        $('#form-sell').submit();
+        $('#form-sell .btn-agregar').prop('disabled',true).html('Agregando al carro...');
     });
   </script>
 {% endblock js %}
