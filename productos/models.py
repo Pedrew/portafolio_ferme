@@ -87,4 +87,55 @@ class Product(models.Model):
         cur.close()
         con.close()
         return array
-    
+    @classmethod
+    def updateStock(self, id, cantidad):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.callproc("update_stock",[id, cantidad])
+        cur.close()
+        con.close()
+    @classmethod
+    def createBoleta(self, id_user, pay_type, payment, entrega, id_prod, cantidad, total):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.callproc("create_boleta",[id_user, pay_type, payment, entrega])
+        cur.callproc("create_detalle_boleta",[id_prod, cantidad, total])
+        cur.close()
+        con.close()
+    @classmethod
+    def getUser(self, id):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select nombre, apellido, direccion, usuario from usuarios join cliente on usuarios.user_id = cliente.usuario_id where usuarios.user_id = '+str(id))
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3]}
+        cur.close()
+        con.close()
+        return obj
+    @classmethod
+    def getDetalle(self, id):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select nombre, valor, cantidad, total, id_boleta from detalle_boleta join products on detalle_boleta.id_producto = products.id_prod where id_boleta = (select max(id_boleta) from detalle_boleta where id_producto ='+str(id)+')')
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4]}
+        cur.close()
+        con.close()
+        return obj
+    @classmethod
+    def getLastBoleta(self, id):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select * from boleta where id_boleta = (select max(id_boleta) from boleta where id_usuario ='+str(id)+')')
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4]}
+        cur.close()
+        con.close()
+        return obj
+
+            
+        
+

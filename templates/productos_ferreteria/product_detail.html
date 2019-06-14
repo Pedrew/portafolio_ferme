@@ -20,8 +20,9 @@
               <p class="stock">Stock: {{product.STOCK}}</p>
               <p class="precio">$ {{ product.VALOR|intcomma }}</p>
               
-              <form method="GET" class="post-form" action="shopping_cart">
+              <form method="POST" class="post-form" action="shopping_cart">
                 {% csrf_token %}
+                <input type="hidden" name="precio" class="from-control" value="{{product.VALOR}}">
                 <input type="hidden" name="id" class="from-control" value="{{product.ID_PROD}}">
                 <div class="form-group cantidad">
                   <label>Cantidad:</label>

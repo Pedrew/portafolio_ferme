@@ -76,7 +76,32 @@ def productos_detail(request):
 	return render(request, 'productos_ferreteria/product_detail.html',{'product':response, 'tipo':familia_tipo})
 
 def product_receipt(request):
-	return render(request, 'productos_ferreteria/product_receipt.html')
+	post = request.POST
+	cantidad = post['cantidad']
+	id = post['id']
+
+	Product.updateStock(id, cantidad)
+
+	id_user = 161
+	entrega = post['entrega']
+	pago_tipo = post['payment_type']
+	medio_pago = post['payment_method']
+	total = post['total']
+	
+	Product.createBoleta(id_user, pago_tipo, medio_pago, entrega, id, cantidad, total)
+
+	now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+	detalle = Product.getDetalle(id)
+	usuario = Product.getUser(id_user)
+	boleta = Product.getLastBoleta(id_user)
+	return render(request, 'productos_ferreteria/product_receipt.html', {'detalle': detalle, 'usuario': usuario, 'boleta': boleta, 'entrega': entrega, 'pago_tipo': pago_tipo, 'medio_pago': medio_pago, 'fecha': str(now)})
 
 def shopping_cart(request):
-	return render(request, 'productos_ferreteria/shopping_cart.html')
+	post = request.POST
+	cantidad = post['cantidad']
+	id = post['id']
+	valor = post['precio']
+	total = int(cantidad) * int(valor)
+	product = Product.getProduct(id)
+	
+	return render(request, 'productos_ferreteria/shopping_cart.html', {'product': product, 'total': total, 'cantidad': cantidad})

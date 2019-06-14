@@ -31,38 +31,38 @@
     <div class="row">
         <div class="col-xs-12 mt-4">
     		<div class="invoice-title">
-    			<h2>Boleta</h2><h3 class="pull-right"># 12345</h3>
+    			<h2>Boleta</h2><h3 class="pull-right"># {{boleta.ID_BOLETA}}</h3>
     		</div>
     		<hr>
     		<div class="row">
     			<div class="col-xs-6">
     				<address>
     				<strong>Emitida para:</strong><br>
-    					Iván Díaz<br>
-    					Springfield, ST 54321<br>
-    					usuario@gmail.com
+    					{{usuario.NOMBRE}} {{usuario.APELLIDO}}<br>
+    					{{usuario.DIRECCION}}<br>
+						{{usuario.USUARIO}}
     				</address>
     			</div>
     			<div class="col-xs-6 text-right">
     				<address>
         			<strong>Tipo de pago:</strong><br>
-    					Pago contra entrega<br>
+    					{{pago_tipo}}<br>
                     <strong>Tipo de entrega:</strong><br>
-                        Retiro en sucursal<br>
+                        {{entrega}}<br>
     				</address>
     			</div>
     		</div>
     		<div class="row">
     			<div class="col-xs-6">
     				<address>
-    					<strong>Forma de pago:</strong><br>
-    					Efectivo
+    					<strong>Medio de pago:</strong><br>
+    					{{medio_pago}}
     				</address>
     			</div>
     			<div class="col-xs-6 text-right">
     				<address>
     					<strong>Fecha:</strong><br>
-    					6/12/2019<br><br>
+    					{{fecha}}<br><br>
     				</address>
     			</div>
     		</div>
@@ -87,30 +87,17 @@
                                 </tr>
     						</thead>
     						<tbody>
-    							<!-- foreach ($order->lineItems as $line) or some such thing here -->
     							<tr>
-    								<td>BS-200</td>
-    								<td class="text-center">$10.99</td>
-    								<td class="text-center">1</td>
-    								<td class="text-right">$10.99</td>
-    							</tr>
-                                <tr>
-        							<td>BS-400</td>
-    								<td class="text-center">$20.00</td>
-    								<td class="text-center">3</td>
-    								<td class="text-right">$60.00</td>
-    							</tr>
-                                <tr>
-            						<td>BS-1000</td>
-    								<td class="text-center">$600.00</td>
-    								<td class="text-center">1</td>
-    								<td class="text-right">$600.00</td>
+    								<td>{{detalle.NOMBRE}}</td>
+    								<td class="text-center">${{detalle.VALOR}}</td>
+    								<td class="text-center">{{detalle.CANTIDAD}}</td>
+    								<td class="text-right">${{detalle.TOTAL}}</td>
     							</tr>
     							<tr>
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
     								<td class="thick-line text-center"><strong>Subtotal</strong></td>
-    								<td class="thick-line text-right">$670.99</td>
+    								<td class="thick-line text-right">${{detalle.TOTAL}}</td>
     							</tr>
     							<tr>
     								<td class="no-line"></td>
@@ -122,7 +109,7 @@
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>Total</strong></td>
-    								<td class="no-line text-right">$670.99</td>
+    								<td class="no-line text-right">${{detalle.TOTAL}}</td>
     							</tr>
     						</tbody>
     					</table>
