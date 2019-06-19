@@ -42,14 +42,18 @@
 
                 <div class="input-group mb-3 row mx-0">
                     <div class="input-group-prepend col-4 px-0">
-                        <span class="input-group-text w-100">Nombre</span>
+                        <span class="input-group-text w-100">
+                            <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp;Nombre
+                        </span>
                     </div>
                     <input type="text" name="nombre" class="form-control col-8 validarCampo text-uppercase" data-nom="Nombre">
                 </div>
 
                 <div class="input-group mb-3 row mx-0">
                     <div class="input-group-prepend col-4 px-0">
-                        <span class="input-group-text w-100">Valor</span>
+                        <span class="input-group-text w-100">
+                            <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp;Valor
+                        </span>
                     </div>
                     <input type="text" name="valor" class="form-control col-8 validarCampo numero" data-nom="Valor">
                 </div>
@@ -63,7 +67,7 @@
 
                 <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
                 <div class="text-center">
-                    <a class="btn btn-volver" href="{% url 'productos_list' %}"><i class="icon-reply"></i> Volver</a>
+                    <a class="btn btn-volver" href="{% url 'familia_list' %}"><i class="icon-reply"></i> Volver</a>
                     <button type="button" class="btn btn-ferme b2 btn-enviar">Guardar</button>
                 </div>
             </form>

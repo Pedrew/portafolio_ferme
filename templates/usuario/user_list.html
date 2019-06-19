@@ -92,6 +92,7 @@
 
     $('.btn-confirmar').click(function(){
         /* CAMBIAR URL PARA CAMBIO ESTADO*/
+        $(this).text('Modificando...').prop('disabled',true);
         window.location = 'URL_CAMBIA_ESTADO?id='+$(this).attr('data-id');
     });
 
