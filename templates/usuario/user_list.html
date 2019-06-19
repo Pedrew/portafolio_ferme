@@ -4,71 +4,107 @@
     <title>USUARIOS | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-    <div class="container-fluid">
-        <div class="py-4">
-            <h1 class="titulo">Usuarios</h1>
-            <div class="usuarios">
-                <div class="tabla-general table-responsive">
-                    <table class="table table-hover table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Contraseña</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Apellido</th>
-                                <th scope="col">Rut</th>
-                                <th scope="col">Estado</th>
-                                <th width="120px" scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in user %}
-                            <tr>
-                                <td>{{ item.USER_ID }}</td>
-                                <td>{{ item.USUARIO }}</td>
-                                <td>{{ item.PASS }}</td>
-                                <td>{{ item.TYPE_NAME }}</td>
-                                <td>{{ item.NOMBRE }}</td>
-                                <td>{{ item.APELLIDO }}</td>
-                                <td>{{ item.RUT }}</td>
-                                <td>{{ item.ESTADO }}</td>
-                                <td class="acciones">
-                                    <a class="btn btn-block btn-warning" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}" aria-label="Modificar Usuario">
-                                        <i class="icon-pencil"></i> Editar
-                                    </a>
-                                    <a class="btn btn-block btn-danger" href="users_delete?id={{item.USER_ID}}">
-                                        <i class="icon-bin"></i> Eliminar
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="text-right">
-                    <a class="btn btn-ferme b2" href="{% url 'users_create' %}">
-                        <i class="icon-user-plus"></i> 
-                        Crear Usuario
-                    </a>
-                </div>
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Usuarios</h1>
+        <div class="usuarios">
+            <div class="tabla-general table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Rut</th>
+                            <th scope="col">Estado</th>
+                            <th width="120px" scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in user %}
+                        {% if item.TYPE_NAME != 'admin'  %}
+                        <tr>
+                            <td>{{ item.USER_ID }}</td>
+                            <td>{{ item.USUARIO }}</td>
+                            <td>{{ item.TYPE_NAME }}</td>
+                            <td>{{ item.NOMBRE }} {{ item.APELLIDO }}</td>
+                            <td>{{ item.RUT }}</td>
+                            <td>{{ item.ESTADO }}</td>
+                            <td class="acciones">
+                                <a class="btn btn-block btn-warning" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}">
+                                    <i class="icon-pencil"></i> Editar
+                                </a>
+                                {% if item.ESTADO == 'Activo'  %}
+                                    <button class="btn btn-block btn-info btn-estado" data-nom="{{ item.NOMBRE }} {{ item.APELLIDO }}" data-id="{{item.ID_PROD}}">
+                                        Desactivar
+                                    </button>
+                                {% else %}
+                                    <button class="btn btn-block btn-success btn-estado" data-nom="{{ item.NOMBRE }} {{ item.APELLIDO }}" data-id="{{item.ID_PROD}}">
+                                        Activar
+                                    </button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-right">
+                <a class="btn btn-ferme b2" href="{% url 'users_create' %}">
+                    <i class="icon-user-plus"></i> 
+                    Crear Usuario
+                </a>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+            ¿Está seguro que desea cambiar el estado a<br>
+            "<strong></strong>"?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-volver" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger btn-confirmar">Si, Modificar</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}
 {% block js %}
-    <script>
-        $(document).ready(function(){
-            $('[data-bg]').each(function(){
-                $(this).css({
-                    'background-image': 'url('+$(this).attr("data-bg")+')'
-                });
+<script>
+    $('.btn-estado').click(function(){
+        $('#modalConfirmar').modal('show');
+        $('#modalConfirmar .modal-body strong').text($(this).attr('data-nom').toUpperCase());
+        $('#modalConfirmar .modal-footer .btn-confirmar').attr('data-id',$(this).attr('data-id'));
+    });
+
+    $('.btn-confirmar').click(function(){
+        /* CAMBIAR URL PARA CAMBIO ESTADO*/
+        window.location = 'URL_CAMBIA_ESTADO?id='+$(this).attr('data-id');
+    });
+
+    $(document).ready(function(){
+        $('[data-bg]').each(function(){
+            $(this).css({
+                'background-image': 'url('+$(this).attr("data-bg")+')'
             });
-            $('[data-url]').click(function(){
-                window.location = $(this).attr('data-url');
-            });
-            $('#aside [data-menu="users_list"]').addClass('active');
         });
-    </script>
+        $('[data-url]').click(function(){
+            window.location = $(this).attr('data-url');
+        });
+        $('#aside [data-menu="users_list"]').addClass('active');
+    });
+</script>
 {% endblock js %}
