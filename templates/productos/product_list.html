@@ -26,7 +26,7 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Proveedor</th>
                         <th scope="col">Precio</th>
-                        <th scope="col">Acciones</th>
+                        <th width="120px" scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,12 +37,12 @@
                         <td class="text-uppercase">{{ item.NOMBRE }}</td></td>
                         <td class="text-uppercase">{{ item.IDENTIFICADOR }}</td>
                         <td class="text-right">$ {{ item.VALOR|intcomma }}</td>
-                        <td class="text-center">
-                            <a class="btn btn-warning" href="productos_get?id={{item.ID_PROD}}">
-                                <i class="icon-pencil s-4"></i>
+                        <td class="acciones">
+                            <a class="btn btn-block btn-warning" href="productos_get?id={{item.ID_PROD}}">
+                                <i class="icon-pencil s-4"></i> Editar
                             </a>
-                            <button type="button" class="btn btn-danger btn-eliminar" data-nom="{{ item.NOMBRE }}" data-id="{{item.ID_PROD}}">
-                                <i class="icon-bin s-4"></i>
+                            <button type="button" class="btn btn-block btn-danger btn-eliminar" data-nom="{{ item.NOMBRE }}" data-id="{{item.ID_PROD}}">
+                                <i class="icon-bin s-4"></i> Eliminar
                             </button>
                         </td>
                     </tr>
@@ -87,6 +87,7 @@
     });
 
     $('.btn-confirmar').click(function(){
+        $(this).text('Eliminando...').prop('disabled',true);
         window.location = 'productos_delete?id='+$(this).attr('data-id');
     });
 
