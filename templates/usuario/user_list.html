@@ -36,11 +36,11 @@
                                     <i class="icon-pencil"></i> Editar
                                 </a>
                                 {% if item.ESTADO == 'Activo'  %}
-                                    <button class="btn btn-block btn-info btn-estado" data-nom="{{ item.NOMBRE }} {{ item.APELLIDO }}" data-id="{{item.ID_PROD}}">
+                                    <button class="btn btn-block btn-info btn-estado" data-nom="{{ item.NOMBRE }} {{ item.APELLIDO }}" data-id="{{item.USER_ID}}" data-status="{{item.ESTADO}}">
                                         Desactivar
                                     </button>
                                 {% else %}
-                                    <button class="btn btn-block btn-success btn-estado" data-nom="{{ item.NOMBRE }} {{ item.APELLIDO }}" data-id="{{item.ID_PROD}}">
+                                    <button class="btn btn-block btn-success btn-estado" data-nom="{{ item.NOMBRE }} {{ item.APELLIDO }}" data-id="{{item.USER_ID}}" data-status="{{item.ESTADO}}">
                                         Activar
                                     </button>
                                 {% endif %}
@@ -88,12 +88,12 @@
         $('#modalConfirmar').modal('show');
         $('#modalConfirmar .modal-body strong').text($(this).attr('data-nom').toUpperCase());
         $('#modalConfirmar .modal-footer .btn-confirmar').attr('data-id',$(this).attr('data-id'));
+        $('#modalConfirmar .modal-footer .btn-confirmar').attr('data-status',$(this).attr('data-status'));
     });
 
     $('.btn-confirmar').click(function(){
-        /* CAMBIAR URL PARA CAMBIO ESTADO*/
         $(this).text('Modificando...').prop('disabled',true);
-        window.location = 'URL_CAMBIA_ESTADO?id='+$(this).attr('data-id');
+        window.location = 'update_user_status?id='+$(this).attr('data-id')+'&status='+$(this).attr('data-status');
     });
 
     $(document).ready(function(){

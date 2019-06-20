@@ -63,4 +63,21 @@ class Usuario(models.Model):
         cur.callproc("delete_proveedor",[id])
         cur.close()
         con.close()
-    
+    @classmethod
+    def updateUserStatus(self, id, status):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.callproc("update_user_status",[id, status])
+        cur.close()
+        con.close()
+    @classmethod
+    def validateUser(self, user, password):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select user_id, usuario, pass, tipo, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id where usuario ='+user+' and pass = '+password)            
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        obj = {column[0]:res[0], column[1]:res[1], column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5], column[6]:res[6], column[7]:res[7]}            
+        cur.close()
+        con.close()
+        return obj

@@ -66,3 +66,22 @@ def users_update(request):
 	Usuario.updateUser(user_id, user, password, user_type, name, last_name, status, rut)
 	response = redirect('users_list')
 	return response
+
+def update_user_status(request):
+	get = request.GET
+	user_id = get['id']
+	user_status = get['status']
+	if user_status == 'Activo':
+		user_status = 'Inactivo'
+	else:
+		user_status = 'Activo'
+	response = Usuario.updateUserStatus(user_id, user_status)
+	response = redirect('users_list')
+	return response
+
+def validate_user(request):
+	post = request.POST
+	user = post['usuario']
+	password = post['password']
+	response = Usuario.validateUser(user, password)
+	return render(request, 'base/header.html',{'user_data':response})

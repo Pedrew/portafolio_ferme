@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^users_delete', users_delete, name='users_delete'),
     url(r'^users_get', users_get, name='users_get'),
     url(r'^users_update', users_update, name='users_update'),
+    url(r'^update_user_status', update_user_status, name='update_user_status'),
 ]
