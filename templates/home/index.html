@@ -23,16 +23,24 @@
 			<div class="productos">
 				{% for item in productos %}
                     <div class="producto">
-                        <div class="foto" data-bg="{% static 'media/producto.jpg' %}" data-url="productos_ferreteria/productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}"></div>
+                        <div class="foto" data-bg="{% static 'media/producto.jpg' %}" data-url="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}"></div>
                         <div class="texto">
                             <h2>
-                                <a href="productos_ferreteria/productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}">
+                                <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}">
                                     {{item.NOMBRE}}
                                 </a>
                             </h2>
+
                             <p class="precio">$ {{ item.VALOR|intcomma }}</p>
-                            <p class="stock">Stock: {{item.STOCK}}</p>
-                            <a href="productos_ferreteria/productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-block btn-detalle">Ver Detalle</a>
+                            <p class="stock">
+                                Stock: 
+                                {% if item.STOCK > 0 %}
+                                    {{ item.STOCK }}
+                                {% else %}
+                                    <span class="text-danger">Sin stock</span>
+                                {% endif %}
+                            </p>
+                            <a href="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}" class="btn btn-block btn-detalle">Ver Detalle</a>
                         </div>
                     </div>
                 {% endfor %}

@@ -6,6 +6,9 @@ def home(request):
 	product_list = Product.getProductos()
 	return render(request, 'home/index.html',{ 'productos' : product_list})
 
+def login(request):
+	return render(request, 'home/login.html')
+
 def productos(request):
 	return render(request, 'productos/product_list.html')
 

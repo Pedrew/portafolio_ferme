@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block tituloPagina %}
+	<title>HOME | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div class="container-fluid">
+	<div class="py-4">
+		<h1 class="titulo">Login</h1>
+
+		<div class="col-6 mx-auto py-3">
+            <form method="POST" id="form-login">
+                {% csrf_token %}
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Usuario</span>
+                    </div>
+                    <input type="text" name="usuario" class="form-control validarCampo col-8" data-nom="Usuario">
+                </div>
+
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Contraseña</span>
+                    </div>
+                    <input type="password" name="password" class="form-control validarCampo col-8" data-nom="Contraseña">
+                </div>
+
+                <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
+                <div class="text-center">
+                    <a class="btn btn-volver" href="{% url 'home' %}"><i class="icon-reply"></i> Volver al Home</a>
+                    <button type="button" class="btn btn-ferme b2 btn-enviar">Ingresar</button>
+                </div>
+            </form>
+        </div>
+	</div>
+</div>
+{% endblock contenido %}
+{% block js %}
+	<script>
+		$(document).ready(function(){
+			$('[data-bg]').each(function(){
+				$(this).css({
+					'background-image': 'url('+$(this).attr("data-bg")+')'
+				});
+			});
+		});
+
+		$('.btn-enviar').click(function(){
+            var flag = false;
+            $('#res').addClass('d-none');
+
+            $('#form-login .validarCampo').each(function(){
+                if($.trim($(this).val()) == ''){
+                    $(this).addClass('is-invalid').focus();
+                    $('#res').html('Ingrese '+$(this).attr('data-nom'));
+                    $('#res').removeClass('d-none');
+                    flag = true;
+                    return false;
+                }else{
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+            if(flag == false){
+                $('#form-login .btn-enviar').prop('disabled',true).html('Verificando datos...');
+
+                /*
+
+                URL EJEMPLO AJAX 
+				https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html
+                
+                */
+
+				$.ajax({
+					type: "POST",
+					url: '/ajax/validate_username/',
+					data: $("#form-login").serialize(),
+					dataType: 'json',
+					success: function (data) {
+						if (data.is_taken) {
+							alert("A user with this username already exists.");
+						}
+					}
+				});
+            }
+        });
+	</script>
+{% endblock js %}
