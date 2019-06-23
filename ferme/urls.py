@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.contrib.auth.views import logout, login
 from . import views
 
 from django.conf.urls.static import static
@@ -27,8 +26,7 @@ urlpatterns = [
     url(r'^$', views.home, name="home"),
     url(r'^usuario/', include('usuario.urls')),
     url(r'^usuario/', include('django.contrib.auth.urls')),
-    url(r'^login', login, name="login"),
-    url(r'^logout', logout, name="logout"),
+    url(r'^login', views.login, name="login"),
     url(r'^productos_proveedor/', include('productos_proveedor.urls')),
     url(r'^proveedores/', include('proveedores.urls')),
     url(r'^orden_de_compra/', include('orden_compra.urls')),
