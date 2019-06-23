@@ -7,10 +7,15 @@
 {% block contenido %}
 <div class="container-fluid">
 	<div class="py-4">
-		<h1 class="titulo">Login</h1>
-
+        <h1 class="titulo">Login</h1>
+        {% if error %}
+        {{error}}
+        {% endif %}
+        {% if valid %}
+        {{valid}}
+        {% endif %}
 		<div class="col-6 mx-auto py-3">
-            <form method="POST" id="form-login">
+            <form method="POST" id="form-login" action="{% url 'validate_user' %}">
                 {% csrf_token %}
                 <div class="input-group mb-3 row mx-0">
                     <div class="input-group-prepend col-4 px-0">
@@ -29,7 +34,7 @@
                 <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
                 <div class="text-center">
                     <a class="btn btn-volver" href="{% url 'home' %}"><i class="icon-reply"></i> Volver al Home</a>
-                    <button type="button" class="btn btn-ferme b2 btn-enviar">Ingresar</button>
+                    <button type="submit" class="btn btn-ferme b2 ">Ingresar</button>
                 </div>
             </form>
         </div>
@@ -45,7 +50,7 @@
 				});
 			});
 		});
-
+        /*
 		$('.btn-enviar').click(function(){
             var flag = false;
             $('#res').addClass('d-none');
@@ -70,19 +75,19 @@
 				https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html
                 
                 */
-
+                /*
 				$.ajax({
 					type: "POST",
-					url: '/ajax/validate_username/',
+					url: '{% url "validate_user" %}',
 					data: $("#form-login").serialize(),
 					dataType: 'json',
 					success: function (data) {
-						if (data.is_taken) {
-							alert("A user with this username already exists.");
-						}
+                        alert("ahoals")
 					}
-				});
+                });
+                
             }
         });
+        */
 	</script>
 {% endblock js %}

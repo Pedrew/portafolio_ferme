@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from .models import Usuario
 from django.shortcuts import redirect
-
 # Create your views here.
+
 def perfil(request):
 	return render(request, 'usuario/perfil.html')
 
@@ -84,4 +84,8 @@ def validate_user(request):
 	user = post['usuario']
 	password = post['password']
 	response = Usuario.validateUser(user, password)
-	return render(request, 'base/header.html',{'user_data':response})
+	if response == None:
+		error = 'Los datos ingresados no son válidos'
+		return render(request, 'home/login.html',{'error': error })
+	else:
+		return render(request, 'home/login.html',{'valid':response})

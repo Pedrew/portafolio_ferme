@@ -24,7 +24,7 @@ from django.conf import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.home, name="home"),
-    url(r'^usuario/', include('usuario.urls')),
+    url(r'^usuario/', include('usuario.urls')), 
     url(r'^usuario/', include('django.contrib.auth.urls')),
     url(r'^login', views.login, name="login"),
     url(r'^productos_proveedor/', include('productos_proveedor.urls')),

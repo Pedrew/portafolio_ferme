@@ -8,7 +8,15 @@
         <div class="form-wrapper md-elevation-8 p-8">
             <div class="logo bg-secondary">
                 <span>F</span>
-            </div>
+			</div>
+			
+			<form>
+				<label>user</label>
+				<input id="user" name="user" type="text" placeholder="Enter username or email">
+				<label>password</label>
+				<input id="pass" name="pass" type="password" placeholder="Enter password">
+			</form>
+
             <form name="loginForm" id="formlogin" novalidate method="post" action="{% url 'login' %}">
             	{% csrf_token %}
             	<div id="form-login-respuesta" class="d-none alert alert-danger" role="alert"></div>

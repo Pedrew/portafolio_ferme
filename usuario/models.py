@@ -4,9 +4,6 @@ import cx_Oracle
 # Create your models here.
 
 class Usuario(models.Model):
-    def __str__(self, usuario_id):
-        self.usuario_id = usuario_id
-
     @classmethod
     def getUsers(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
@@ -74,10 +71,13 @@ class Usuario(models.Model):
     def validateUser(self, user, password):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select user_id, usuario, pass, tipo, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id where usuario ='+user+' and pass = '+password)            
+        cur.execute("select user_id, usuario, pass, tipo, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id where usuario ='"+user+"' and pass = '"+password+"'")            
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
-        obj = {column[0]:res[0], column[1]:res[1], column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5], column[6]:res[6], column[7]:res[7]}            
+        if res:
+            obj = {column[0]:res[0], column[1]:res[1], column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5], column[6]:res[6], column[7]:res[7]}            
+        else:
+            obj = None
         cur.close()
         con.close()
         return obj
