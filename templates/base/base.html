@@ -22,6 +22,26 @@
     <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/popper4.3.1.min.js' %}" ></script>
     <script type="text/javascript" src="{% static 'js/bootstrap4.3.1.min.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if(sessionStorage.getItem('user_id') != null){
+
+                /* activo menú según tipo de usuario */
+                var tipo = sessionStorage.getItem('user_tipo');
+                $('#aside .menu-lateral .btn[data-tipo="'+tipo+'"]').removeClass('d-none');
+
+                $('nav.user-logeado').removeClass('d-none');
+                $('nav.user-logeado .btn-log span').text(sessionStorage.getItem('user_nombre')+ ' '+sessionStorage.getItem('user_apellido'));
+            }else{
+                $('nav.user-no').removeClass('d-none');
+            }
+        });
+
+        $('.btn-logout').click(function(){
+            sessionStorage.clear();
+            window.location = '{% url 'home' %}';
+        });
+    </script>
     {% block js %}{# Este bloque se redefine en las vistas #}{% endblock js %}
 	{% endblock body %}
 </body>

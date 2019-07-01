@@ -1,7 +1,18 @@
 {% load static %}
-<nav>
+<nav class="user-no d-none">
     <a href="{% url 'login' %}" class="btn btn-ferme">
         <i class="icon-user"></i> 
         Iniciar Sesión
     </a>
+</nav>
+<nav class="user-logeado d-none">
+	<div class="dropdown">
+		<button class="btn btn-ferme btn-log dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown">
+			Bienvenido <span></span>
+		</button>
+		<div class="dropdown-menu dropdown-menu-right">
+			<a href="" class="dropdown-item" type="button">Ver Perfil</a>
+			<button class="dropdown-item btn-logout" type="button">Cerrar sesión</button>
+		</div>
+	</div>
 </nav>

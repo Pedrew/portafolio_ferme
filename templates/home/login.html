@@ -9,11 +9,21 @@
 	<div class="py-4">
         <h1 class="titulo">Login</h1>
         {% if error %}
-        {{error}}
+			<div class="error d-none">{{error}}</div>
         {% endif %}
         {% if valid %}
-        {{valid}}
+        	<div class="valido">
+				<input type="hidden" name="user_id" value="{{valid.USER_ID}}">
+				<input type="hidden" name="user_usuario" value="{{valid.USUARIO}}">
+				<input type="hidden" name="user_pass" value="{{valid.PASS}}">
+				<input type="hidden" name="user_tipo" value="{{valid.TIPO}}">
+				<input type="hidden" name="user_nombre" value="{{valid.NOMBRE}}">
+				<input type="hidden" name="user_apellido" value="{{valid.APELLIDO}}">
+				<input type="hidden" name="user_estado" value="{{valid.ESTADO}}">
+				<input type="hidden" name="user_rut" value="{{valid.rut}}">
+        	</div>
         {% endif %}
+
 		<div class="col-6 mx-auto py-3">
             <form method="POST" id="form-login" action="{% url 'validate_user' %}">
                 {% csrf_token %}
@@ -32,9 +42,9 @@
                 </div>
 
                 <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
-                <div class="text-center">
+                <div class="text-center botones">
                     <a class="btn btn-volver" href="{% url 'home' %}"><i class="icon-reply"></i> Volver al Home</a>
-                    <button type="submit" class="btn btn-ferme b2 ">Ingresar</button>
+                    <button type="button" class="btn btn-ferme btn-enviar b2 ">Ingresar</button>
                 </div>
             </form>
         </div>
@@ -49,8 +59,30 @@
 					'background-image': 'url('+$(this).attr("data-bg")+')'
 				});
 			});
+
+			if($('.error').html() != undefined){
+				$('#res').removeClass('d-none').html('Los datos ingresados no son válidos');
+			}
+			if($('.valido').html() != undefined){
+				$('#form-login .input-group').each(function(){
+	                $(this).remove();
+	            });
+	            $('#form-login .botones').remove();
+
+	            sessionStorage.user_id = '{{valid.USER_ID}}';
+	            sessionStorage.user_usuario = '{{valid.USUARIO}}';
+	            sessionStorage.user_pass = '{{valid.PASS}}';
+	            sessionStorage.user_tipo = '{{valid.TIPO}}';
+	            sessionStorage.user_nombre = '{{valid.NOMBRE}}';
+	            sessionStorage.user_apellido = '{{valid.APELLIDO}}';
+	            sessionStorage.user_estado = '{{valid.ESTADO}}';
+	            sessionStorage.user_rut = '{{valid.RUT}}';
+
+				$('#res').removeClass('d-none').removeClass('alert-danger').addClass('alert-success').html('Acceso Correcto<br>Estás siendo redirigido...');
+				window.location = '{% url 'home' %}';
+			}
 		});
-        /*
+        
 		$('.btn-enviar').click(function(){
             var flag = false;
             $('#res').addClass('d-none');
@@ -67,27 +99,10 @@
                 }
             });
             if(flag == false){
+            	$('#form-login').submit();
                 $('#form-login .btn-enviar').prop('disabled',true).html('Verificando datos...');
-
-                /*
-
-                URL EJEMPLO AJAX 
-				https://simpleisbetterthancomplex.com/tutorial/2016/08/29/how-to-work-with-ajax-request-with-django.html
-                
-                */
-                /*
-				$.ajax({
-					type: "POST",
-					url: '{% url "validate_user" %}',
-					data: $("#form-login").serialize(),
-					dataType: 'json',
-					success: function (data) {
-                        alert("ahoals")
-					}
-                });
-                
             }
         });
-        */
+        
 	</script>
 {% endblock js %}
