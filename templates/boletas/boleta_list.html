@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+    <title>PROOVEDORES | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Boletas</h1>
+        <div class="usuarios">
+            <div class="tabla-general table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID Boleta</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Tipo pago</th>
+                            <th scope="col">Medio pago</th>
+                            <th scope="col">Entrega</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in boletas %}
+                        <tr>
+                            <td>{{ item.ID_BOLETA }}</td>
+                            <td>{{ item.NOMBRE }}
+                            <td>{{ item.TIPO_PAGO }}</td></td>
+                            <td>{{ item.MEDIO_PAGO }}</td>
+                            <td>{{ item.ENTREGA }}</td>
+                            <td>${{ item.TOTAL }}</td>
+                            <td><a class="btn btn-block btn-warning" href="boleta_detail?id={{item.ID_BOLETA}}">
+                                    <i class="icon-eye s-4"></i> Detalle
+                                </a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $('#aside [data-menu="proveedores_list"]').addClass('active');
+    });
+</script>
+{% endblock js %}
