@@ -27,8 +27,13 @@
             if(sessionStorage.getItem('user_id') != null){
 
                 /* activo menú según tipo de usuario */
-                var tipo = sessionStorage.getItem('user_tipo');
-                $('#aside .menu-lateral .btn[data-tipo="'+tipo+'"]').removeClass('d-none');
+                var tipo = '['+sessionStorage.getItem('user_tipo')+']';
+                
+                $('#aside .menu-lateral .btn').each(function(){
+                    if ($(this).attr('data-tipo').indexOf(tipo) != -1){
+                        $(this).removeClass('d-none');
+                    }
+                });
 
                 $('nav.user-logeado').removeClass('d-none');
                 $('nav.user-logeado .btn-log span').text(sessionStorage.getItem('user_nombre')+ ' '+sessionStorage.getItem('user_apellido'));
