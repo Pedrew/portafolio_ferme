@@ -88,13 +88,14 @@ def product_receipt(request):
 	medio_pago = post['payment_method']
 	total = post['total']
 	
-	Product.createBoleta(id_user, pago_tipo, medio_pago, entrega, id, cantidad, total)
+	now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
-	now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+	Product.createBoleta(id_user, pago_tipo, medio_pago, entrega, now, id, cantidad, total)
+
 	detalle = Product.getDetalle(id)
 	usuario = Product.getUser(id_user)
 	boleta = Product.getLastBoleta(id_user)
-	return render(request, 'productos_ferreteria/product_receipt.html', {'detalle': detalle, 'usuario': usuario, 'boleta': boleta, 'entrega': entrega, 'pago_tipo': pago_tipo, 'medio_pago': medio_pago, 'fecha': str(now)})
+	return render(request, 'productos_ferreteria/product_receipt.html', {'detalle': detalle, 'usuario': usuario, 'boleta': boleta, 'entrega': entrega, 'pago_tipo': pago_tipo, 'medio_pago': medio_pago})
 
 def shopping_cart(request):
 	post = request.POST

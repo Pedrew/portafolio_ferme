@@ -95,10 +95,10 @@ class Product(models.Model):
         cur.close()
         con.close()
     @classmethod
-    def createBoleta(self, id_user, pay_type, payment, entrega, id_prod, cantidad, total):
+    def createBoleta(self, id_user, pay_type, payment, entrega, fecha, id_prod, cantidad, total):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.callproc("create_boleta",[id_user, pay_type, payment, entrega])
+        cur.callproc("create_boleta",[id_user, pay_type, payment, entrega, fecha])
         cur.callproc("create_detalle_boleta",[id_prod, cantidad, total])
         cur.close()
         con.close()
@@ -131,7 +131,7 @@ class Product(models.Model):
         cur.execute('select * from boleta where id_boleta = (select max(id_boleta) from boleta where id_usuario ='+str(id)+')')
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
-        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4]}
+        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5]}
         cur.close()
         con.close()
         return obj

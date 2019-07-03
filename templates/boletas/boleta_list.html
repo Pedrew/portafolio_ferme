@@ -18,6 +18,7 @@
                             <th scope="col">Medio pago</th>
                             <th scope="col">Entrega</th>
                             <th scope="col">Total</th>
+                            <th scope="col">Fecha</th>
                             <th scope="col">Detalle</th>
                         </tr>
                     </thead>
@@ -30,6 +31,7 @@
                             <td>{{ item.MEDIO_PAGO }}</td>
                             <td>{{ item.ENTREGA }}</td>
                             <td>${{ item.TOTAL }}</td>
+                            <td>{{ item.FECHA }}</td>
                             <td><a class="btn btn-block btn-warning" href="boleta_detail?id={{item.ID_BOLETA}}">
                                     <i class="icon-eye s-4"></i> Detalle
                                 </a></td>
