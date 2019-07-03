@@ -30,7 +30,11 @@
                 var tipo = '['+sessionStorage.getItem('user_tipo')+']';
                 
                 $('#aside .menu-lateral .btn').each(function(){
-                    if ($(this).attr('data-tipo').indexOf(tipo) != -1){
+                    if($(this).attr('user-tipo') != '[all]'){
+                        if($(this).attr('user-tipo').indexOf(tipo) != -1){
+                            $(this).removeClass('d-none');
+                        }
+                    }else{
                         $(this).removeClass('d-none');
                     }
                 });

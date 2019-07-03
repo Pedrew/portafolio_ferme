@@ -1,157 +1,143 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block tituloPagina %}
-	<title>Órden de Compra | FERME</title>
+    <title>ORDENES DE COMPRA | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-<div id="e-commerce-products" class="page-layout carded full-width">
-    <div class="top-bg bg-primary"></div>
-    <div class="page-content-wrapper">
-        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
-            <div class="col-12 col-sm">
-                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
-                    <div class="logo-icon mr-3 mt-1">
-                        <i class="icon-book s-6"></i>
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Órden de Compra</h1>
+
+        <div class="row">
+            <div class="col-5">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Proveedores</span>
                     </div>
-                    <div class="logo-text">
-                        <div class="h4">Órden de Compra</div>
-                    </div>
+                    <input type="text" class="form-control btn-filtro" data-op="proveedor" placeholder="Filtrar por proveedor...">
                 </div>
-            </div>
-            <div class="col search-wrapper px-20">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-icon">
-                            <i class="icon icon-magnify"></i>
-                        </button>
-                    </span>
-                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
-                </div>
-            </div>
-        </div>    
-<div class="row">
-            <div class="col-sm-5">
-                <div class="light-fg text-center">
-                    <div class=" col-sm-12 h4">Proveedores</div>
-                </div>
-                    <div class="page-content-card">
-                        <table id="e-commerce-products-table" class="table dataTable">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div class="table-header">
-                                            <span class="column-title">Proveedor</span>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div class="table-header">
-                                            <span class="column-title">Código</span>
-                                        </div>
-                                    </th>
-                                    <th class="text-center">
-                                        <div class="table-header">
-                                            <span class="column-title">Acción</span>
-                                        </div>
-                                    </th>                        
-                                </tr>
-                            </thead>
-                            <tbody>
-                                    {% for item in proveedores_list %}
-                                <tr> 
-                                    <td>{{item.RAZON_SOCIAL}}</td>
-                                    <td>{{item.IDENTIFICADOR}}</td>
-                                <td class="text-center">
-                                    <a class="badge badge-dark" href="productos_get?id={{item.PROVEEDOR_ID}}&proveedor={{item.RAZON_SOCIAL}}">
-                                        <small>Nueva Órden</small>
+                <div class="tabla-general table-responsive">
+                    <table class="table table-hover table-bordered" id="tabla-proveedor">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Proveedor</th>
+                                <th scope="col">Código</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in proveedores_list %}
+                            <tr class="fila">
+                                <td class="text-uppercase text-left">{{ item.RAZON_SOCIAL }}</td>
+                                <td class="text-uppercase">{{ item.IDENTIFICADOR }}</td>
+                                <td class="acciones">
+                                    <a class="btn btn-block btn-small btn-ferme b2" href="productos_get?id={{item.PROVEEDOR_ID}}&proveedor={{item.RAZON_SOCIAL}}">
+                                        Nueva Orden
                                     </a>
                                 </td>
-                                    {%endfor%}
                             </tr>
-                            </tbody>
-                        </table>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Tipos</span>
                     </div>
-                    
-</div>
-<div class="col-sm-7">
-    <div class="light-fg text-center">
-        <div class=" col-sm-12 h4">Listado Órdenes de Compra</div>
-    </div>
-        <div class="page-content-card">
-            <table id="e-commerce-products-table" class="table dataTable">
-                <thead>
-                    <tr>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">ID</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Proveedor</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Producto</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Valor Total</span>
-                            </div>
-                        </th>
-                        <th class="text-center">
-                            <div class="table-header">
-                                <span class="column-title">Estado</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Detalle</span>
-                            </div>
-                        </th>                        
-                    </tr>
-                </thead>
-                <tbody>
-                        {% for item in order_list %}
-                    <tr> 
-                        <td>{{item.ID_ORDEN}}</td>
-                        <td>{{item.RAZON_SOCIAL}}</td>
-                        <td>{{item.PRODUCTO}}</td>
-                        <td class="text-center">$ {{item.VALOR}}</td>
-                        {% if item.ESTADO == 'Pendiente' %}
-                        <td><span class="badge badge-pill badge-warning">{{item.ESTADO}}</span></td>                        
-                        {% endif %}
-                        {% if item.ESTADO == 'Envío Local' %}
-                        <td><span class="badge badge-pill badge-info">{{item.ESTADO}}</span></td>                        
-                        {% endif %}
-                        {% if item.ESTADO == 'En Sucursal' %}
-                        <td><span class="badge badge-pill badge-primary">{{item.ESTADO}}</span></td>                        
-                        {% endif %}
-                        {% if item.ESTADO == 'Procesada' %}
-                        <td><span class="badge badge-pill badge-success">{{item.ESTADO}}</span></td>                        
-                        {% endif %}
-                        {% if item.ESTADO == 'Anulada' %}
-                        <td><span class="badge badge-pill badge-danger">{{item.ESTADO}}</span></td>                        
-                        {% endif %}
-                        <td>
-                        <a class="btn btn-icon" href="order_status?id={{item.ID_ORDEN}}" aria-label="Detalle Orden">
-                            <i class="icon icon-eye s-4"></i> detalle
-                        </a>
-                    </td>
-                        {%endfor%}
-                </tr>
-                </tbody>
-            </table>
+                    <input type="text" class="form-control btn-filtro" data-op="ordenes" placeholder="Filtrar por n° orden...">
+                </div>
+                <div class="tabla-general table-responsive">
+                    <table class="table table-hover table-bordered" id="tabla-ordenes">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Proveedor</th>
+                                <th scope="col">Producto</th>
+                                <th scope="col">Valor Total</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order_list %}
+                            <tr class="fila">
+                                <td class="text-uppercase">{{ item.ID_ORDEN }}</td>
+                                <td class="text-uppercase">{{ item.RAZON_SOCIAL }}</td>
+                                <td class="text-uppercase">{{ item.PRODUCTO }}</td>
+                                <td class="text-uppercase text-right">${{ item.VALOR|intcomma }}</td>
+                                <td>
+                                    {% if item.ESTADO == 'Pendiente' %}
+                                        <span class="badge badge-pill badge-warning">{{item.ESTADO}}</span>                        
+                                    {% endif %}
+                                    {% if item.ESTADO == 'Envío Local' %}
+                                        <span class="badge badge-pill badge-info">{{item.ESTADO}}</span>                        
+                                    {% endif %}
+                                    {% if item.ESTADO == 'En Sucursal' %}
+                                        <span class="badge badge-pill badge-primary">{{item.ESTADO}}</span>                        
+                                    {% endif %}
+                                    {% if item.ESTADO == 'Procesada' %}
+                                        <span class="badge badge-pill badge-success">{{item.ESTADO}}</span>                        
+                                    {% endif %}
+                                    {% if item.ESTADO == 'Anulada' %}
+                                        <span class="badge badge-pill badge-danger">{{item.ESTADO}}</span>                        
+                                    {% endif %}
+                                </td>
+                                <td class="acciones">
+                                    <a class="btn btn-block btn-small btn-ferme b2" href="order_status?id={{item.ID_ORDEN}}">
+                                        Ver Detalle
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
 </div>
+
 {% endblock contenido %}
 {% block js %}
-	<script>
-		$(document).ready(function(){
-			
-		});
-	</script>
+<script>
+    $(document).ready(function(){
+        $('#aside [data-menu="orders_list"]').addClass('active');
+    });
+
+    $('.btn-filtro').keyup(function(){
+        var palabra = $(this).val().toUpperCase();
+        var tipo = $(this).attr('data-op');
+
+        if($.trim(palabra) != ''){
+            if(tipo == "proveedor"){
+                $('#tabla-proveedor .fila').addClass('d-none');
+                $('#tabla-proveedor .fila td:first-child').each(function(){
+                    var texto = $(this).text().toUpperCase();
+
+                    if(texto.search(palabra) != -1){
+                        $(this).parent().removeClass('d-none');
+                    }
+                });
+            }else{
+                $('#tabla-ordenes .fila').addClass('d-none');
+                $('#tabla-ordenes .fila td:first-child').each(function(){
+                    var texto = $(this).text().toUpperCase();
+
+                    if(texto.search(palabra) != -1){
+                        $(this).parent().removeClass('d-none');
+                    }
+                });
+            }
+        }else{
+            if(tipo == "proveedor"){
+                $('#tabla-proveedor .fila').removeClass('d-none');
+            }else{
+                $('#tabla-ordenes .fila').removeClass('d-none');
+            }
+        }
+    });
+</script>
 {% endblock js %}

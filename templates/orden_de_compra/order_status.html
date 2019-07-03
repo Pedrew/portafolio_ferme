@@ -1,9 +1,89 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block tituloPagina %}
-	<title>Órden de Compra | FERME</title>
+    <title>PRDEN ESTADO | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
+    <div class="container-fluid">
+        <div class="py-4">
+            <h1 class="titulo">ORDEN ESTADO</h1>
+
+            <div class="col-6 mx-auto py-3">
+                <form method="POST" class="post-form" action="order_update" id="form-orden">
+                    {% csrf_token %}
+                    <input type="hidden" name="id_prod" value="{{orden.ID_PROD}}" readonly>
+                    <input type="hidden" name="id_prov" value="{{orden.ID_PROV}}" readonly>
+                    <input type="hidden" name="id_orden" value="{{orden.ID_ORDEN}}" readonly>
+                    <div class="input-group mb-3 row mx-0">
+                        <div class="input-group-prepend col-4 px-0">
+                            <span class="input-group-text w-100">Proveedor</span>
+                        </div>
+                        <input type="text" name="proveedor" class="form-control col-8" value="{{orden.RAZON_SOCIAL}}" readonly>
+                    </div>
+
+                    <div class="input-group mb-3 row mx-0">
+                        <div class="input-group-prepend col-4 px-0">
+                            <span class="input-group-text w-100">Producto</span>
+                        </div>
+                        <input type="text" name="producto" class="form-control col-8" value="{{orden.PRODUCTO}}" readonly>
+                    </div>
+
+                    <div class="input-group mb-3 row mx-0">
+                        <div class="input-group-prepend col-4 px-0">
+                            <span class="input-group-text w-100">Cantidad</span>
+                        </div>
+                        <input type="text" name="stock" class="form-control col-8" value="{{orden.STOCK}}" readonly>
+                    </div>
+
+                    <div class="input-group mb-3 row mx-0">
+                        <div class="input-group-prepend col-4 px-0">
+                            <span class="input-group-text w-100">Stock Crítico</span>
+                        </div>
+                        <input type="text" name="stock_crit" class="form-control col-8" value="{{orden.STOCK_CRIT}}" readonly>
+                    </div>
+
+                    <div class="input-group mb-3 row mx-0">
+                        <div class="input-group-prepend col-4 px-0">
+                            <span class="input-group-text w-100">Total</span>
+                        </div>
+                        <input type="text" name="total" class="form-control col-8" value="$ {{orden.VALOR|intcomma}}" readonly>
+                    </div>
+
+                    <div class="input-group mb-3 row mx-0">
+                        <div class="input-group-prepend col-4 px-0">
+                            <span class="input-group-text w-100">Estado</span>
+                        </div>
+                        <input type="text" name="total" class="form-control col-8" value="{{orden.ESTADO}}" readonly>
+                    </div>
+                    
+                    
+                    
+                    <div class="botones text-center">
+                        <a class="btn btn-volver" href="{% url 'orders_list' %}"> <i class="icon-reply"></i> Volver</a>
+                        {% if orden.ESTADO == 'Pendiente' %}
+                            <input type="hidden" name="estado" value="2" readonly>
+                            <button type="button" class="btn btn-ferme btn-enviar b2">Iniciar Envío Local</button>
+                        {% endif %}
+                        {% if orden.ESTADO == 'Envío Local' %}
+                            <input type="hidden" name="estado" value="3" readonly>
+                            <button type="buttond" class="btn btn-ferme btn-enviar b2">Órden En Sucursal</button>
+                        {% endif %}
+                        {% if orden.ESTADO == 'En Sucursal' %}
+                            <input type="hidden" name="estado" value="4" readonly>
+                            <button type="submit" class="btn btn-ferme btn-enviar b2">Procesar y Cerrar</button>
+                        {% endif %}
+                        {% if orden.ESTADO == 'Anulada' %}
+                        {% endif %}
+                    </div>
+                    <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
 <div id="e-commerce-products" class="page-layout carded full-width">
     <div class="top-bg bg-primary"></div>
     <div class="page-content-wrapper">
@@ -87,8 +167,68 @@
 </div>
 {% endblock contenido %}
 {% block js %}
-	<script>
-		$(document).ready(function(){
-		});
-	</script>
+    <script src="{% static 'js/jquery.rut.chileno.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-bg]').each(function(){
+                $(this).css({
+                    'background-image': 'url('+$(this).attr("data-bg")+')'
+                });
+            });
+            $('[data-url]').click(function(){
+                window.location = $(this).attr('data-url');
+            });
+            $('#aside [data-menu="orders_list"]').addClass('active');
+        });
+
+        $('.cantidad .btn-control').click(function(){
+          var act = parseInt($('.cantidad [name="stock"]').attr('value'));
+          var op = $(this).attr('data-op');
+          if(op == 1){  
+            $('.cantidad [name="stock"]').attr('value', act + 1);
+          }else{
+              if(act > 1){
+                $('.cantidad [name="stock"]').attr('value', act - 1); 
+              }
+          }
+
+
+          $('#form-orden [name="total"]').val(parseInt($('.cantidad [name="stock"]').attr('value')) * parseInt($('#valor').attr('value')));
+        });
+
+        $('.cantidad-stock .btn-control').click(function(){
+          var act = parseInt($('.cantidad-stock [name="stock_crit"]').attr('value'));
+          var op = $(this).attr('data-op');
+          if(op == 1){  
+            $('.cantidad-stock [name="stock_crit"]').attr('value', act + 1);
+          }else{
+              if(act > 1){
+                $('.cantidad-stock [name="stock_crit"]').attr('value', act - 1); 
+              }
+          }
+        });
+        
+        $('.btn-enviar').click(function(){
+            var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var expr2 = /^\d*$/;
+            var flag = false;
+            $('#res').addClass('d-none');
+
+            $('#form-orden .validarCampo').each(function(){
+                if($.trim($(this).val()) == ''){
+                    $(this).addClass('is-invalid').focus();
+                    $('#res').html('Ingrese '+$(this).attr('data-nom'));
+                    $('#res').removeClass('d-none');
+                    flag = true;
+                    return false;
+                }else{
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+            if(flag == false){
+                $('#form-orden').submit();
+                $('#form-orden .btn-enviar').prop('disabled',true).html('Enviando...');
+            }
+        });
+    </script>
 {% endblock js %}
