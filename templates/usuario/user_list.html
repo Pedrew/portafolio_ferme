@@ -17,9 +17,17 @@
                 </a>
             </div>
         </div>
+        <div class="col-6 px-0">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Nombre</span>
+                </div>
+                <input type="text" class="form-control btn-filtro" placeholder="Filtrar por nombre...">
+            </div>
+        </div>
         <div class="usuarios">
             <div class="tabla-general table-responsive">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered" id="tabla-usuarios">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID</th>
@@ -34,7 +42,7 @@
                     <tbody>
                         {% for item in user %}
                         {% if item.TYPE_NAME != 'admin'  %}
-                        <tr>
+                        <tr class="fila">
                             <td>{{ item.USER_ID }}</td>
                             <td>{{ item.USUARIO }}</td>
                             <td>{{ item.TYPE_NAME }}</td>
@@ -99,6 +107,22 @@
     $('.btn-confirmar').click(function(){
         $(this).text('Modificando...').prop('disabled',true);
         window.location = 'update_user_status?id='+$(this).attr('data-id')+'&status='+$(this).attr('data-status');
+    });
+
+    $('.btn-filtro').keyup(function(){
+        var palabra = $(this).val().toUpperCase();
+        if($.trim(palabra) != ''){
+            $('#tabla-usuarios .fila').addClass('d-none');
+            $('#tabla-usuarios .fila td:nth-child(4)').each(function(){
+                var texto = $(this).text().toUpperCase();
+
+                if(texto.search(palabra) != -1){
+                    $(this).parent().removeClass('d-none');
+                }
+            });
+        }else{
+            $('#tabla-usuarios .fila').removeClass('d-none');
+        }
     });
 
     $(document).ready(function(){
