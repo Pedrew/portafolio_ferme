@@ -1,75 +1,44 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block tituloPagina %}
-	<title>Productos Proveedores | FERME</title>
+    <title>PRODUCTOS PROOVEDORES | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
-<div id="e-commerce-products" class="page-layout carded full-width">
-    <div class="top-bg bg-primary"></div>
-    <div class="page-content-wrapper">
-        <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
-            <div class="col-12 col-sm">
-                <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
-                    <div class="logo-icon mr-3 mt-1">
-                        <i class="icon-cart s-6"></i>
-                    </div>
-                    <div class="logo-text">
-                        <div class="h4">Productos {{proveedor}}</div>
-                    </div>
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Productos {{proveedor}}</h1>
+
+        <div class="col-6 px-0">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Nombre</span>
                 </div>
+                <input type="text" class="form-control btn-filtro" placeholder="Filtrar por nombre...">
             </div>
-            <div class="col search-wrapper px-20">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-icon">
-                            <i class="icon icon-magnify"></i>
-                        </button>
-                    </span>
-                    <input id="products-search-input" type="text" class="form-control" placeholder="Buscador..." />
-                </div>
-            </div>
-       </div>
-       <div class="light-fg text-center">
-            <div class=" col-sm-12 h4 text-left">Seleccione Producto para generar órden de compra</div>
         </div>
-        <div class="page-content-card">
-            <table class="table dataTable">
-                <thead>
+        <div class="tabla-general table-responsive">
+            <table class="table table-hover table-bordered" id="tabla-productos">
+                <thead class="thead-dark">
                     <tr>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Código</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Nombre</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Precio</span>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="table-header">
-                                <span class="column-title">Agregar</span>
-                            </div>
-                        </th>
+                        <th scope="col">Código</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Precio</th>
+                        <th width="120px" scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in productos %}
-                    <tr>
-                        <td>{{ item.PRODUCTO_ID }}</td>
-                        <td>{{ item.NOMBRE }}</td>
-                        <td>$ {{ item.VALOR }}</td>
-                    <td>
-                        <a class="btn btn-icon" href="orders_create?id={{item.ID_PROD}}&id_prov={{id_prov}}&prov={{proveedor}}&producto={{item.NOMBRE}}&valor={{item.VALOR}}" aria-label="Modificar Producto">
-                            <i class="icon icon-cart s-4"></i>
-                        </a>
-                    </td>
-                </tr>
+                    <tr class="fila">
+                        <td class="text-left text-uppercase">{{ item.PRODUCTO_ID }}
+                        <td class="text-uppercase">{{ item.NOMBRE }}</td></td>
+                        <td class="text-right">$ {{ item.VALOR|intcomma }}</td>
+                        <td class="acciones">
+                            <a class="btn btn-block btn-warning" href="orders_create?id={{item.ID_PROD}}&id_prov={{id_prov}}&prov={{proveedor}}&producto={{item.NOMBRE}}&valor={{item.VALOR}}">
+                                Crear Orden
+                            </a>
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
@@ -78,10 +47,26 @@
 </div>
 {% endblock contenido %}
 {% block js %}
-    <script type="text/javascript" src="{% static 'js/apps/e-commerce/products/productos_lista.js' %}"></script>
-	<script>
-		$(document).ready(function(){
-			
-		});
-	</script>
+<script>
+    $(document).ready(function(){
+        $('#aside [data-menu="orders_list"]').addClass('active');
+    });
+
+    $('.btn-filtro').keyup(function(){
+        var palabra = $(this).val().toUpperCase();
+
+        if($.trim(palabra) != ''){
+            $('#tabla-productos .fila').addClass('d-none');
+            $('#tabla-productos .fila td:nth-child(2)').each(function(){
+                var texto = $(this).text().toUpperCase();
+
+                if(texto.search(palabra) != -1){
+                    $(this).parent().removeClass('d-none');
+                }
+            });
+        }else{
+            $('#tabla-productos .fila').removeClass('d-none');
+        }
+    });
+</script>
 {% endblock js %}
