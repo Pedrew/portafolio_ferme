@@ -1,24 +1,3 @@
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-<style>
-.invoice-title h2, .invoice-title h3 {
-    display: inline-block;
-}
-
-.table > tbody > tr > .no-line {
-    border-top: none;
-}
-
-.table > thead > tr > .no-line {
-    border-bottom: none;
-}
-
-.table > tbody > tr > .thick-line {
-    border-top: 2px solid;
-}
-</style>
 {% extends 'base/base.html' %}
 {% load static %}
 {% load humanize %}
@@ -27,94 +6,251 @@
 {% endblock tituloPagina %}
 {% block contenido %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 mt-4">
-    		<div class="invoice-title">
-    			<h2>Carro de compra</h2><button class="pull-right btn btn-ferme b2">Continuar comprando</button>
-    		</div>
-    		<hr>
-    	</div>	
-    </div>
-    
-    <div class="row">
-    	<div class="col-md-12">
-    		<div class="panel panel-default">
-    			<div class="panel-heading">
-    				<h3 class="panel-title"><strong>Detalle</strong></h3>
-    			</div>
-    			<div class="panel-body">
-    				<div class="table-responsive">
-    					<table class="table table-condensed">
-    						<thead>
-                                <tr>
-        							<td><strong>Item</strong></td>
-        							<td class="text-center"><strong>Valor</strong></td>
-        							<td class="text-center"><strong>Cantidad</strong></td>
-        							<td class="text-right"><strong>Total</strong></td>
-                                </tr>
-    						</thead>
-    						<tbody>
-    							<!-- foreach ($order->lineItems as $line) or some such thing here -->
-    							<tr>
-    								<td>{{product.NOMBRE}}</td>
-    								<td class="text-center">${{product.VALOR}}</td>
-    								<td class="text-center">{{cantidad}}</td>
-    								<td class="text-right">${{total}}</td>
-    							</tr>
-    							<tr>
-    								<td class="thick-line"></td>
-    								<td class="thick-line"></td>
-    								<td class="thick-line text-center"><strong>Subtotal</strong></td>
-    								<td class="thick-line text-right">${{total}}</td>
-    							</tr>
-    							<tr>
-    								<td class="no-line"></td>
-    								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>envío</strong></td>
-    								<td class="no-line text-right">$0</td>
-    							</tr>
-    							<tr>
-    								<td class="no-line"></td>
-    								<td class="no-line"></td>
-    								<td class="no-line text-center"><strong>Total</strong></td>
-    								<td class="no-line text-right">${{total}}</td>
-    							</tr>
-    						</tbody>
-                        </table>
-						<hr>
-						<form method="POST" class="post-form" action="product_receipt">
-								{% csrf_token %}
-							<input type="hidden" name="cantidad" class="from-control" value="{{cantidad}}">
-							<input type="hidden" name="total" class="from-control" value="{{total}}">
-							<input type="hidden" name="id" class="from-control" value="{{product.ID_PROD}}">
-							<div>
-								<label>Tipo de entrega: </label>
-								<select name="entrega" class="ml-1" data-nom="Tipo Usuario">
-									<option value="Retiro en sucursal">Retiro en sucursal</option>
-									<option value="Entrega a domicilio">Entrega a domicilio</option>
-								</select>
-							</div>
-							<div>
-								<label>Tipo de pago:</label>
-								<select name="payment_type" class="ml-4" data-nom="Tipo Usuario">
-									<option value="Pago contra entrega">Pago contra entrega</option>
-									<option value="Pago online">Pago online</option>
-								</select>
-							</div>
-							<div>
-								<label>Medio de pago:</label>
-								<select name="payment_method" class="ml-2" data-nom="Tipo Usuario">
-									<option value="Efectivo">Efectivo</option>
-									<option value="Tarjeta">Tarjeta</option>
-								</select>
-							</div>
-							<button class="pull-right btn btn-ferme b2" type="submit">Procesar Compra</button>
-						</form>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
+<div class="container-fluid">
+    <div class="py-4">
+        <div class="row">
+            <div class="col-sm-9">
+                <h1 class="titulo">CARRO DE COMPRA</h1>
+            </div> 
+            <div class="text-right col-sm-3">
+                <a class="btn btn-ferme b2" href="{% url 'productos_sell_list' %}">
+                    Seguir Comprando
+                </a>
+            </div>
+        </div>
+
+        <div class="tabla-general table-responsive">
+            <table class="table table-hover table-bordered" id="tabla-productos">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila">
+                        <td class="text-uppercase text-left">{{ product.NOMBRE }}</td>
+                        <td class="text-uppercase text-right">${{ product.VALOR|intcomma }}</td>
+                        <td class="text-uppercase text-center">{{ cantidad }}</td>
+                        <td class="text-right">${{ total|intcomma }}</td>
+                    </tr>
+                    <tr class="fila">
+                        <td class=""></td>
+                        <td class=""></td>
+                        <td class=""></td>
+                        <td class=""></td>
+                    </tr>
+                    <tr class="fila">
+                        <td class=""></td>
+                        <td class=""></td>
+                        <td class="text-right"><strong>Subtotal</strong></td>
+                        <td class="text-right">${{ total|intcomma }}</td>
+                    </tr>
+                    <tr class="fila">
+                        <td class=""></td>
+                        <td class=""></td>
+                        <td class="text-right"><strong>Envío</strong></td>
+                        <td class="text-right" id="costo_envio">$0</td>
+                    </tr>
+                    <tr class="fila">
+                        <td class=""></td>
+                        <td class=""></td>
+                        <td class="text-right"><strong>Total</strong></td>
+                        <td class="text-right" id="total_vista">${{ total|intcomma }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-6 mx-auto py-3">
+            <form method="POST" id="form-carro" action="product_receipt">
+                {% csrf_token %}
+                <input type="hidden" name="total_global" value="{{total}}">
+                <input type="hidden" name="cantidad" value="{{cantidad}}">
+                <input type="hidden" name="total">
+                <input type="hidden" name="id" value="{{product.ID_PROD}}">
+                <input type="hidden" name="id_user"> <!-- TOMAR DATO PARA NOMBRE EN BOLETA -->
+                <input type="hidden" name="envio"> <!-- TOMAR DATO PARA COSTO ENVIO EN BOLETA -->
+                
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Tipo de Entrega</span>
+                    </div>
+                    <select name="entrega" class="form-control validarCampo" data-nom="Tipo de Entrega">
+                        <option value="">Seleccione...</option>
+                        <option value="Retiro en sucursal">Retiro en sucursal</option>
+                        <option value="Entrega a domicilio">Entrega a domicilio</option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3 row mx-0 direccion d-none">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Seleccione Región</span>
+                    </div>
+                    <select name="region" class="form-control" data-nom="Región" id="regiones">
+                        
+                    </select>
+                </div>
+
+                <div class="input-group mb-3 row mx-0 direccion d-none">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Seleccione Comuna</span>
+                    </div>
+                    <select name="comuna" class="form-control" data-nom="Comuna" id="comunas">
+                    </select>
+                </div>
+
+                <div class="input-group mb-3 row mx-0 direccion d-none">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Indique Dirección</span>
+                    </div>
+                    <input type="text" name="address" class="form-control" data-nom="Dirección">
+                </div>
+
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Tipo de Pago</span>
+                    </div>
+                    <select name="payment_type" class="form-control validarCampo" data-nom="Tipo de Pago">
+                        <option value="">Seleccione...</option>
+                        <option value="Pago contra entrega">Pago contra entrega</option>
+                        <option value="Pago online">Pago online</option>
+                    </select>
+                </div>
+
+                <div class="input-group mb-3 row mx-0">
+                    <div class="input-group-prepend col-4 px-0">
+                        <span class="input-group-text w-100">Medio de Pago</span>
+                    </div>
+                    <select name="payment_method" class="form-control validarCampo" data-nom="Medio de Pago">
+                        <option value="">Seleccione...</option>
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta">Tarjeta</option>
+                    </select>
+                </div>
+
+                <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
+                <div class="text-center">
+                    <button type="button" class="btn btn-ferme b2 btn-enviar">Proecsar Compra</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+            Despacho disponible sólo en Región Metropolitana de Santiago, en la comuna de San Joaquín
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-confirmar" data-dismiss="modal">Ok, entiendo!</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
 {% endblock contenido %}
+
+{% block js %}
+    <script src="{% static 'js/regiones-y-comunas.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('[data-bg]').each(function(){
+                $(this).css({
+                    'background-image': 'url('+$(this).attr("data-bg")+')'
+                });
+            });
+            $('[data-url]').click(function(){
+                window.location = $(this).attr('data-url');
+            });
+            $('#aside [data-menu="users_list"]').addClass('active');
+
+            $('[name="id_user"]').attr('value',sessionStorage.getItem('user_id'));
+        });
+
+        $('[name="entrega"]').change(function(){
+            if($(this).val() == 'Entrega a domicilio'){
+                $('#modalConfirmar').modal('show');
+                $('.direccion').removeClass('d-none');
+                $('.direccion .form-control').addClass('validarCampo');
+                $('#costo_envio').html('$3.000');
+                $('[name="total"]').attr('value',parseInt($('[name="total_global"]').attr('value')) + 3000);
+                $('[name="envio"]').attr('value','3000');
+                $('#total_vista').html('$'+(parseInt($('[name="total_global"]').attr('value')) + 3000));
+
+            }else{
+                $('.direccion').addClass('d-none');
+                $('.direccion .form-control').removeClass('validarCampo');
+                $('#costo_envio').html('$0');
+                $('[name="total"]').attr('value',parseInt($('[name="total_global"]').attr('value')));
+                $('[name="envio"]').attr('value','0');
+                $('#total_vista').html('$'+(parseInt($('[name="total_global"]').attr('value'))));
+            }
+        });
+
+        $('[name="payment_type"]').change(function(){
+            if($(this).val() == 'Pago online'){
+                $('[name="payment_method"] option[value="Efectivo"]').addClass('d-none');
+            }else{
+                $('[name="payment_method"] option[value="Efectivo"]').removeClass('d-none');
+            }
+            $('[name="payment_method"]').prop('selectedIndex',0);
+        });
+
+
+        $('.btn-enviar').click(function(){
+            var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var expr2 = /^\d*$/;
+            var flag = false;
+            $('#res').addClass('d-none');
+
+            $('#form-carro .validarCampo').each(function(){
+                if($.trim($(this).val()) == ''){
+                    $(this).addClass('is-invalid').focus();
+                    $('#res').html('Ingrese '+$(this).attr('data-nom'));
+                    $('#res').removeClass('d-none');
+                    flag = true;
+                    return false;
+                }else{
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                }
+                if($(this).attr('name') == 'region'){
+                    if($(this).val() != 'Región Metropolitana de Santiago'){
+                        $(this).addClass('is-invalid').focus();
+                        $('#res').html('La región indicada no tiene cobertura de despacho');
+                        $('#res').removeClass('d-none');
+                        flag = true;
+                        return false;
+                    }else{
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    }
+                }
+                if($(this).attr('name') == 'comuna'){
+                    if($(this).val() != 'San Joaquín'){
+                        $(this).addClass('is-invalid').focus();
+                        $('#res').html('No hay despacho disponible en la comuna indicada');
+                        $('#res').removeClass('d-none');
+                        flag = true;
+                        return false;
+                    }else{
+                        $(this).removeClass('is-invalid').addClass('is-valid');
+                    }
+                }
+            });
+            if(flag == false){
+                $('#form-carro').submit();
+                $('#form-carro .btn-enviar').prop('disabled',true).html('Enviando...');
+            }
+        });
+    </script>
+{% endblock js %}
