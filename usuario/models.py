@@ -35,12 +35,15 @@ class Usuario(models.Model):
         con.close()
         return obj
     @classmethod
-    def createUser(self, user, password, user_type, name, last_name, status, rut, rubro, telefono, razon_social, identificador):
+    def createUser(self, user, password, user_type, name, last_name, status, rut, rubro, telefono, razon_social, identificador, direccion):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
         if user_type == "4":
             cur.callproc("create_user",[user, password, user_type, name, last_name, status, rut])
             cur.callproc("create_proveedor",[rubro, telefono, razon_social, identificador])
+        if user_type == "3" or user_type == "6":
+            cur.callproc("create_user",[user, password, user_type, name, last_name, status, rut])
+            cur.callproc("create_client",[direccion])
         else:
             cur.callproc("create_user",[user, password, user_type, name, last_name, status, rut])
         cur.close()

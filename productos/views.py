@@ -82,7 +82,7 @@ def product_receipt(request):
 
 	Product.updateStock(id, cantidad)
 
-	id_user = 161
+	id_user = post['id_user']
 	entrega = post['entrega']
 	pago_tipo = post['payment_type']
 	medio_pago = post['payment_method']

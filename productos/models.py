@@ -109,7 +109,7 @@ class Product(models.Model):
         cur.execute('select nombre, apellido, direccion, usuario from usuarios join cliente on usuarios.user_id = cliente.usuario_id where usuarios.user_id = '+str(id))
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
-        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3]}
+        obj = {column[0]:res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3]}
         cur.close()
         con.close()
         return obj
@@ -131,7 +131,7 @@ class Product(models.Model):
         cur.execute('select * from boleta where id_boleta = (select max(id_boleta) from boleta where id_usuario ='+str(id)+')')
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
-        obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5]}
+        obj = {column[0]:res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5]}
         cur.close()
         con.close()
         return obj

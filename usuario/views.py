@@ -26,6 +26,7 @@ def users_insert(request):
 	status = post['status']
 	rut = post['rut']
 
+	direccion = ""
 	rubro = ""
 	telefono = ""
 	razon_social = ""
@@ -35,7 +36,9 @@ def users_insert(request):
 		telefono = post['telefono']
 		razon_social = post['razon_social']
 		identificador = post['identificador']
-	Usuario.createUser(user, password, user_type, name, last_name, status, rut, rubro, telefono, razon_social, identificador)
+	if user_type == "3" or user_type == "6":
+		direccion = post['direccion']
+	Usuario.createUser(user, password, user_type, name, last_name, status, rut, rubro, telefono, razon_social, identificador, direccion)
 	response = redirect('users_list')
 	return response
 
