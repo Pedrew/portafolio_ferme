@@ -10,7 +10,7 @@
         <h1 class="titulo">Modificar Producto</h1>
         
         <div class="col-6 mx-auto py-3">
-            <form method="POST" id="form-producto" action="productos_update">
+            <form method="POST" id="form-producto" action="productos_ferreteria_update">
                 {% csrf_token %}
                 <input type="hidden" name="producto_id" class="from-control" value="{{product.ID_PROD}}">
                 <div class="input-group mb-3 row mx-0">
