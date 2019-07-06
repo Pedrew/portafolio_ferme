@@ -8,73 +8,280 @@
     <div class="py-4">
         <h1 class="titulo">Reportes</h1>
 
-		<form method="POST" action="boletas_anno">
+		<form method="POST" action="" id="form-boleta">
 			<div class="col-6 mx-auto">
 				<div class="input-group mb-3 row mx-0">
-	                <div class="input-group-prepend col-4 px-0">
-	                    <span class="input-group-text w-100">Familia</span>
-	                </div>
-	                <select class="form-control col-8" id="tipo">
-	                	<option value="">Seleccione...</option>
-	                	<option value="1">Año</option>
-	                	<option value="2">Mes</option>
-	                	<option value="3">Día</option>
-	                </select>
-	            </div>
+					<div class="input-group-prepend col-4 px-0">
+						<span class="input-group-text w-100">Tipo reporte</span>
+					</div>
+					<select class="form-control col-8 validarCampo" data-nom="Tipo reporte" name="tipo_reporte" id="tipo">
+						<option value="">Seleccione...</option>
+						<option value="boleta">Boleta</option>
+						<option value="usuario">Usuario</option>
+						<option value="medio_pago">Medio de Pago</option>
+					</select>
+				</div>
+	        </div>
+			<div class="col-6 mx-auto con-fecha d-none">
+				<div class="input-group mb-3 row mx-0">
+					<div class="input-group-prepend col-4 px-0">
+						<span class="input-group-text w-100">Reporte según</span>
+					</div>
+					<select class="form-control col-8" data-nom="Reporte según" id="parametro">
+						<option value="">Seleccione...</option>
+						<option value="dia">Día</option>
+						<option value="mes">Mes</option>
+						<option value="ano">Año</option>
+					</select>
+				</div>
+	        </div>
+	        <div class="col-6 mx-auto">
+	        	<div class="row justify-content-center">
+	        		<div class="col-4 d-none" data-campo="dia">
+	        			<div class="input-group row mx-0">
+							<div class="input-group-prepend col-4 px-0">
+								<span class="input-group-text w-100">Día</span>
+							</div>
+							<select class="form-control col-8" name="dia" data-nom="Día">
+								<option value=""></option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+							</select>
+						</div>
+					</div>
+	        		<div class="col-4 d-none" data-campo="mes">
+	        			<div class="input-group row mx-0">
+							<div class="input-group-prepend col-4 px-0">
+								<span class="input-group-text w-100">Mes</span>
+							</div>
+							<select class="form-control col-8" name="mes" data-nom="Mes">
+								<option value=""></option>
+								<option value="01">01</option>
+								<option value="02">02</option>
+								<option value="03">03</option>
+								<option value="04">04</option>
+								<option value="05">05</option>
+								<option value="06">06</option>
+								<option value="07">07</option>
+								<option value="08">08</option>
+								<option value="09">09</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select>
+						</div>
+					</div>
+	        		<div class="col-4 d-none" data-campo="ano">
+	        			<div class="input-group row mx-0">
+							<div class="input-group-prepend col-4 px-0">
+								<span class="input-group-text w-100">Año</span>
+							</div>
+							<select class="form-control col-8" name="ano" data-nom="Año">
+								<option value=""></option>
+								<option value="1980">1980</option>
+								<option value="1981">1981</option>
+								<option value="1982">1982</option>
+								<option value="1983">1983</option>
+								<option value="1984">1984</option>
+								<option value="1985">1985</option>
+								<option value="1986">1986</option>
+								<option value="1987">1987</option>
+								<option value="1988">1988</option>
+								<option value="1989">1989</option>
+								<option value="1990">1990</option>
+								<option value="1991">1991</option>
+								<option value="1992">1992</option>
+								<option value="1993">1993</option>
+								<option value="1994">1994</option>
+								<option value="1995">1995</option>
+								<option value="1996">1996</option>
+								<option value="1997">1997</option>
+								<option value="1998">1998</option>
+								<option value="1999">1999</option>
+								<option value="2001">2001</option>
+								<option value="2002">2002</option>
+								<option value="2003">2003</option>
+								<option value="2004">2004</option>
+								<option value="2005">2005</option>
+								<option value="2006">2006</option>
+								<option value="2007">2007</option>
+								<option value="2008">2008</option>
+								<option value="2009">2009</option>
+								<option value="2010">2010</option>
+								<option value="2011">2011</option>
+								<option value="2012">2012</option>
+								<option value="2013">2013</option>
+								<option value="2014">2014</option>
+								<option value="2015">2015</option>
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+								<option value="2018">2018</option>
+								<option value="2019">2019</option>
+							</select>
+						</div>
+					</div>
+	        	</div>
+	        </div>
+
+	        <div class="col-6 mx-auto con-pago d-none">
+	        	<div class="input-group mb-3 row mx-0">
+					<div class="input-group-prepend col-4 px-0">
+						<span class="input-group-text w-100">Tipo de Pago</span>
+					</div>
+					<select class="form-control col-8" data-nom="Tipo de Pago" name="tipo_pago">
+						<option value="">Seleccione...</option>
+						<option value="efectivo">Efectivo</option>
+						<option value="tarjeta">Tarjeta</option>
+					</select>
+				</div>
+	        </div>
+	        <div class="col-6 mx-auto pt-3">
+	        	<div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
+	        </div>
+	        <div class="col-6 mx-auto text-center">
+	        	<button type="button" class="btn btn-ferme btn-enviar b2">Generar Reporte</button>	
 	        </div>
 		</form>
-
-		<div class="col-6 col-xl-4 mx-auto">
-			<input type="text" class="form-control" id="datepicker">
-		</div>
     </div>
+</div>
+
+<div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+            ¿Está seguro que desea agregar con estos datos?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-volver" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-success btn-confirmar">Si, Agregar</button>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock contenido %}
 {% block js %}
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
-	$.datepicker.regional['es'] = {
-		closeText: 'Cerrar',
-		prevText: '< Ant',
-		nextText: 'Sig >',
-		currentText: 'Hoy',
-		monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-		monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-		dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-		dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-		weekHeader: 'Sm',
-		dateFormat: 'dd/mm/yy',
-		firstDay: 1,
-		isRTL: false,
-		showMonthAfterYear: false,
-		yearSuffix: ''
-	};
-	$.datepicker.setDefaults($.datepicker.regional['es']);
-	
     $(document).ready(function(){
-        $('#aside [data-menu="reportes"]').addClass('active');
+		$('#aside [data-menu="reportes"]').addClass('active');
+		$('#parametro').change(function(){
+			$('[data-campo="dia"]').addClass('d-none');
+			$('[data-campo="dia"] .form-control').removeClass('validarCampo');
+			$('[data-campo="mes"]').addClass('d-none');
+			$('[data-campo="mes"] .form-control').removeClass('validarCampo');
+			$('[data-campo="ano"]').addClass('d-none');
+			$('[data-campo="ano"] .form-control').removeClass('validarCampo');
+			var op = $(this).val();
 
-        $('#tipo').change(function(){
-        	var op = parseInt($(this).val()); 
-        	if(op != ''){
-        		switch(op){
-					case 1:
-						
-						break;
-				}
-        	}else{
+			if(op == 'dia'){
+				$('[data-campo="dia"]').removeClass('d-none');
+				$('[data-campo="dia"] .form-control').addClass('validarCampo');
+				$('[data-campo="mes"]').removeClass('d-none')
+				$('[data-campo="mes"] .form-control').addClass('validarCampo');
+				$('[data-campo="ano"]').removeClass('d-none');
+				$('[data-campo="ano"] .form-control').addClass('validarCampo');
+				$('#form-boleta').attr('action','boletas_dia');
+			}
+			if(op == 'mes'){
+				$('[data-campo="mes"]').removeClass('d-none');
+				$('[data-campo="mes"] .form-control').addClass('validarCampo');
+				$('[data-campo="ano"]').removeClass('d-none');
+				$('[data-campo="ano"] .form-control').addClass('validarCampo');
+				$('#form-boleta').attr('action','boletas_mes');
+			}
+			if(op == 'ano'){
+				$('[data-campo="ano"]').removeClass('d-none')
+				$('[data-campo="ano"] .form-control').addClass('validarCampo');
+				$('#form-boleta').attr('action','boletas_anno');
+			}
+		});
 
-        	}
+		$('#tipo').change(function(){
+			$('.con-fecha').addClass('d-none');
+			$('.con-fecha .form-control').removeClass('validarCampo');
+			$('.con-pago').addClass('d-none');
+			$('.con-pago .form-control').removeClass('validarCampo');
+			$('[data-campo="dia"]').addClass('d-none');
+			$('[data-campo="dia"] .form-control').removeClass('validarCampo');
+			$('[data-campo="mes"]').addClass('d-none');
+			$('[data-campo="mes"] .form-control').removeClass('validarCampo');
+			$('[data-campo="ano"]').addClass('d-none');
+			$('[data-campo="ano"] .form-control').removeClass('validarCampo');
+
+
+			if($(this).val() == 'boleta' || $(this).val() == 'boleta'){
+				$('.con-fecha').removeClass('d-none');
+				$('.con-fecha .form-control').addClass('validarCampo');
+			}
+			if($(this).val() == 'usuario'){
+				$('#form-boleta').attr('action','compras_usuario');
+			}
+			if($(this).val() == 'medio_pago'){
+				$('#form-boleta').attr('action','compras_metodo');
+				$('.con-pago').removeClass('d-none');
+				$('.con-pago .form-control').addClass('validarCampo');
+			}
+		});
+
+		$('.btn-enviar').click(function(){
+            var flag = false;
+            $('#res').addClass('d-none');
+
+            $('#form-boleta .validarCampo').each(function(){
+                if($.trim($(this).val()) == ''){
+                    $(this).addClass('is-invalid').focus();
+                    $('#res').html('Ingrese '+$(this).attr('data-nom'));
+                    $('#res').removeClass('d-none');
+                    flag = true;
+                    return false;
+                }else{
+                    $(this).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+            if(flag == false){
+                $('#modalConfirmar').modal('show');
+            }
+        });
+
+        $('.btn-confirmar').click(function(){
+            $(this).text('Agregando...').prop('disabled',true);
+            $('#form-boleta').submit();
+            $('#form-boleta .btn-enviar').prop('disabled',true).html('Enviando...');
         });
     });
-
-    $(function(){
-		$("#datepicker").datepicker();
-	});
-
-
-
 </script>
 {% endblock js %}
