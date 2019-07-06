@@ -7,9 +7,20 @@
 <div class="container-fluid">
     <div class="py-4">
         <h1 class="titulo">Proveedores</h1>
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Razón Social</span>
+                    </div>
+                    <input type="text" class="form-control btn-filtro" placeholder="Filtrar por razón social...">
+                </div>
+            </div>
+        </div>
         <div class="usuarios">
             <div class="tabla-general table-responsive">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered" id="tabla-proveedores">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Identificador</th>
@@ -22,13 +33,13 @@
                     </thead>
                     <tbody>
                         {% for item in proveedores %}
-                        <tr>
-                            <td>{{ item.IDENTIFICADOR }}</td>
-                            <td>{{ item.RAZON_SOCIAL }}
-                            <td>{{ item.RUBRO }}</td></td>
-                            <td>{{ item.RUT }}</td>
-                            <td>{{ item.USUARIO }}</td>
-                            <td>{{ item.TELEFONO }}</td>
+                        <tr class="fila">
+                            <td class="text-uppercase">{{ item.IDENTIFICADOR }}</td>
+                            <td class="text-uppercase">{{ item.RAZON_SOCIAL }}
+                            <td class="text-uppercase">{{ item.RUBRO }}</td></td>
+                            <td class="text-uppercase">{{ item.RUT }}</td>
+                            <td class="text-uppercase">{{ item.USUARIO }}</td>
+                            <td class="text-uppercase">{{ item.TELEFONO }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -42,6 +53,22 @@
 <script>
     $(document).ready(function(){
         $('#aside [data-menu="proveedores_list"]').addClass('active');
+
+        $('.btn-filtro').keyup(function(){
+            var palabra = $(this).val().toUpperCase();
+            if($.trim(palabra) != ''){
+                $('#tabla-proveedores .fila').addClass('d-none');
+                $('#tabla-proveedores .fila td:nth-child(2)').each(function(){
+                    var texto = $(this).text().toUpperCase();
+
+                    if(texto.search(palabra) != -1){
+                        $(this).parent().removeClass('d-none');
+                    }
+                });
+            }else{
+                $('#tabla-proveedores .fila').removeClass('d-none');
+            }
+        });
     });
 </script>
 {% endblock js %}

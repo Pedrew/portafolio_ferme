@@ -14,6 +14,21 @@
                     <table class="table table-bordered">
                         <tr>
                             <td>
+                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Tipo Usuario
+                            </td>
+                            <td>
+                                <select name="user_type" class="form-control validarCampo" data-nom="Tipo Usuario">
+                                    <option value=""></option>
+                                    <option value="2">Vendedor</option>
+                                    <option value="1">Administrador</option>
+                                    <option value="3">Cliente</option>
+                                    <option value="4">Proveedor</option>
+                                    <option value="5">Empleado</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Nombre
                             </td>
                             <td>
@@ -26,6 +41,17 @@
                             </td>
                             <td>
                                 <input type="text" name="last_name"  class="form-control validarCampo" data-nom="Apellido" value="{{user.APELLIDO}}">
+                            </td>
+                        </tr>
+                        <!-- RECORDATORIO -->
+                        <!-- AGREGAR CAMPO DIRECCION A UPDATE CLIENTE -->
+                        <!-- MODIFICACIÓN TIPO USUARIO A PROVEEDOR NO LO REGISTRA COMO PROVEEDOR -->
+                        <tr class="cliente d-none">
+                            <td>
+                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Dirección
+                            </td>
+                            <td>
+                                <input type="text" name="direccion" class="form-control" data-nom="Direccion" value="{{user.DIRECCION}}">
                             </td>
                         </tr>
                         <tr>
@@ -72,21 +98,7 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Tipo Usuario
-                            </td>
-                            <td>
-                                <select name="user_type" class="form-control validarCampo" data-nom="Tipo Usuario">
-                                    <option value=""></option>
-                                    <option value="2">Vendedor</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="3">Cliente</option>
-                                    <option value="4">Proveedor</option>
-                                    <option value="5">Empleado</option>
-                                </select>
-                            </td>
-                        </tr>
+                        
                         <tr class="proveedor d-none">
                             <td colspan="2" class="text-center">PROVEEDOR</td>
                         </tr>
@@ -134,6 +146,26 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+                ¿Está seguro que desea agregar con estos datos?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-volver" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success btn-confirmar">Si, Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock contenido %}
 {% block js %}
     <script src="{% static 'js/jquery.rut.chileno.js' %}"></script>
@@ -155,6 +187,10 @@
                 $('tr.proveedor').removeClass('d-none');
                 $('tr.proveedor .form-control').addClass('validarCampo');
             }
+            if(tipo == 3 || tipo == 6){
+                $('tr.cliente').removeClass('d-none');
+                $('tr.cliente .form-control').addClass('validarCampo');
+            }
 
             var estado = '{{user.ESTADO}}';
             $('[name="status"] option[value="'+estado+'"]').attr('selected','selected');
@@ -167,6 +203,14 @@
             }else{
                 $('tr.proveedor').addClass('d-none');
                 $('tr.proveedor .form-control').removeClass('validarCampo');
+            }
+
+            if(parseInt($(this).val()) == 3 || parseInt($(this).val()) == 6){
+                $('tr.cliente').removeClass('d-none');
+                $('tr.cliente .form-control').addClass('validarCampo');
+            }else{
+                $('tr.cliente').addClass('d-none');
+                $('tr.cliente .form-control').removeClass('validarCampo').val('');
             }
         });
 
@@ -241,9 +285,14 @@
                 }
             });
             if(flag == false){
-                $('#form-registro').submit();
-                $('#form-registro .btn-enviar').prop('disabled',true).html('Enviando...');
+                $('#modalConfirmar').modal('show');
             }
+        });
+
+        $('.btn-confirmar').click(function(){
+            $(this).text('Modificando...').prop('disabled',true);
+            $('#form-registro').submit();
+            $('#form-registro .btn-enviar').prop('disabled',true).html('Enviando...');
         });
     </script>
 {% endblock js %}

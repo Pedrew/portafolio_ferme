@@ -17,12 +17,17 @@
                 </a>
             </div>
         </div>
-        <div class="col-6 px-0">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Nombre</span>
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Nombre</span>
+                    </div>
+                    <input type="text" class="form-control btn-filtro" placeholder="Filtrar por nombre...">
                 </div>
-                <input type="text" class="form-control btn-filtro" placeholder="Filtrar por nombre...">
+            </div>
+            <div class="col-6 mb-3">
+                <button class="btn btn-ferme b2 btn-activos">Mostrar sólo activos</button>
             </div>
         </div>
         <div class="usuarios">
@@ -30,7 +35,6 @@
                 <table class="table table-hover table-bordered" id="tabla-usuarios">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">ID</th>
                             <th scope="col">Usuario</th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Nombre</th>
@@ -42,13 +46,18 @@
                     <tbody>
                         {% for item in user %}
                         {% if item.TYPE_NAME != 'admin'  %}
-                        <tr class="fila">
-                            <td>{{ item.USER_ID }}</td>
-                            <td>{{ item.USUARIO }}</td>
-                            <td>{{ item.TYPE_NAME }}</td>
-                            <td>{{ item.NOMBRE }} {{ item.APELLIDO }}</td>
-                            <td>{{ item.RUT }}</td>
-                            <td>{{ item.ESTADO }}</td>
+                        <tr class="fila" data-estado="{{ item.ESTADO }}" data-tipo="{{ item.TYPE_NAME }}">
+                            <td class="text-left text-uppercase">{{ item.USUARIO }}</td>
+                            <td class="text-center text-uppercase">{{ item.TYPE_NAME }}</td>
+                            <td class="text-uppercase">{{ item.NOMBRE }} {{ item.APELLIDO }}</td>
+                            <td class="text-uppercase">{{ item.RUT }}</td>
+                            <td class="text-uppercase">
+                                {% if item.ESTADO == 'Activo'  %}
+                                    <span class="text-success">{{ item.ESTADO }}</span>
+                                {% else %}
+                                    <span class="text-danger">{{ item.ESTADO }}</span>
+                                {% endif %}
+                            </td>
                             <td class="acciones">
                                 <a class="btn btn-block btn-warning" href="users_get?id={{item.USER_ID}}&type={{item.TYPE_NAME}}">
                                     <i class="icon-pencil"></i> Editar
@@ -97,6 +106,16 @@
 {% endblock contenido %}
 {% block js %}
 <script>
+    /* VERIFICO SI EXISTE USUARIO LOGEADO SI NO LO MANDO AL LOGIN */
+    if(sessionStorage.getItem('user_id') == null){
+        window.location = "{% url 'home' %}";
+    }else{
+        if (sessionStorage.getItem('user_tipo') != 1){
+            window.location = "{% url 'home' %}";
+        }
+    }
+
+
     $('.btn-estado').click(function(){
         $('#modalConfirmar').modal('show');
         $('#modalConfirmar .modal-body strong').text($(this).attr('data-nom').toUpperCase());
@@ -125,6 +144,9 @@
         }
     });
 
+
+    
+
     $(document).ready(function(){
         $('[data-bg]').each(function(){
             $(this).css({
@@ -135,6 +157,22 @@
             window.location = $(this).attr('data-url');
         });
         $('#aside [data-menu="users_list"]').addClass('active');
+
+
+
+        $('.btn-activos').click(function(){
+            if($(this).hasClass('active')){
+                $(this).removeClass('active');
+                $(this).html('Mostrar sólo usuarios activos');
+                $('#tabla-usuarios .fila').removeClass('d-none');
+            }else{
+                $(this).addClass('active');
+                $(this).html('Mostrar todos los usuarios');
+                $('#tabla-usuarios .fila[data-estado="Inactivo"]').each(function(){
+                    $(this).addClass('d-none');
+                });
+            }
+        });
     });
 </script>
 {% endblock js %}

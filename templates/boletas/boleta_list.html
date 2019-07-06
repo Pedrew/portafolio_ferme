@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
+{% load humanize %}
 {% block tituloPagina %}
     <title>BOLETAS | FERME</title>
 {% endblock tituloPagina %}
@@ -7,12 +8,22 @@
 <div class="container-fluid">
     <div class="py-4">
         <h1 class="titulo">Boletas</h1>
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cliente</span>
+                    </div>
+                    <input type="text" class="form-control btn-filtro" placeholder="Filtrar por Cliente...">
+                </div>
+            </div>
+        </div>
         <div class="usuarios">
             <div class="tabla-general table-responsive">
-                <table class="table table-hover table-bordered">
+                <table class="table table-hover table-bordered" id="tabla-ordenes">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">ID Boleta</th>
+                            <th scope="col">N° Boleta</th>
                             <th scope="col">Cliente</th>
                             <th scope="col">Tipo pago</th>
                             <th scope="col">Medio pago</th>
@@ -24,17 +35,19 @@
                     </thead>
                     <tbody>
                         {% for item in boletas %}
-                        <tr>
-                            <td>{{ item.ID_BOLETA }}</td>
-                            <td>{{ item.NOMBRE }}
-                            <td>{{ item.TIPO_PAGO }}</td></td>
-                            <td>{{ item.MEDIO_PAGO }}</td>
-                            <td>{{ item.ENTREGA }}</td>
-                            <td>${{ item.TOTAL }}</td>
-                            <td>{{ item.FECHA }}</td>
-                            <td><a class="btn btn-block btn-warning" href="boleta_detail?id={{item.ID_BOLETA}}">
+                        <tr class="fila">
+                            <td class="text-uppercase">{{ item.ID_BOLETA }}</td>
+                            <td class="text-uppercase">{{ item.NOMBRE }}
+                            <td class="text-uppercase">{{ item.TIPO_PAGO }}</td></td>
+                            <td class="text-uppercase">{{ item.MEDIO_PAGO }}</td>
+                            <td class="text-uppercase">{{ item.ENTREGA }}</td>
+                            <td class="text-uppercase text-right">${{ item.TOTAL|intcomma }}</td>
+                            <td class="text-uppercase">{{ item.FECHA }}</td>
+                            <td class="acciones">
+                                <a class="btn btn-block btn-warning" href="boleta_detail?id={{item.ID_BOLETA}}">
                                     <i class="icon-eye s-4"></i> Detalle
-                                </a></td>
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -47,7 +60,23 @@
 {% block js %}
 <script>
     $(document).ready(function(){
-        $('#aside [data-menu="proveedores_list"]').addClass('active');
+        $('#aside [data-menu="boletas_list"]').addClass('active');
+    });
+
+    $('.btn-filtro').keyup(function(){
+        var palabra = $(this).val().toUpperCase();
+        if($.trim(palabra) != ''){
+            $('#tabla-ordenes .fila').addClass('d-none');
+            $('#tabla-ordenes .fila td:nth-child(2)').each(function(){
+                var texto = $(this).text().toUpperCase();
+
+                if(texto.search(palabra) != -1){
+                    $(this).parent().removeClass('d-none');
+                }
+            });
+        }else{
+            $('#tabla-ordenes .fila').removeClass('d-none');
+        }
     });
 </script>
 {% endblock js %}

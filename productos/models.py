@@ -13,7 +13,16 @@ class Product(models.Model):
         column = [row[0] for row in cur.description]
         array = []
         for r in res:
-            array.append({column[0] :r[0], column[1]:r[1],column[2]:r[2], column[3]:r[3],column[4]:r[4],column[5]:r[5],column[6]:r[6],column[7]:r[7]})
+            array.append({
+                column[0] :r[0],
+                column[1] :r[1],
+                column[2] :r[2],
+                column[3] :r[3],
+                column[4] :r[4],
+                column[5] :r[5],
+                column[6] :r[6],
+                column[7] :r[7]
+            })
         cur.close()
         con.close()
         return array

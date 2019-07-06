@@ -1,12 +1,12 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block tituloPagina %}
-    <title>CREAR ÓRDEN DE COMPRA | FERME</title>
+    <title>CREAR ORDEN DE COMPRA | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
     <div class="container-fluid">
         <div class="py-4">
-            <h1 class="titulo">Crear Órden de Compra</h1>
+            <h1 class="titulo">Crear Orden de Compra</h1>
 
             <div class="col-6 mx-auto py-3">
                 <form method="POST" class="post-form" action="orders_insert" id="form-orden">
@@ -76,6 +76,26 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+                ¿Está seguro que desea confirmar ésta orden con estos datos?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-volver" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success btn-confirmar">Si, Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock contenido %}
 {% block js %}
     <script src="{% static 'js/jquery.rut.chileno.js' %}"></script>
@@ -137,9 +157,15 @@
                 }
             });
             if(flag == false){
-                $('#form-orden').submit();
-                $('#form-orden .btn-enviar').prop('disabled',true).html('Enviando...');
+                $('#modalConfirmar').modal('show');
+                
             }
+        });
+
+        $('.btn-confirmar').click(function(){
+            $(this).text('Agregando...').prop('disabled',true);
+            $('#form-orden').submit();
+            $('#form-orden .btn-enviar').prop('disabled',true).html('Enviando...');
         });
     </script>
 {% endblock js %}

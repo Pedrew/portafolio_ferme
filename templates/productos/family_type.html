@@ -15,7 +15,7 @@
                     <select name="proveedor_id" class="form-control validarCampo" data-nom="Proveedor">
                         <option value="">Seleccione Proveedor</option>
                         {% for item in proveedores %}
-                        <option value="{{ item.PROVEEDOR_ID }}">{{ item.IDENTIFICADOR }}</option>
+                        <option value="{{ item.PROVEEDOR_ID }}">{{ item.RAZON_SOCIAL }}</option>
                         {% endfor %}
                     </select>
                     <div class="input-group-append">
@@ -45,11 +45,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <!-- RECORDATORIO -->
+                            <!-- ORDENAR FAMILIAS ALFABETICAMENTE -->
                             {% for item in familia %}
                             <tr class="fila">
                                 <td class="text-uppercase text-left">{{ item.DETALLE }}</td>
                                 <td class="text-uppercase">{{ item.IDEN_FAMILIA }}</td>
-                                <td class="text-uppercase">{{ item.IDEN_PROV }}</td>
+                                <td class="text-uppercase">{{ item.IDEN_RZ }}</td>
                                 <td>
                                     <a class="btn btn-block btn-small btn-ferme b2" href="tipo_create?id={{item.ID_FAMILIA}}&family={{item.IDEN_FAMILIA}}">
                                         Agregar Tipo
