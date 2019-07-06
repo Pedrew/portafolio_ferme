@@ -3,6 +3,9 @@ from .models import Reportes
 from django.shortcuts import redirect
 
 # Create your views here.
+def reportes(request):
+    return render(request, 'reportes/reportes.html')
+
 def boletas_anno(request, ano):
     post = request.POST
     anno = post['anno']
