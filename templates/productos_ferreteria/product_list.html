@@ -32,18 +32,18 @@
                 </thead>
                 <tbody>
                     {% for item in productos %}
-                    <tr class="fila">
+                    <tr class="fila" data-cant="{{ item.STOCK }}" data-crit="{{ item.STOCK_CRITICO }}">
                         <td class="text-uppercase text-left">{{ item.PRODUCTO_ID }}</td>
-                        <td>{{ item.NOMBRE }}</td>
-                        <td>{{ item.RAZON_SOCIAL }}</td>
-                        <td class="text-center">{{ item.STOCK }}</td>
+                        <td class="text-uppercase bg-gradient-danger">{{ item.NOMBRE }}</td>
+                        <td class="text-uppercase bg-gradient-warning">{{ item.RAZON_SOCIAL }}</td>
+                        <td class="text-uppercase text-center">{{ item.STOCK }} -> {{ item.STOCK_CRITICO }}</td>
                         <td class="text-right">$ {{ item.VALOR|intcomma }}</td>
-                        <td class="text-center">
-                            <a class="btn btn-warning" href="productos_ferreteria_get?id={{item.ID_PROD}}">
-                                <i class="icon-pencil s-4"></i>
+                        <td class="text-center acciones">
+                            <a class="btn btn-block btn-warning" href="productos_ferreteria_get?id={{item.ID_PROD}}">
+                                Editar
                             </a>
-                            <button type="button" class="btn btn-danger btn-eliminar" data-nom="{{ item.NOMBRE }}" data-id="{{item.ID_PROD}}">
-                                <i class="icon-bin s-4"></i>
+                            <button type="button" class="btn btn-block btn-danger btn-eliminar" data-nom="{{ item.NOMBRE }}" data-id="{{item.ID_PROD}}">
+                                Eliminar
                             </button>
                         </td>
                     </tr>
@@ -80,6 +80,18 @@
 <script>
     $(document).ready(function(){
         $('#aside [data-menu="productos_ferreteria_list"]').addClass('active');
+
+        $('#tabla-productos .fila').each(function(){
+            var cant = parseInt($(this).attr('data-cant'));
+            var crit = parseInt($(this).attr('data-crit'));
+            if(cant > 0){
+                if(cant <= crit){
+                    $(this).children('td').addClass('alert-warning');
+                }
+            }else{
+                $(this).children('td').addClass('alert-danger');
+            }
+        });
     });
 
     $('.btn-eliminar').click(function(){

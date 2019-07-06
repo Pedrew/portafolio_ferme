@@ -8,7 +8,7 @@ class Boletas(models.Model):
     def getBoletas(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute("select boleta.id_boleta, usuarios.nombre ||' '|| usuarios.apellido as nombre, boleta.tipo_pago, boleta.medio_pago, boleta.entrega, boleta.fecha, detalle_boleta.total from boleta join usuarios on boleta.id_usuario = usuarios.user_id join detalle_boleta on boleta.id_boleta = detalle_boleta.id_boleta")
+        cur.execute("select boleta.id_boleta, usuarios.nombre ||' '|| usuarios.apellido as nombre, boleta.tipo_pago, boleta.medio_pago, boleta.entrega, boleta.fecha, detalle_boleta.total from boleta join usuarios on boleta.id_usuario = usuarios.user_id join detalle_boleta on boleta.id_boleta = detalle_boleta.id_boleta order by boleta.id_boleta desc")
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []

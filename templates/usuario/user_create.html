@@ -14,6 +14,22 @@
                     <table class="table table-bordered">
                         <tr>
                             <td>
+                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Tipo Usuario
+                            </td>
+                            <td>
+                                <select name="user_type" class="form-control validarCampo" data-nom="Tipo Usuario">
+                                    <option value="">Seleccione...</option>
+                                    <option value="1">Administrador</option>
+                                    <option value="2">Vendedor</option>
+                                    <option value="3">Persona</option>
+                                    <option value="4">Proveedor</option>
+                                    <option value="5">Empleado</option>
+                                    <option value="6">Cliente Empresa</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Nombre
                             </td>
                             <td>
@@ -26,6 +42,14 @@
                             </td>
                             <td>
                                 <input type="text" name="last_name"  class="form-control validarCampo" data-nom="Apellido">
+                            </td>
+                        </tr>
+                        <tr class="cliente d-none">
+                            <td>
+                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Dirección
+                            </td>
+                            <td>
+                                <input type="text" name="direccion" class="form-control" data-nom="Direccion">
                             </td>
                         </tr>
                         <tr>
@@ -60,31 +84,9 @@
                                 <input type="password" name="passwordRepeat"  class="form-control validarCampo" data-nom="Repetir Contraseña">
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Tipo Usuario
-                            </td>
-                            <td>
-                                <select name="user_type" class="form-control validarCampo" data-nom="Tipo Usuario">
-                                    <option value="">Seleccione...</option>
-                                    <option value="2">Vendedor</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="3">Cliente</option>
-                                    <option value="4">Proveedor</option>
-                                    <option value="5">Empleado</option>
-                                    <option value="6">Cliente Empresa</option>
-                                </select>
-                            </td>
-                        </tr>
                         
-                        <tr>
-                            <td>
-                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Dirección
-                            </td>
-                            <td>
-                                <input type="text" name="direccion"  class="form-control validarCampo" data-nom="Direccion">
-                            </td>
-                        </tr>
+                        
+                        
                         <tr class="proveedor d-none">
                             <td colspan="2" class="text-center">PROVEEDOR</td>
                         </tr>
@@ -157,6 +159,21 @@
 {% block js %}
     <script src="{% static 'js/jquery.rut.chileno.js' %}"></script>
     <script>
+        /* VERIFICO SI EXISTE USUARIO LOGEADO SI NO LO MANDO AL LOGIN */
+        if(sessionStorage.getItem('user_id') == null){
+            $('tr.cliente').removeClass('d-none');
+            $('tr.cliente .form-control').addClass('validarCampo');
+            $('[name="user_type"] option').each(function(){
+                if($(this).attr('value') != '' && parseInt($(this).attr('value')) != 3 && parseInt($(this).attr('value')) != 6){
+                    $(this).remove();
+                }
+            });
+        }else{
+            if (sessionStorage.getItem('user_tipo') != 1){
+                window.location = "{% url 'home' %}";
+            }
+        }
+
         $(document).ready(function(){
             $('[data-bg]').each(function(){
                 $(this).css({
@@ -176,6 +193,14 @@
             }else{
                 $('tr.proveedor').addClass('d-none');
                 $('tr.proveedor .form-control').removeClass('validarCampo');
+            }
+
+            if(parseInt($(this).val()) == 3 || parseInt($(this).val()) == 6){
+                $('tr.cliente').removeClass('d-none');
+                $('tr.cliente .form-control').addClass('validarCampo');
+            }else{
+                $('tr.cliente').addClass('d-none');
+                $('tr.cliente .form-control').removeClass('validarCampo').val('');
             }
         });
 

@@ -8,12 +8,20 @@ class Product_proveedor(models.Model):
     def getProductos(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select producto_id, nombre, valor, id_prod, codigo_tipo, identificador from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id')
+        cur.execute('select producto_id, nombre, valor, id_prod, codigo_tipo, identificador, proveedor.razon_social as iden_rz from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id order by nombre')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
         for r in res:
-            array.append({column[0] :r[0], column[1]:r[1],column[2]:r[2], column[3]:r[3],column[4]:r[4],column[5]:r[5]})
+            array.append({
+                column[0] :r[0],
+                column[1] :r[1],
+                column[2] :r[2],
+                column[3] :r[3],
+                column[4] :r[4],
+                column[5] :r[5],
+                column[6] :r[6]
+            })
         cur.close()
         con.close()
         return array
@@ -54,12 +62,16 @@ class Product_proveedor(models.Model):
     def getProveedores(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select proveedor_id, identificador from proveedor')
+        cur.execute('select proveedor_id, identificador, razon_social from proveedor')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
         for r in res:
-            array.append({column[0] :r[0],column[1] :r[1]})
+            array.append({
+                column[0] :r[0].upper(),
+                column[1] :r[1].upper(),
+                column[2] :r[2].upper()
+            })
         cur.close()
         con.close()
         print(array)
@@ -68,12 +80,18 @@ class Product_proveedor(models.Model):
     def getFamilias(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select id_familia, familia_producto.identificador as iden_familia, detalle, proveedor.identificador as iden_prov from familia_producto join proveedor on familia_producto.id_prov = proveedor.proveedor_id')
+        cur.execute('select id_familia, familia_producto.identificador as iden_familia, detalle, proveedor.identificador as iden_prov, proveedor.razon_social as iden_rz from familia_producto join proveedor on familia_producto.id_prov = proveedor.proveedor_id')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
         for r in res:
-            array.append({column[0] :r[0], column[1]:r[1],column[2]:r[2], column[3]:r[3]})
+            array.append({
+                column[0] :r[0],
+                column[1] :r[1],
+                column[2] :r[2],
+                column[3] :r[3],
+                column[4] :r[4]
+            })
         cur.close()
         con.close()
         return array
@@ -88,7 +106,7 @@ class Product_proveedor(models.Model):
     def getTipos(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select id_tipo, codigo_tipo, descripcion, identificador, id_prov from familia_tipo join familia_producto on familia_tipo.id_familia = familia_producto.id_familia')
+        cur.execute('select id_tipo, codigo_tipo, descripcion, identificador, id_prov from familia_tipo join familia_producto on familia_tipo.id_familia = familia_producto.id_familia order by descripcion')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []

@@ -2,12 +2,12 @@
 {% load static %}
 {% load humanize %}
 {% block tituloPagina %}
-    <title>PRDEN ESTADO | FERME</title>
+    <title>ORDEN ESTADO | FERME</title>
 {% endblock tituloPagina %}
 {% block contenido %}
     <div class="container-fluid">
         <div class="py-4">
-            <h1 class="titulo">ORDEN ESTADO</h1>
+            <h1 class="titulo">Orden Estado</h1>
 
             <div class="col-6 mx-auto py-3">
                 <form method="POST" class="post-form" action="order_update" id="form-orden">
@@ -67,11 +67,11 @@
                         {% endif %}
                         {% if orden.ESTADO == 'Envío Local' %}
                             <input type="hidden" name="estado" value="3" readonly>
-                            <button type="buttond" class="btn btn-ferme btn-enviar b2">Órden En Sucursal</button>
+                            <button type="button" class="btn btn-ferme btn-enviar b2">Órden En Sucursal</button>
                         {% endif %}
                         {% if orden.ESTADO == 'En Sucursal' %}
                             <input type="hidden" name="estado" value="4" readonly>
-                            <button type="submit" class="btn btn-ferme btn-enviar b2">Procesar y Cerrar</button>
+                            <button type="button" class="btn btn-ferme btn-enviar b2">Procesar y Cerrar</button>
                         {% endif %}
                         {% if orden.ESTADO == 'Anulada' %}
                         {% endif %}
@@ -80,6 +80,28 @@
                 </form>
             </div>
         </div>
+    </div>
+
+
+
+    <div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+                ¿Está seguro que desea cambiar estado?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-volver" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-success btn-confirmar">Si, Modificar</button>
+          </div>
+        </div>
+      </div>
     </div>
 {% endblock contenido %}
 {% block js %}
@@ -142,9 +164,14 @@
                 }
             });
             if(flag == false){
-                $('#form-orden').submit();
-                $('#form-orden .btn-enviar').prop('disabled',true).html('Enviando...');
+                $('#modalConfirmar').modal('show');
             }
+        });
+
+        $('.btn-confirmar').click(function(){
+            $(this).text('Actualizando...').prop('disabled',true);
+            $('#form-orden').submit();
+            $('#form-orden .btn-enviar').prop('disabled',true).html('Enviando...');
         });
     </script>
 {% endblock js %}

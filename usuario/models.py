@@ -8,7 +8,7 @@ class Usuario(models.Model):
     def getUsers(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select user_id, usuario, pass, type_name, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id')
+        cur.execute('select user_id, usuario, pass, type_name, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id order by usuario')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
