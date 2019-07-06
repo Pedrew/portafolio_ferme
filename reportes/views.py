@@ -15,3 +15,11 @@ def boletas_mes(request):
     ano = post['ano']
     boletas_mes = Reportes.boletasMes(mes, ano)
     return render(request, 'reportes/boletas_mes.html',{ 'boletas' : boletas_mes})
+
+def boletas_dia(request):
+    post = request.POST
+    mes = post['mes']
+    ano = post['ano']
+    dia = post['dia']
+    boletas_dia = Reportes.boletasDia(dia, mes, ano)
+    return render(request, 'reportes/boletas_dia.html',{ 'boletas' : boletas_dia})
