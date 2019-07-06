@@ -1,0 +1,50 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block tituloPagina %}
+    <title>REPORTES | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Reportes</h1>
+		{% if compras %}
+			<div class="tabla-general table-responsive">
+	            <table class="table table-hover table-bordered" id="tabla-productos">
+	                <thead class="thead-dark">
+	                    <tr>
+	                        <th scope="col">Nombre</th>
+	                        <th scope="col">Cantidad</th>
+	                    </tr>
+	                </thead>
+	                <tbody>
+	                    {% for item in compras %}
+	                    <tr class="fila">
+	                        <td class="text-left text-uppercase bg-gradient-danger">{{ item.NOMBRE }} {{ item.APELLIDO }}</td>
+	                        <td class="text-uppercase text-center">{{ item.CANTIDAD }}</td>
+	                    </tr>
+	                    {% endfor %}
+	                </tbody>
+	            </table>
+	        </div>
+
+        {% else %}
+            <div class="col-12">
+            	<div class="alert text-center alert-info">
+            		No se encontraron registros
+            	</div>
+            </div>
+        {% endif %}
+        <div class="text-center">
+			<a href="{% url 'reportes' %}" class="btn btn-volver"><i class="icon-reply"></i> Volver</a>
+		</div>
+    </div>
+</div>
+{% endblock contenido %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+		$('#aside [data-menu="reportes"]').addClass('active');
+    });
+</script>
+{% endblock js %}
