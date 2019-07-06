@@ -1,0 +1,80 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block tituloPagina %}
+    <title>REPORTES | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Reportes</h1>
+
+		<form method="POST" action="boletas_anno">
+			<div class="col-6 mx-auto">
+				<div class="input-group mb-3 row mx-0">
+	                <div class="input-group-prepend col-4 px-0">
+	                    <span class="input-group-text w-100">Familia</span>
+	                </div>
+	                <select class="form-control col-8" id="tipo">
+	                	<option value="">Seleccione...</option>
+	                	<option value="1">Año</option>
+	                	<option value="2">Mes</option>
+	                	<option value="3">Día</option>
+	                </select>
+	            </div>
+	        </div>
+		</form>
+
+		<div class="col-6 col-xl-4 mx-auto">
+			<input type="text" class="form-control" id="datepicker">
+		</div>
+    </div>
+</div>
+{% endblock contenido %}
+{% block js %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+	$.datepicker.regional['es'] = {
+		closeText: 'Cerrar',
+		prevText: '< Ant',
+		nextText: 'Sig >',
+		currentText: 'Hoy',
+		monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+		dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
+		weekHeader: 'Sm',
+		dateFormat: 'dd/mm/yy',
+		firstDay: 1,
+		isRTL: false,
+		showMonthAfterYear: false,
+		yearSuffix: ''
+	};
+	$.datepicker.setDefaults($.datepicker.regional['es']);
+	
+    $(document).ready(function(){
+        $('#aside [data-menu="reportes"]').addClass('active');
+
+        $('#tipo').change(function(){
+        	var op = parseInt($(this).val()); 
+        	if(op != ''){
+        		switch(op){
+					case 1:
+						
+						break;
+				}
+        	}else{
+
+        	}
+        });
+    });
+
+    $(function(){
+		$("#datepicker").datepicker();
+	});
+
+
+
+</script>
+{% endblock js %}
