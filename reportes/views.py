@@ -26,3 +26,19 @@ def boletas_dia(request):
     dia = post['dia']
     boletas_dia = Reportes.boletasDia(dia, mes, ano)
     return render(request, 'reportes/boletas_dia.html',{ 'boletas' : boletas_dia})
+
+def compras_usuario(request):
+    compra_usuario = Reportes.comprasUsuario()
+    return render(request, 'reportes/compra_usuario.html',{ 'compras' : compra_usuario})
+
+def compras_metodo(request):
+    post = request.POST
+    tipoPago = post['tipo_pago']
+    compras_metodo = Reportes.comprasMetodo(tipoPago)
+    return render(request, 'reportes/compras_metodo.html',{ 'boletas' : compras_metodo})
+
+def compras_lugar(request):
+    post = request.POST
+    lugarPago = post['lugar_pago']
+    compras_lugar = Reportes.comprasEntrega(lugarPago)
+    return render(request, 'reportes/compras_lugar.html',{ 'boletas' : compras_lugar})
