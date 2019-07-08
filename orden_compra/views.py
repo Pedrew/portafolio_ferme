@@ -6,10 +6,10 @@ import datetime
 # Create your views here.
 def orders_list(request):
 	get = request.GET
-	proveedor_id = get['id']
-	order_list = Orders.getOrders(proveedor_id)
+	proveedor = get['proveedor']
+	order_list = Orders.getOrders(proveedor)
 	proveedores_list = Orders.getProveedores()
-	return render(request, 'orden_de_compra/orders_list.html',{ 'order_list' : order_list, 'proveedores_list': proveedores_list})
+	return render(request, 'orden_de_compra/orders_list.html',{ 'order_list' : order_list, 'proveedores_list': proveedores_list, 'proveedor': proveedor})
 
 def productos_get(request):
 	get = request.GET
@@ -30,7 +30,7 @@ def orders_insert(request):
 
 	Orders.createOrder(id_prov, id_prod, id_user, valor, estado, stock, stock_crit)
 
-	response = redirect('orders_list')
+	response = redirect('/orden_de_compra/orders_list?proveedor='+(str(1)))
 	return response
 
 def orders_create(request):
@@ -51,6 +51,7 @@ def order_status(request):
 
 def order_update(request):
 	post = request.POST
+	id_user = post['id_user']
 	estado = post['estado']
 	id_orden = post['id_orden']
 	if estado == "4":
@@ -60,8 +61,6 @@ def order_update(request):
 		stock_crit = post['stock_crit']
 		Orders.createProduct(id_prov, id_prod, stock, stock_crit)
 		Orders.updateOrder(id_orden, estado)
-		response = redirect('orders_list')
 	else:
 		Orders.updateOrder(id_orden, estado)
-		response = redirect('orders_list')
-	return response
+	return redirect('/orden_de_compra/orders_list?proveedor='+(str(id_user)))

@@ -39,6 +39,10 @@
                     }
                 });
 
+                var href = $('#aside .menu-lateral .btn[data-menu="orders_list"]').attr('href');
+                href = href+'?proveedor='+sessionStorage.getItem("user_id");
+                $('#aside .menu-lateral .btn[data-menu="orders_list"]').attr('href',href);
+
                 $('nav.user-logeado').removeClass('d-none');
                 $('nav.user-logeado .btn-log span').text(sessionStorage.getItem('user_nombre')+ ' '+sessionStorage.getItem('user_apellido'));
             }else{

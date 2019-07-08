@@ -14,7 +14,7 @@
                     <input type="hidden" id="valor" name="valor" value="{{valor}}" readonly>
                     <input type="hidden" id="id_prov" name="id_prov" value="{{prov_id}}" readonly>
                     <input type="hidden" id="id_prod" name="id_prod" value="{{id_prod}}" readonly>
-                    <input type="hidden" id="id_user" name="id_user" value="1" readonly>
+                    <input type="hidden" id="id_user" name="id_user" value="" readonly>
                     <div class="input-group mb-3 row mx-0">
                         <div class="input-group-prepend col-4 px-0">
                             <span class="input-group-text w-100">Proveedor</span>
@@ -109,6 +109,8 @@
             $('[data-url]').click(function(){
                 window.location = $(this).attr('data-url');
             });
+
+            $('#id_user').attr('value',sessionStorage.getItem("user_id"));
             $('#aside [data-menu="orders_list"]').addClass('active');
         });
 
