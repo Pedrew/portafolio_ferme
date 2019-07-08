@@ -6,10 +6,13 @@ import cx_Oracle
 
 class Orders(models.Model):
     @classmethod
-    def getOrders(self):
+    def getOrders(self, id):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select orden_de_compra.id_orden as id_orden, proveedor.razon_social as razon_social, products_proveedor.nombre as producto, usuarios.nombre as solicitante, orden_de_compra.valor as valor, orden_estado.descripcion as estado from orden_de_compra join proveedor on orden_de_compra.id_proveedor = proveedor.proveedor_id join products_proveedor on orden_de_compra.id_producto = products_proveedor.id_prod join usuarios on orden_de_compra.id_usuario = usuarios.user_id join orden_estado on orden_de_compra.estado = orden_estado.id')
+        if id == '1':
+            cur.execute('select orden_de_compra.id_orden as id_orden, proveedor.razon_social as razon_social, products_proveedor.nombre as producto, usuarios.nombre as solicitante, orden_de_compra.valor as valor, orden_estado.descripcion as estado from orden_de_compra join proveedor on orden_de_compra.id_proveedor = proveedor.proveedor_id join products_proveedor on orden_de_compra.id_producto = products_proveedor.id_prod join usuarios on orden_de_compra.id_usuario = usuarios.user_id join orden_estado on orden_de_compra.estado = orden_estado.id order by orden_de_compra.id_orden desc')
+        else:
+            cur.execute('select orden_de_compra.id_orden as id_orden, proveedor.razon_social as razon_social, products_proveedor.nombre as producto, usuarios.nombre as solicitante, orden_de_compra.valor as valor, orden_estado.descripcion as estado from orden_de_compra join proveedor on orden_de_compra.id_proveedor = proveedor.proveedor_id join products_proveedor on orden_de_compra.id_producto = products_proveedor.id_prod join usuarios on orden_de_compra.id_usuario = usuarios.user_id join orden_estado on orden_de_compra.estado = orden_estado.id where proveedor.proveedor_id = '+id+' order by orden_de_compra.id_orden desc')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []

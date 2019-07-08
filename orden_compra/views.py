@@ -5,7 +5,9 @@ import datetime
 
 # Create your views here.
 def orders_list(request):
-	order_list = Orders.getOrders()
+	get = request.GET
+	proveedor = get['proveedor']
+	order_list = Orders.getOrders(proveedor)
 	proveedores_list = Orders.getProveedores()
 	return render(request, 'orden_de_compra/orders_list.html',{ 'order_list' : order_list, 'proveedores_list': proveedores_list})
 

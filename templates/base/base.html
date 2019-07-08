@@ -40,7 +40,7 @@
                 });
 
                 var href = $('#aside .menu-lateral .btn[data-menu="orders_list"]').attr('href');
-                href = href+'?burro='+sessionStorage.getItem("user_id");
+                href = href+'?proveedor='+sessionStorage.getItem("user_id");
                 $('#aside .menu-lateral .btn[data-menu="orders_list"]').attr('href',href);
 
                 $('nav.user-logeado').removeClass('d-none');
