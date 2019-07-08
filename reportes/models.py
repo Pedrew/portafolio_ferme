@@ -8,7 +8,7 @@ class Reportes(models.Model):
     def boletasAnno(self, ano):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select b.id_boleta, u.nombre, u.apellido, b.tipo_pago, b.medio_pago, b.entrega, b.fecha, p.nombre as producto, db.cantidad, db.total from boleta b join detalle_boleta db on b.id_boleta = db.id_boleta join usuarios u on b.id_usuario = u.user_id join products p on db.id_producto = p.id_prod where substr(fecha,1, 4) = '+ ano)
+        cur.execute('select b.id_boleta, u.nombre, u.apellido, b.tipo_pago, b.medio_pago, b.entrega, b.fecha, p.nombre as producto, db.cantidad, db.total from boleta b join detalle_boleta db on b.id_boleta = db.id_boleta join usuarios u on b.id_usuario = u.user_id join products p on db.id_producto = p.id_prod where substr(fecha,1, 4) = '+ ano+' order by b.id_boleta')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
@@ -45,7 +45,7 @@ class Reportes(models.Model):
     def boletasMes(self, mes, ano):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select b.id_boleta, u.nombre, u.apellido, b.tipo_pago, b.medio_pago, b.entrega, b.fecha, p.nombre as producto, db.cantidad, db.total from boleta b join detalle_boleta db on b.id_boleta = db.id_boleta join usuarios u on b.id_usuario = u.user_id join products p on db.id_producto = p.id_prod where substr(fecha,1, 4) = '+ano+' and substr(fecha,6, 2) = '+mes)
+        cur.execute('select b.id_boleta, u.nombre, u.apellido, b.tipo_pago, b.medio_pago, b.entrega, b.fecha, p.nombre as producto, db.cantidad, db.total from boleta b join detalle_boleta db on b.id_boleta = db.id_boleta join usuarios u on b.id_usuario = u.user_id join products p on db.id_producto = p.id_prod where substr(fecha,1, 4) = '+ano+' and substr(fecha,6, 2) = '+mes+' order by b.id_boleta')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
@@ -82,7 +82,7 @@ class Reportes(models.Model):
     def boletasDia(self, dia, mes, ano):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select b.id_boleta, u.nombre, u.apellido, b.tipo_pago, b.medio_pago, b.entrega, b.fecha, p.nombre as producto, db.cantidad, db.total as total from boleta b join detalle_boleta db on b.id_boleta = db.id_boleta join usuarios u on b.id_usuario = u.user_id join products p on db.id_producto = p.id_prod where substr(fecha,1, 4) = '+ano+' and substr(fecha,6, 2) = '+mes+ ' and substr(fecha, 9,2) = '+dia)    
+        cur.execute('select b.id_boleta, u.nombre, u.apellido, b.tipo_pago, b.medio_pago, b.entrega, b.fecha, p.nombre as producto, db.cantidad, db.total as total from boleta b join detalle_boleta db on b.id_boleta = db.id_boleta join usuarios u on b.id_usuario = u.user_id join products p on db.id_producto = p.id_prod where substr(fecha,1, 4) = '+ano+' and substr(fecha,6, 2) = '+mes+ ' and substr(fecha, 9,2) = '+dia+' order by b.id_boleta')    
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []

@@ -36,7 +36,7 @@ class Orders(models.Model):
     def getProveedores(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select proveedor_id, razon_social, identificador from proveedor')
+        cur.execute('select proveedor_id, razon_social, identificador from proveedor order by proveedor_id')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
@@ -50,7 +50,7 @@ class Orders(models.Model):
     def getProductos(self, id):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select producto_id, nombre, valor, id_prod, codigo_tipo, razon_social from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id where proveedor.proveedor_id = '+id)
+        cur.execute('select producto_id, nombre, valor, id_prod, codigo_tipo, razon_social from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id where proveedor.proveedor_id = '+id+' order by id_prod desc')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []

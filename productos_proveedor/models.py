@@ -8,7 +8,7 @@ class Product_proveedor(models.Model):
     def getProductos(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select producto_id, nombre, valor, id_prod, codigo_tipo, identificador, proveedor.razon_social as iden_rz from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id order by nombre')
+        cur.execute('select producto_id, nombre, valor, id_prod, codigo_tipo, identificador, proveedor.razon_social as iden_rz from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id order by id_prod desc')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []

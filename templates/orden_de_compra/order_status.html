@@ -63,7 +63,7 @@
                     
                     
                     <div class="botones text-center">
-                        <a class="btn btn-volver" href="{% url 'orders_list' %}"> <i class="icon-reply"></i> Volver</a>
+                        <a class="btn btn-volver" href="orders_list?proveedor={{orden.ID_PROV}}"> <i class="icon-reply"></i> Volver</a>
                         {% if orden.ESTADO == 'Pendiente' %}
                             <input type="hidden" name="estado" value="2" readonly>
                             <button type="button" class="btn btn-ferme btn-enviar b2">Iniciar Envío Local</button>

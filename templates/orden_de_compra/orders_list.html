@@ -10,6 +10,7 @@
         <h1 class="titulo">Orden de Compra</h1>
 
         <div class="row">
+            {% if proveedor == '1' %}
             <div class="col-5">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -42,6 +43,7 @@
                     </table>
                 </div>
             </div>
+            {% endif %}
             <div class="col-7">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
