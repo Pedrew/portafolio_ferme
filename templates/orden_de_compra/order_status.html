@@ -16,6 +16,7 @@
                     <input type="hidden" name="id_prov" value="{{orden.ID_PROV}}" readonly>
                     <input type="hidden" name="id_orden" value="{{orden.ID_ORDEN}}" readonly>
                     <input type="hidden" id="id_user" name="id_user" value="" readonly>
+                    <input type="hidden" id="id_tipo" name="id_tipo" value="" readonly>
 
                     <div class="input-group mb-3 row mx-0">
                         <div class="input-group-prepend col-4 px-0">
@@ -120,6 +121,7 @@
             });
 
             $('#id_user').attr('value',sessionStorage.getItem("user_id"));
+            $('#id_tipo').attr('value',sessionStorage.getItem("user_tipo"));
 
             $('#aside [data-menu="orders_list"]').addClass('active');
         });
