@@ -39,20 +39,20 @@ class Usuario(models.Model):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
         if user_type == "4":
-            cur.callproc("create_user",[user, password, user_type, name, last_name, status, rut])
+            cur.callproc("create_user",[user.upper(), password, user_type, name, last_name, status, rut])
             cur.callproc("create_proveedor",[rubro, telefono, razon_social, identificador])
         if user_type == "3" or user_type == "6":
-            cur.callproc("create_user",[user, password, user_type, name, last_name, status, rut])
+            cur.callproc("create_user",[user.upper(), password, user_type, name, last_name, status, rut])
             cur.callproc("create_client",[direccion])
         else:
-            cur.callproc("create_user",[user, password, user_type, name, last_name, status, rut])
+            cur.callproc("create_user",[user.upper(), password, user_type, name, last_name, status, rut])
         cur.close()
         con.close()
     @classmethod    
     def updateUser(self, id, user, password, user_type, name, last_name, status, rut):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.callproc("update_user",[id, user, password, user_type, name, last_name, status, rut])
+        cur.callproc("update_user",[id, user.upper(), password, user_type, name, last_name, status, rut])
         cur.close()
         con.close()
     @classmethod
@@ -81,6 +81,21 @@ class Usuario(models.Model):
             obj = {column[0]:res[0], column[1]:res[1], column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5], column[6]:res[6], column[7]:res[7]}            
         else:
             obj = None
+        cur.close()
+        con.close()
+        return obj
+
+    @classmethod
+    def validateUserEmail(self, email):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute("select usuario from usuarios where usuario ='"+email+"'")            
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        if res:
+            obj = None           
+        else:
+            obj = 'MIAU'
         cur.close()
         con.close()
         return obj

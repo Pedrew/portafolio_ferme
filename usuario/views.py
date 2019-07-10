@@ -19,28 +19,33 @@ def users_create(request):
 def users_insert(request):
 	post = request.POST
 	user = post['usuario']
-	password = post['password']
-	user_type = post['user_type']
-	name = post['name']
-	last_name = post['last_name']
-	status = post['status']
-	rut = post['rut']
+	email = Usuario.validateUserEmail(user)
+	if email == None:
+		error = 'El email ingresado ya existe'
+		return render(request, 'usuario/user_create.html',{'error': error })
+	else:
+		password = post['password']
+		user_type = post['user_type']
+		name = post['name']
+		last_name = post['last_name']
+		status = post['status']
+		rut = post['rut']
 
-	direccion = ""
-	rubro = ""
-	telefono = ""
-	razon_social = ""
-	identificador = ""
-	if user_type == "4":
-		rubro = post['rubro']
-		telefono = post['telefono']
-		razon_social = post['razon_social']
-		identificador = post['identificador']
-	if user_type == "3" or user_type == "6":
-		direccion = post['direccion']
-	Usuario.createUser(user, password, user_type, name, last_name, status, rut, rubro, telefono, razon_social, identificador, direccion)
-	response = redirect('users_list')
-	return response
+		direccion = ""
+		rubro = ""
+		telefono = ""
+		razon_social = ""
+		identificador = ""
+		if user_type == "4":
+			rubro = post['rubro']
+			telefono = post['telefono']
+			razon_social = post['razon_social']
+			identificador = post['identificador']
+		if user_type == "3" or user_type == "6":
+			direccion = post['direccion']
+		Usuario.createUser(user, password, user_type, name, last_name, status, rut, rubro, telefono, razon_social, identificador, direccion)
+		response = redirect('users_list')
+		return response
 
 def users_delete(request):
 	get = request.GET
