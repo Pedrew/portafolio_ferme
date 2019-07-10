@@ -47,7 +47,7 @@
 
                 <div class="d-none alert alert-danger text-center" role="alert" id="res"></div>
                 <div class="text-center pb-2">
-                    <small><a href="{% url 'users_create' %}" class="text-danger">Me quiero registrar</a></small>
+                    <small><a href="{% url 'users_create' %}" class="text-danger" id="quiero-registrar">Me quiero registrar</a></small>
                 </div>
                 <div class="text-center botones">
                     <a class="btn btn-volver" href="{% url 'home' %}"><i class="icon-reply"></i> Volver al Home</a>
@@ -89,6 +89,7 @@
 	            sessionStorage.user_estado = '{{valid.ESTADO}}';
 	            sessionStorage.user_rut = '{{valid.RUT}}';
 
+                $('#quiero-registrar').addClass('d-none');
 				$('#res').removeClass('d-none').removeClass('alert-danger').addClass('alert-success').html('Acceso Correcto<br>Estás siendo redirigido...');
 				window.location = '{% url 'home' %}';
 			}

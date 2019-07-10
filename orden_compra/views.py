@@ -7,9 +7,15 @@ import datetime
 def orders_list(request):
 	get = request.GET
 	proveedor = get['proveedor']
-	order_list = Orders.getOrders(proveedor)
+	tipo = get['tipo']
+	order_list = Orders.getOrders(proveedor, tipo)
 	proveedores_list = Orders.getProveedores()
-	return render(request, 'orden_de_compra/orders_list.html',{ 'order_list' : order_list, 'proveedores_list': proveedores_list, 'proveedor': proveedor})
+	return render(request, 'orden_de_compra/orders_list.html',{
+		'order_list' : order_list,
+		'proveedores_list': proveedores_list,
+		'proveedor': proveedor,
+		'tipo' : tipo
+	})
 
 def productos_get(request):
 	get = request.GET
@@ -23,6 +29,7 @@ def orders_insert(request):
 	id_prov = post['id_prov']
 	id_prod = post['id_prod']
 	id_user = post['id_user']
+	user_tipo = post['user_tipo']
 	valor = post['total']
 	estado = 1
 	stock = post['stock']
@@ -30,7 +37,7 @@ def orders_insert(request):
 
 	Orders.createOrder(id_prov, id_prod, id_user, valor, estado, stock, stock_crit)
 
-	response = redirect('/orden_de_compra/orders_list?proveedor='+(str(1)))
+	response = redirect('/orden_de_compra/orders_list?proveedor='+(str(1))+'&tipo='+user_tipo)
 	return response
 
 def orders_create(request):
@@ -53,6 +60,7 @@ def order_update(request):
 	post = request.POST
 	id_user = post['id_user']
 	estado = post['estado']
+	user_tipo = post['id_tipo']
 	id_orden = post['id_orden']
 	if estado == "4":
 		id_prov = post['id_prov']
@@ -63,4 +71,4 @@ def order_update(request):
 		Orders.updateOrder(id_orden, estado)
 	else:
 		Orders.updateOrder(id_orden, estado)
-	return redirect('/orden_de_compra/orders_list?proveedor='+(str(id_user)))
+	return redirect('/orden_de_compra/orders_list?proveedor='+(str(id_user))+'&tipo='+user_tipo)

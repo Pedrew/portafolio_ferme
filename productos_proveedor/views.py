@@ -67,7 +67,11 @@ def familia_list(request):
 	proveedor_list = Product_proveedor.getProveedores()
 	familia_list = Product_proveedor.getFamilias()
 	tipo_list = Product_proveedor.getTipos()
-	return render(request, 'productos/family_type.html',{ 'familia' : familia_list, 'tipo' : tipo_list, 'proveedores' : proveedor_list})
+	return render(request, 'productos/family_type.html',{
+		'familia' : familia_list,
+		'tipo' : tipo_list,
+		'proveedores' : proveedor_list
+	})
 
 def familia_create(request):
 	post = request.POST

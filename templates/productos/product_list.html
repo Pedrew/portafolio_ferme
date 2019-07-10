@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                     {% for item in productos %}
-                    <tr class="fila">
+                    <tr class="fila" data-prov="{{ item.ID_PROV }}">
                         <td class="text-uppercase">{{ item.ID_PROD }}</td>
                         <td class="text-uppercase">{{ item.PRODUCTO_ID }}</td>
                         <td class="text-uppercase">{{ item.NOMBRE }}</td>
@@ -78,6 +78,17 @@
 <script>
     $(document).ready(function(){
         $('#aside [data-menu="productos_list"]').addClass('active');
+
+        var user_id = parseInt(sessionStorage.getItem('user_id'));
+        var user_tipo = parseInt(sessionStorage.getItem('user_tipo'));
+
+        if(user_tipo != 1 && user_tipo != 5){
+            $('#tabla-productos .fila').each(function(){
+                if(parseInt($(this).attr('data-prov')) != user_id){
+                    $(this).remove();
+                }
+            });
+        }
     });
 
     $('.btn-eliminar').click(function(){
