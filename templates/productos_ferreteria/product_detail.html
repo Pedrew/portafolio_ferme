@@ -15,7 +15,7 @@
           </div>
           <div class="col-12 col-md-7">
             <div class="texto">
-              <h1>{{product.NOMBRE}}</h1>
+              <h1 class="text-uppercase">{{product.NOMBRE}}</h1>
 
               <p class="stock">
                 Stock: 
@@ -63,6 +63,27 @@
       </div>
     </div>
   </div>
+
+<div class="modal fade" id="modalConfirmar" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center">
+            Para comprar debe de iniciar sesión.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-volver" data-dismiss="modal">Cancelar</button>
+            <a href="{% url 'login' %}" class="btn btn-success btn-confirmar">Ok, Entrar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
 {% endblock contenido %}
 {% block js %}
   <script>
@@ -91,8 +112,13 @@
     });
 
     $('#form-sell .btn-agregar').click(function(){
-        $('#form-sell').submit();
-        $('#form-sell .btn-agregar').prop('disabled',true).html('Agregando al carro...');
+        if(sessionStorage.getItem('user_id') == null){
+          $('#modalConfirmar').modal('show');
+        }else{
+          $('#form-sell').submit();
+          $('#form-sell .btn-agregar').prop('disabled',true).html('Agregando al carro...');  
+        }
+        
     });
   </script>
 {% endblock js %}

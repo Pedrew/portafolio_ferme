@@ -9,24 +9,9 @@
             <h1 class="titulo">Registro de Usuario</h1>
             <form method="POST" class="post-form" action="users_update" id="form-registro">
                 {% csrf_token %}
-                <input type="hidden" name="id" class="form-control" value="{{user.USER_ID}}">
+                <input type="hidden" name="id" value="{{user.USER_ID}}">
                 <div class="tabla-registro">
                     <table class="table table-bordered">
-                        <tr>
-                            <td>
-                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Tipo Usuario
-                            </td>
-                            <td>
-                                <select name="user_type" class="form-control validarCampo" data-nom="Tipo Usuario">
-                                    <option value=""></option>
-                                    <option value="2">Vendedor</option>
-                                    <option value="1">Administrador</option>
-                                    <option value="3">Cliente</option>
-                                    <option value="4">Proveedor</option>
-                                    <option value="5">Empleado</option>
-                                </select>
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Nombre
@@ -46,14 +31,6 @@
                         <!-- RECORDATORIO -->
                         <!-- AGREGAR CAMPO DIRECCION A UPDATE CLIENTE -->
                         <!-- MODIFICACIÓN TIPO USUARIO A PROVEEDOR NO LO REGISTRA COMO PROVEEDOR -->
-                        <tr class="cliente d-none">
-                            <td>
-                                <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Dirección
-                            </td>
-                            <td>
-                                <input type="text" name="direccion" class="form-control" data-nom="Direccion" value="{{user.DIRECCION}}">
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                 <span class="text-danger" data-toggle="tooltip" data-placement="top" title="Campo Obligatorio">(*)</span>&nbsp; Rut

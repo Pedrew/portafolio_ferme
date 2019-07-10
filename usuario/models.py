@@ -13,7 +13,16 @@ class Usuario(models.Model):
         column = [row[0] for row in cur.description]
         array = []
         for r in res:
-            array.append({column[0]:r[0], column[1]:r[1], column[2]:r[2], column[3]:r[3], column[4]:r[4], column[5]:r[5], column[6]:r[6], column[7]:r[7]})
+            array.append({
+                column[0]:r[0],
+                column[1]:r[1],
+                column[2]:r[2],
+                column[3]:r[3],
+                column[4]:r[4],
+                column[5]:r[5],
+                column[6]:r[6],
+                column[7]:r[7]
+            })
         cur.close()
         con.close()
         return array
@@ -49,10 +58,10 @@ class Usuario(models.Model):
         cur.close()
         con.close()
     @classmethod    
-    def updateUser(self, id, user, password, user_type, name, last_name, status, rut):
+    def updateUser(self, id, user, password, name, last_name, status, rut):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.callproc("update_user",[id, user.upper(), password, user_type, name, last_name, status, rut])
+        cur.callproc("update_user",[id, user.upper(), password, name, last_name, status, rut])
         cur.close()
         con.close()
     @classmethod
@@ -74,7 +83,7 @@ class Usuario(models.Model):
     def validateUser(self, user, password):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute("select user_id, usuario, pass, tipo, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id where usuario ='"+user+"' and pass = '"+password+"'")            
+        cur.execute("select user_id, usuario, pass, tipo, nombre, apellido, estado, rut from usuarios join user_type on usuarios.tipo = user_type.type_id where usuario ='"+user.upper()+"' and pass = '"+password+"'")
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
         if res:
