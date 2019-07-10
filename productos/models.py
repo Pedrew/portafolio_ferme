@@ -112,6 +112,14 @@ class Product(models.Model):
         cur.close()
         con.close()
     @classmethod
+    def createFactura(self, id_user, pay_type, payment, entrega, fecha, id_prod, cantidad, total):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.callproc("create_factura",[id_user, pay_type, payment, entrega, fecha])
+        cur.callproc("create_detalle_factura",[id_prod, cantidad, total])
+        cur.close()
+        con.close()
+    @classmethod
     def getUser(self, id):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
