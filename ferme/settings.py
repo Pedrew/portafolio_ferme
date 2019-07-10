@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'orden_compra',
     'boletas',
     'reportes',
+    'facturas',
 ]
 
 MIDDLEWARE = [

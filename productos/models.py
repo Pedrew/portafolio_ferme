@@ -112,6 +112,14 @@ class Product(models.Model):
         cur.close()
         con.close()
     @classmethod
+    def createFactura(self, id_user, pay_type, payment, entrega, fecha, id_prod, cantidad, total):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.callproc("create_factura",[id_user, pay_type, payment, entrega, fecha])
+        cur.callproc("create_detalle_factura",[id_prod, cantidad, total])
+        cur.close()
+        con.close()
+    @classmethod
     def getUser(self, id):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
@@ -138,6 +146,17 @@ class Product(models.Model):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
         cur.execute('select * from boleta where id_boleta = (select max(id_boleta) from boleta where id_usuario ='+str(id)+')')
+        res = cur.fetchone()
+        column = [row[0] for row in cur.description]
+        obj = {column[0]:res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5]}
+        cur.close()
+        con.close()
+        return obj
+    @classmethod
+    def getLastFactura(self, id):
+        con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
+        cur = con.cursor()
+        cur.execute('select * from factura where id_factura = (select max(id_factura) from factura where id_usuario ='+str(id)+')')
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
         obj = {column[0]:res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4], column[5]:res[5]}

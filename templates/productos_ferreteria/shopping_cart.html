@@ -71,6 +71,7 @@
                 <input type="hidden" name="cantidad" value="{{cantidad}}">
                 <input type="hidden" name="total">
                 <input type="hidden" name="id" value="{{product.ID_PROD}}">
+                <input type="hidden" name="user_type">
                 <input type="hidden" name="id_user"> <!-- TOMAR DATO PARA NOMBRE EN BOLETA -->
                 <input type="hidden" name="envio"> <!-- TOMAR DATO PARA COSTO ENVIO EN BOLETA -->
                 
@@ -169,6 +170,7 @@
             $('#aside [data-menu="users_list"]').addClass('active');
 
             $('[name="id_user"]').attr('value',sessionStorage.getItem('user_id'));
+            $('[name="user_type"]').attr('value',sessionStorage.getItem('user_tipo'));
         });
 
         $('[name="entrega"]').change(function(){
