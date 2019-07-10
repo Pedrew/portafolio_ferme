@@ -389,3 +389,8 @@ nav{
 	height: 3px;
 	background-color: #041E42;
 }
+.titulo .catalogo{
+	font-size: 24px;
+	color: #ff0000;
+	text-decoration: none;
+}

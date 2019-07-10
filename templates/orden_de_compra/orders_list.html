@@ -7,7 +7,7 @@
 {% block contenido %}
 <div class="container-fluid">
     <div class="py-4">
-        <h1 class="titulo">Orden de Compra</h1>
+        <h1 class="titulo">Orden de Compra <a target="_blank" href="{% static 'manuales/orden-de-compra.pdf' %}" class="catalogo"><i class="icon-question-circle"></i></a></h1>
 
         <div class="row justify-content-md-center">
             {% if proveedor == '1' or tipo == '5' %}
