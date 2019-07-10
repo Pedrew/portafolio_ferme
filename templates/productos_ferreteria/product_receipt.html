@@ -31,7 +31,7 @@
     <div class="row">
         <div class="col-xs-12 mt-4">
     		<div class="invoice-title">
-    			<h2>Boleta</h2><h3 class="pull-right"># {{boleta.ID_BOLETA}}</h3>
+    			<h2 id="nom_doc"></h2><h3 class="pull-right"># {{boleta.ID_FACTURA}}</h3>
     		</div>
     		<hr>
     		<div class="row">
@@ -120,3 +120,17 @@
     </div>
 </div>
 {% endblock contenido %}
+
+{% block js %}
+<script>
+    $(document).ready(function(){
+        if(parseInt(sessionStorage.getItem('user_tipo')) == 3){
+            $('#nom_doc').text('Boleta');
+        }else{
+            $('#nom_doc').text('Factura');
+        }
+
+        
+    });
+</script>
+{% endblock js %}

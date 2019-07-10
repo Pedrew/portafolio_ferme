@@ -83,6 +83,7 @@ def product_receipt(request):
 	Product.updateStock(id, cantidad)
 
 	id_user = post['id_user']
+	user_type = post['user_type']
 	entrega = post['entrega']
 	pago_tipo = post['payment_type']
 	medio_pago = post['payment_method']
@@ -90,11 +91,19 @@ def product_receipt(request):
 	
 	now = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
-	Product.createBoleta(id_user, pago_tipo, medio_pago, entrega, now, id, cantidad, total)
+	if user_type == '3':
+		Product.createBoleta(id_user, pago_tipo, medio_pago, entrega, now, id, cantidad, total)
+		detalle = Product.getDetalle(id)
+		usuario = Product.getUser(id_user)
+		boleta = Product.getLastBoleta(id_user)
+	else:
+		Product.createFactura(id_user, pago_tipo, medio_pago, entrega, now, id, cantidad, total)
+		detalle = Product.getDetalle(id)
+		usuario = Product.getUser(id_user)
+		boleta = Product.getLastFactura(id_user)
 
-	detalle = Product.getDetalle(id)
-	usuario = Product.getUser(id_user)
-	boleta = Product.getLastBoleta(id_user)
+
+	
 	return render(request, 'productos_ferreteria/product_receipt.html', {'detalle': detalle, 'usuario': usuario, 'boleta': boleta, 'entrega': entrega, 'pago_tipo': pago_tipo, 'medio_pago': medio_pago})
 
 def shopping_cart(request):

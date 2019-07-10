@@ -21,7 +21,7 @@
 			<h1 class="titulo">Productos</h1>
 			<div class="productos">
 				{% for item in productos %}
-                    <div class="producto">
+                    <div class="producto mb-4">
                         <div class="foto" data-bg="{% static 'media/producto.jpg' %}" data-url="productos_detail?id={{item.ID_PROD}}&tipo={{item.CODIGO_TIPO}}"></div>
                         <div class="texto">
                             <h2>
