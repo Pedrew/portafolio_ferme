@@ -21,7 +21,7 @@ class Boletas(models.Model):
     def getBoletaDetail(self, id_boleta):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute("select boleta.id_boleta, nombre ||' '|| apellido as nombre, tipo_pago, medio_pago, entrega, id_producto, cantidad, fecha, total from boleta join detalle_boleta on boleta.id_boleta = detalle_boleta.id_boleta join usuarios on boleta.id_usuario = usuarios.user_id where boleta.id_boleta = "+id_boleta)
+        cur.execute("select b.id_boleta, u.nombre ||' '|| u.apellido as nombre, b.tipo_pago, b.medio_pago, b.entrega, upper(p.nombre) as producto, db.cantidad, b.fecha, db.total from boleta b join detalle_boleta db on b.id_boleta = db.id_boleta join usuarios u on b.id_usuario = u.user_id join products p on db.id_producto = p.id_prod where b.id_boleta = "+id_boleta)
         res = cur.fetchone()
         column = [row[0] for row in cur.description]
         obj = {column[0] :res[0], column[1]:res[1],column[2]:res[2], column[3]:res[3], column[4]:res[4],column[5] :res[5], column[6]:res[6],column[7]:res[7],column[8]:res[8]}
