@@ -9,7 +9,6 @@
             <h1 class="titulo">Registro de Usuario</h1>
             <form method="POST" class="post-form" action="users_insert" id="form-registro">
                 {% csrf_token %}
-                {{ error }}
                 <input type="hidden" name="status" value="Activo">
                 <div class="tabla-registro">
                     <table class="table table-bordered">
@@ -176,6 +175,14 @@
         }
 
         $(document).ready(function(){
+            var error = '{{ error }}';
+            if(error != ''){
+                $('#res').html(error);
+                $('#res').removeClass('d-none');
+            }
+
+
+            
             $('[data-bg]').each(function(){
                 $(this).css({
                     'background-image': 'url('+$(this).attr("data-bg")+')'
