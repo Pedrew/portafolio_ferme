@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from boletas.views import *
+from facturas.views import *
 
 urlpatterns = [
-	url(r'^boletas_list', boletas_list, name='boletas_list'),
-    url(r'^boleta_detail', boleta_detail, name='boleta_detail'),
+	url(r'^facturas_list', facturas_list, name='facturas_list'),
+    url(r'^factura_detail', factura_detail, name='factura_detail'),
 ]
