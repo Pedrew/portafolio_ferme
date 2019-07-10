@@ -66,12 +66,11 @@ def users_update(request):
 	user_id = post['id']
 	user = post['usuario']
 	password = post['password']
-	user_type = post['user_type']
 	name = post['name']
 	last_name = post['last_name']
 	status = post['status']
 	rut = post['rut']
-	Usuario.updateUser(user_id, user, password, user_type, name, last_name, status, rut)
+	Usuario.updateUser(user_id, user, password, name, last_name, status, rut)
 	response = redirect('users_list')
 	return response
 
