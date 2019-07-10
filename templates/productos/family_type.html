@@ -6,7 +6,7 @@
 {% block contenido %}
 <div class="container-fluid">
     <div class="py-4">
-        <h1 class="titulo">Familias / Tipos</h1>
+        <h1 class="titulo">Familias / Tipos <a target="_blank" href="{% static 'manuales/familias-tipo.pdf' %}" class="catalogo"><i class="icon-question-circle"></i></a></h1>
 
         <div class="col-4 ml-auto mb-3">
             <form method="POST" id="form-familia" class="post-form" action="familia_create">
@@ -48,7 +48,7 @@
                             <!-- RECORDATORIO -->
                             <!-- ORDENAR FAMILIAS ALFABETICAMENTE -->
                             {% for item in familia %}
-                            <tr class="fila">
+                            <tr class="fila" data-id="{{item.ID_PROV}}" data-familia="{{item.ID_FAMILIA}}">
                                 <td class="text-uppercase text-left">{{ item.DETALLE }}</td>
                                 <td class="text-uppercase">{{ item.IDEN_FAMILIA }}</td>
                                 <td class="text-uppercase">{{ item.IDEN_RZ }}</td>
@@ -82,7 +82,7 @@
                         </thead>
                         <tbody>
                             {% for item in tipo %}
-                            <tr class="fila">
+                            <tr class="fila" data-proveedor="{{ item.ID_PROV }}">
                                 <td class="text-uppercase">{{ item.CODIGO_TIPO }}</td>
                                 <td class="text-uppercase">{{ item.DESCRIPCION }}</td>
                                 <td class="text-uppercase">{{ item.IDENTIFICADOR }}</td>
@@ -125,6 +125,29 @@
                 $('#form-familia .btn-enviar').prop('disabled',true).html('Enviando...');
             }
         });
+
+        var user_id = parseInt(sessionStorage.getItem('user_id'));
+        var user_tipo = parseInt(sessionStorage.getItem('user_tipo'));
+
+        if(user_tipo != 1 && user_tipo != 5){
+            $('[name="proveedor_id"] option').each(function(){
+                if(parseInt($(this).attr('value')) != user_id){
+                    $(this).remove();
+                }
+            });
+
+            $('#tabla-familia .fila').each(function(){
+                if(parseInt($(this).attr('data-id')) != user_id){
+                    $(this).remove();
+                }
+            });
+
+            $('#tabla-tipo .fila').each(function(){
+                if(parseInt($(this).attr('data-proveedor')) != user_id){
+                    $(this).remove();
+                }
+            });
+        }
     });
 
     $('.btn-filtro').keyup(function(){

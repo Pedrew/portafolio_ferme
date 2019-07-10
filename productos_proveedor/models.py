@@ -8,7 +8,7 @@ class Product_proveedor(models.Model):
     def getProductos(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select producto_id, nombre, valor, id_prod, codigo_tipo, identificador, proveedor.razon_social as iden_rz from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id order by id_prod desc')
+        cur.execute('select producto_id, nombre, valor, id_prod, id_prov, codigo_tipo, identificador, proveedor.razon_social as iden_rz from products_proveedor join proveedor on products_proveedor.id_prov = proveedor.proveedor_id order by id_prod desc')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
@@ -20,7 +20,8 @@ class Product_proveedor(models.Model):
                 column[3] :r[3],
                 column[4] :r[4],
                 column[5] :r[5],
-                column[6] :r[6]
+                column[6] :r[6],
+                column[7] :r[7]
             })
         cur.close()
         con.close()
@@ -80,7 +81,7 @@ class Product_proveedor(models.Model):
     def getFamilias(self):
         con = cx_Oracle.connect('admin/admin123@dbdrew.cteemzssmjhk.sa-east-1.rds.amazonaws.com/DBDREW')
         cur = con.cursor()
-        cur.execute('select id_familia, familia_producto.identificador as iden_familia, detalle, proveedor.identificador as iden_prov, proveedor.razon_social as iden_rz from familia_producto join proveedor on familia_producto.id_prov = proveedor.proveedor_id')
+        cur.execute('select id_familia, familia_producto.id_prov, familia_producto.identificador as iden_familia, detalle, proveedor.identificador as iden_prov, proveedor.razon_social as iden_rz from familia_producto join proveedor on familia_producto.id_prov = proveedor.proveedor_id')
         res = cur.fetchall()
         column = [row[0] for row in cur.description]
         array = []
@@ -90,7 +91,8 @@ class Product_proveedor(models.Model):
                 column[1] :r[1],
                 column[2] :r[2],
                 column[3] :r[3],
-                column[4] :r[4]
+                column[4] :r[4],
+                column[5] :r[5]
             })
         cur.close()
         con.close()

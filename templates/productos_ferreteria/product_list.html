@@ -7,7 +7,7 @@
 {% block contenido %}
 <div class="container-fluid">
     <div class="py-4">
-        <h1 class="titulo">Productos Ferretería</h1>
+        <h1 class="titulo">Productos Ferretería <a target="_blank" href="{% static 'manuales/productos-ferreteria.pdf' %}" class="catalogo"><i class="icon-question-circle"></i></a></h1>
 
 
         <div class="col-6 px-0">
@@ -26,6 +26,7 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Proveedor</th>
                         <th scope="col">Stock</th>
+                        <th scope="col">Stock Crítico</th>
                         <th scope="col">Precio</th>
                         <th scope="col">Acciones</th>
                     </tr>
@@ -36,7 +37,8 @@
                         <td class="text-uppercase text-left">{{ item.PRODUCTO_ID }}</td>
                         <td class="text-uppercase bg-gradient-danger">{{ item.NOMBRE }}</td>
                         <td class="text-uppercase bg-gradient-warning">{{ item.RAZON_SOCIAL }}</td>
-                        <td class="text-uppercase text-center">{{ item.STOCK }} -> {{ item.STOCK_CRITICO }}</td>
+                        <td class="text-uppercase text-center">{{ item.STOCK }}</td>
+                        <td class="text-uppercase text-center">{{ item.STOCK_CRITICO }}</td>
                         <td class="text-right">$ {{ item.VALOR|intcomma }}</td>
                         <td class="text-center acciones">
                             <a class="btn btn-block btn-warning" href="productos_ferreteria_get?id={{item.ID_PROD}}">

@@ -36,7 +36,7 @@
 	                        <td class="text-uppercase text-center">{{ item.FECHA }}</td>
 	                        <td class="text-uppercase text-center">{{ item.PRODUCTO }}</td>
 	                        <td class="text-uppercase text-center">{{ item.CANTIDAD }}</td>
-	                        <td class="text-uppercase text-right">${{ item.TOTAL|intcomma }}</td>
+	                        <td class="text-uppercase text-right" data-total="{{item.TOTAL}}">${{ item.TOTAL|intcomma }}</td>
 	                    </tr>
 	                    {% endfor %}
 	                    <tr class="fila">
@@ -48,7 +48,7 @@
 	                        <td class=""></td>
 	                        <td class=""></td>
 	                        <td class="text-right"><strong>TOTAL</strong></td>
-	                        <td class="text-right">${{total.TOTAL|intcomma}}</td>
+	                        <td class="text-right" id="totaltotal"></td>
 	                    </tr>
 	                </tbody>
 	            </table>
@@ -62,14 +62,80 @@
         {% endif %}
 		<div class="text-center">
 			<a href="{% url 'reportes' %}" class="btn btn-volver"><i class="icon-reply"></i> Volver</a>
+			<button class="btn btn-info btn-excel"><i class="icon-file-excel"></i> Generar Excel</button>
+			<button class="btn btn-info btn-pdf"><i class="icon-file-pdf"></i> Generar PDF</button>
 		</div>
     </div>
 </div>
 {% endblock contenido %}
 {% block js %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script>
+	function fnExcelReport(){
+	    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+	    var textRange; var j=0;
+	    tab = document.getElementById('tabla-productos'); // id of table
+
+	    for(j = 0 ; j < tab.rows.length ; j++) 
+	    {     
+	        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+	        //tab_text=tab_text+"</tr>";
+	    }
+
+	    tab_text=tab_text+"</table>";
+	    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+	    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+	    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+	    var ua = window.navigator.userAgent;
+	    var msie = ua.indexOf("MSIE "); 
+
+	    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+	    {
+	        txtArea1.document.open("txt/html","replace");
+	        txtArea1.document.write(tab_text);
+	        txtArea1.document.close();
+	        txtArea1.focus(); 
+	        sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+	    }  
+	    else                 //other browser not tested on IE 11
+	        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+	    return (sa);
+	}
+
+	function ExportPDF() {
+        html2canvas(document.getElementById('tabla-productos'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500
+                    }]
+                };
+                pdfMake.createPdf(docDefinition).download("reporte.pdf");
+            }
+        });
+    }
+
     $(document).ready(function(){
 		$('#aside [data-menu="reportes"]').addClass('active');
+
+		$('.btn-excel').click(function(){
+			fnExcelReport();
+		});
+
+		$('.btn-pdf').click(function(){
+			ExportPDF();
+		});
+
+		var total = 0;
+		$('[data-total]').each(function(){
+			total = total +  parseInt($(this).attr('data-total'));
+		});
+		$('#totaltotal').text('$'+total);
     });
 </script>
 {% endblock js %}
