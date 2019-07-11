@@ -6,7 +6,7 @@
                 <img src="{% static 'media/logo.png'%}" alt="">
             </a>
         </div>
-        <a class="btn btn-block btn-ferme" href="{% url 'home' %}" data-menu="home" user-tipo="[1][2][3][5][6]">
+        <a class="btn btn-block btn-ferme" href="{% url 'home' %}" data-menu="home" user-tipo="[1][3][5][6]">
             <i class="icon-office"></i>
             <span>Home</span>
         </a>
@@ -34,11 +34,15 @@
             <i class="icon-tag"></i>
             <span>Boletas</span>
         </a>
+        <a class="btn btn-block btn-ferme d-none" href="{% url 'facturas_list' %}" data-menu="boletas_list" user-tipo="[1][2][3][5][6]">
+            <i class="icon-tag"></i>
+            <span>Facturas</span>
+        </a>
         <a class="btn btn-block btn-ferme d-none" href="{% url 'productos_ferreteria_list' %}" data-menu="productos_ferreteria_list" user-tipo="[1][2][5]">
             <i class="icon-list2"></i>
             <span>Productos Ferreteria</span>
         </a>
-        <a class="btn btn-block btn-ferme d-none" href="{% url 'productos_sell_list' %}" data-menu="productos_sell_list" user-tipo="[1][2][3][5][6]">
+        <a class="btn btn-block btn-ferme d-none" href="{% url 'productos_sell_list' %}" data-menu="productos_sell_list" user-tipo="[1][3][5][6]">
             <i class="icon-file-text"></i>
             <span>Catálogo</span>
         </a>

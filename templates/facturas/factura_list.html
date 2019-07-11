@@ -1,0 +1,93 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block tituloPagina %}
+    <title>FACTURAS | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Facturas <a target="_blank" href="{% static 'manuales/facturas.pdf' %}" class="catalogo"><i class="icon-question-circle"></i></a></h1>
+        <div class="row">
+            <div class="col-6 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Cliente</span>
+                    </div>
+                    <input type="text" class="form-control btn-filtro" placeholder="Filtrar por Cliente...">
+                </div>
+            </div>
+        </div>
+        <div class="usuarios">
+            <div class="tabla-general table-responsive">
+                <table class="table table-hover table-bordered" id="tabla-ordenes">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">N° Factura</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Tipo pago</th>
+                            <th scope="col">Medio pago</th>
+                            <th scope="col">Entrega</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Detalle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in facturas %}
+                        <tr class="fila" data-user="{{ item.ID_USUARIO }}">
+                            <td class="text-uppercase">{{ item.ID_FACTURA }}</td>
+                            <td class="text-uppercase">{{ item.NOMBRE }}
+                            <td class="text-uppercase">{{ item.TIPO_PAGO }}</td></td>
+                            <td class="text-uppercase">{{ item.MEDIO_PAGO }}</td>
+                            <td class="text-uppercase">{{ item.ENTREGA }}</td>
+                            <td class="text-uppercase text-right">${{ item.TOTAL|intcomma }}</td>
+                            <td class="text-uppercase">{{ item.FECHA }}</td>
+                            <td class="acciones">
+                                <a class="btn btn-block btn-warning" href="factura_detail?id={{item.ID_FACTURA}}">
+                                    <i class="icon-eye s-4"></i> Detalle
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
+{% block js %}
+<script>
+    $(document).ready(function(){
+        $('#aside [data-menu="facturas_list"]').addClass('active');
+
+        var user_id = parseInt(sessionStorage.getItem('user_id'));
+        var user_tipo = parseInt(sessionStorage.getItem('user_tipo'));
+
+        if(user_tipo != 1 && user_tipo != 5 && user_tipo != 2){
+            $('#tabla-ordenes .fila').each(function(){
+                if(parseInt($(this).attr('data-user')) != user_id){
+                    $(this).remove();
+                }
+            });
+        }
+    });
+
+    $('.btn-filtro').keyup(function(){
+        var palabra = $(this).val().toUpperCase();
+        if($.trim(palabra) != ''){
+            $('#tabla-ordenes .fila').addClass('d-none');
+            $('#tabla-ordenes .fila td:nth-child(2)').each(function(){
+                var texto = $(this).text().toUpperCase();
+
+                if(texto.search(palabra) != -1){
+                    $(this).parent().removeClass('d-none');
+                }
+            });
+        }else{
+            $('#tabla-ordenes .fila').removeClass('d-none');
+        }
+    });
+</script>
+{% endblock js %}

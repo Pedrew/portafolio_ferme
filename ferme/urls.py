@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^productos_ferreteria/', include('productos.urls')),
     url(r'^boletas/', include('boletas.urls')),
     url(r'^reportes/', include('reportes.urls')),
+    url(r'^facturas/', include('facturas.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -18,6 +18,9 @@
 .table > tbody > tr > .thick-line {
     border-top: 2px solid;
 }
+.text-uppercase{
+	text-transform: uppercase !important;
+}
 </style>
 {% extends 'base/base.html' %}
 {% load static %}
@@ -36,7 +39,7 @@
     		<hr>
     		<div class="row">
     			<div class="col-xs-6">
-    				<address>
+    				<address class="text-uppercase">
     				<strong>Emitida para:</strong><br>
     					{{usuario.NOMBRE}} {{usuario.APELLIDO}}<br>
     					{{usuario.DIRECCION}}<br>
@@ -44,7 +47,7 @@
     				</address>
     			</div>
     			<div class="col-xs-6 text-right">
-    				<address>
+    				<address class="text-uppercase">
         			<strong>Tipo de pago:</strong><br>
     					{{pago_tipo}}<br>
                     <strong>Tipo de entrega:</strong><br>
@@ -89,21 +92,21 @@
     						<tbody>
     							<tr>
     								<td>{{detalle.NOMBRE}}</td>
-    								<td class="text-center">${{detalle.VALOR}}</td>
-    								<td class="text-center">{{detalle.CANTIDAD}}</td>
-    								<td class="text-right">${{detalle.TOTAL}}</td>
+    								<td class="text-center" id="precio" data-precio="{{detalle.VALOR}}">${{detalle.VALOR|intcomma}}</td>
+    								<td class="text-center" id="cant" data-cant="{{detalle.CANTIDAD}}">{{detalle.CANTIDAD}}</td>
+    								<td class="text-right subtotal"></td>
     							</tr>
     							<tr>
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
     								<td class="thick-line text-center"><strong>Subtotal</strong></td>
-    								<td class="thick-line text-right">${{detalle.TOTAL}}</td>
+    								<td class="thick-line text-right subtotal"></td>
     							</tr>
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>envío</strong></td>
-    								<td class="no-line text-right">$0</td>
+    								<td class="no-line text-right" id="costo_envio">$0</td>
     							</tr>
     							<tr>
     								<td class="no-line"></td>
@@ -130,7 +133,16 @@
             $('#nom_doc').text('Factura');
         }
 
-        
+        var cant = parseInt($('#cant').attr('data-cant'));
+		var precio = parseInt($('#precio').attr('data-precio'));
+		$('.subtotal').each(function(){
+			$(this).text('$'+ (cant*precio));
+		});
+
+		var envio = '{{entrega}}';
+		if(envio == 'Entrega a domicilio'){
+			$('#costo_envio').html('$3000');
+		}
     });
 </script>
 {% endblock js %}

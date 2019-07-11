@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from .models import Boletas
+from .models import Facturas
 from django.shortcuts import redirect
 
 # Create your views here.
 
-def boletas_list(request):
-	boletas = Boletas.getBoletas()
-	return render(request, 'boletas/boleta_list.html',{ 'boletas' : boletas})
+def facturas_list(request):
+	facturas = Facturas.getFacturas()
+	return render(request, 'facturas/factura_list.html',{ 'facturas' : facturas})
 
-def boleta_detail(request):
+def factura_detail(request):
 	get = request.GET
 	id_boleta = get['id']
-	boleta = Boletas.getBoletaDetail(id_boleta)
-	return render(request, 'boletas/boleta_detail.html',{ 'boleta' : boleta})
+	factura = Facturas.getFacturasDetail(id_boleta)
+	return render(request, 'facturas/factura_detail.html',{ 'factura' : factura})

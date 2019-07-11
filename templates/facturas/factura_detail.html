@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block tituloPagina %}
+  <title>{{product.NOMBRE}} | FERME</title>
+{% endblock tituloPagina %}
+{% block contenido %}
+<div class="container-fluid">
+    <div class="py-4">
+        <h1 class="titulo">Factura <strong># {{factura.ID_FACTURA}}</strong></h1>
+        
+        <div class="col-lg-8 col-xl-6 mx-auto">
+            <div class="row">
+                <div class="col-6 mb-3 border-bottom">
+                    <strong>Emitida para:</strong><br>
+                    {{factura.NOMBRE}}
+                </div>
+                <div class="col-6 mb-3 border-bottom text-right">
+                    <strong>Tipo de pago:</strong><br>
+                    {{factura.TIPO_PAGO}}
+                </div>
+                <div class="col-6 mb-3 border-bottom">
+                    <strong>Medio de pago:</strong><br>
+                    {{factura.MEDIO_PAGO}}
+                </div>
+                <div class="col-6 mb-3 border-bottom text-right">
+                    <strong>Tipo de entrega:</strong><br>
+                    {{factura.ENTREGA}}<br>
+                </div>
+                <div class="col-6 mb-3 border-bottom">
+                    <strong>Fecha de compra:</strong><br>
+                    {{factura.FECHA}}
+                </div>
+                <div class="col-6 mb-3 border-bottom">
+                </div>
+            </div>
+            
+            <div class="pt-3">
+                <div class="tabla-general table-responsive">
+                    <table class="table table-hover table-bordered" id="tabla-productos">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th colspan="3">Detalle Compra</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="fila">
+                                <td class="text-uppercase">{{factura.PRODUCTO}}</td>
+                                <td class="text-uppercase text-center">{{factura.CANTIDAD}}</td>
+                                <td class="text-right">${{factura.TOTAL|intcomma}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %}
